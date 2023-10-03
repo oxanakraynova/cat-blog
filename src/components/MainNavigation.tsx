@@ -21,7 +21,7 @@ const MainNavigation = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" color="secondary">
+        <AppBar position="fixed" color="secondary" sx={{ overflowX: "auto" }}>
           <Toolbar>
             <List
               sx={{

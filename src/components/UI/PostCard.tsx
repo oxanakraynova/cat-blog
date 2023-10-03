@@ -50,7 +50,7 @@ function PostCard(article: ArticleProps) {
             }}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
-              <Typography component="div" variant="h5" sx={{ mb: 1 }}>
+              <Typography component="div" variant="h5" sx={{ marginBottom: 1 }}>
                 {article.title}
               </Typography>
               <Grid container spacing={2}>
@@ -73,7 +73,7 @@ function PostCard(article: ArticleProps) {
                   </Typography>
                 </Grid>
               </Grid>
-              <Typography component="div" variant="body2" sx={{ mt: 1 }}>
+              <Typography component="div" variant="body2" sx={{ marginTop: 1 }}>
                 {article.perex}
               </Typography>
               <CardActions>
