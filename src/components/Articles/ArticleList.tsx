@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material";
 import articleList from "./articleList.json";
-import CustomCard from "./CustomCard";
+import PostCard from "../UI/PostCard";
 
 function ArticleList() {
   const currentArticleList = articleList.map((article: any) => (
-    <CustomCard
+    <PostCard
       id={article.id}
       key={article.id}
       image={article.image}

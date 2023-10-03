@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import ArticleList from "../Articles/ArticleList";
 
-function HomePage() {
+function ArticlesPage() {
   return (
     <>
       <Container maxWidth="lg">
@@ -23,4 +23,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default ArticlesPage;

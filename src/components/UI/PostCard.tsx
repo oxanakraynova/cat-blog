@@ -9,7 +9,8 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import getImageByFilename from "./ImagesList";
+import { Link } from "react-router-dom";
+import getImageByFilename from "../Articles/ImagesList";
 
 type ArticleProps = {
   id: string;
@@ -21,7 +22,7 @@ type ArticleProps = {
   comments: string;
 };
 
-function CustomCard(article: ArticleProps) {
+function PostCard(article: ArticleProps) {
   return (
     <>
       <Grid item xs={12} key={article.id}>
@@ -77,7 +78,9 @@ function CustomCard(article: ArticleProps) {
               </Typography>
               <CardActions>
                 <Stack direction="row" spacing={2} alignItems="center">
-                  <Button variant="text">Read whole article</Button>
+                  <Link to={`/articles/${article.id}`}>
+                    <Button variant="text">Read whole article</Button>
+                  </Link>
                   <Typography
                     variant="subtitle2"
                     color="text.secondary"
@@ -95,4 +98,4 @@ function CustomCard(article: ArticleProps) {
   );
 }
 
-export default CustomCard;
+export default PostCard;

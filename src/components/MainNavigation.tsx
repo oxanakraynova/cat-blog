@@ -42,7 +42,7 @@ const MainNavigation = () => {
 
               <ListItemButton
                 component={NavLink}
-                to="/"
+                to="/articles"
                 sx={{
                   textAlign: "center",
                   color: "text.secondary",
@@ -71,6 +71,8 @@ const MainNavigation = () => {
               variant="text"
               sx={{ marginLeft: "auto" }}
               endIcon={<ArrowForwardIcon />}
+              component={NavLink}
+              to="/login"
             >
               Log in
             </Button>

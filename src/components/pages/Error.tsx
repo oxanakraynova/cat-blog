@@ -24,7 +24,7 @@ function ErrorPage() {
         </Typography>
         <Box m={2} display="flex" justifyContent="center" alignItems="center">
           <Button
-            to="../"
+            to="/articles"
             component={NavLink}
             variant="contained"
             color="primary"
