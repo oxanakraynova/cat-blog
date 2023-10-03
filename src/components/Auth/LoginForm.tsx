@@ -1,11 +1,10 @@
 import * as React from "react";
+import { CssBaseline } from "@mui/material";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { FormHelperText } from "@mui/material";
 
@@ -23,10 +22,10 @@ export default function LoginForm() {
   const passwordInputIsInvalid =
     !enteredPasswordIsValid && enteredPasswordTouched;
 
-  let formIsValid = false;
-  if (enteredEmailIsValid && enteredPasswordIsValid) {
-    formIsValid = true;
-  }
+  // let formIsValid = false;
+  // if (enteredEmailIsValid && enteredPasswordIsValid) {
+  //   formIsValid = true;
+  // }
 
   const emailInputChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -73,16 +72,41 @@ export default function LoginForm() {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          width: "368px",
+          height: "333px",
+          boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{
+            marginTop: "32px",
+            marginLeft: "32px",
+            display: "flex",
+            justifyContent: "flex-start",
+          }}
+        >
           Log In
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            marginTop: 1,
+            marginLeft: "32px",
+            width: "304px",
+            height: "84px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
+        >
           <TextField
             margin="normal"
             required
@@ -115,14 +139,19 @@ export default function LoginForm() {
           {passwordInputIsInvalid && (
             <FormHelperText error>Password must not be empty!</FormHelperText>
           )}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginRight: "31px",
+            marginTop: "100px",
+          }}
+        >
           <Button
             type="submit"
-            fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            to="/orders/"
-            component={NavLink}
-            disabled={!formIsValid}
+            // disabled={!formIsValid}
           >
             Log In
           </Button>

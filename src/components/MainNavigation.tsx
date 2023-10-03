@@ -1,5 +1,5 @@
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";

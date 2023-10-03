@@ -12,7 +12,6 @@ function ArticlesPage() {
             pb: 3,
             fontWeight: "bold",
             marginLeft: "224px",
-            marginTop: "120px",
           }}
         >
           Recent articles
