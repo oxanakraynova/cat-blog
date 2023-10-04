@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type RelatedArticle = {
   id: string;
@@ -43,7 +43,7 @@ function RelatedArticlesSection({
           </Typography>
           {filteredRelatedArticles.map((article) => (
             <div key={article.id}>
-              <NavLink
+              <Link
                 to={`/articles/${article.id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
@@ -53,7 +53,7 @@ function RelatedArticlesSection({
                 >
                   {article.title}
                 </Typography>
-              </NavLink>
+              </Link>
               <Typography variant="body1" sx={{ marginBottom: "24px" }}>
                 {article.perex}
               </Typography>

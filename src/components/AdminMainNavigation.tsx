@@ -86,11 +86,7 @@ const AdminMainNavigation = () => {
               >
                 <ListItemText>My Articles</ListItemText>
               </ListItemButton>
-              <Button
-                variant="text"
-                component={NavLink}
-                to="/admin/createArticle"
-              >
+              <Button variant="text" component={NavLink} to="/admin/new">
                 Create Article
               </Button>
               <User />

@@ -7,6 +7,8 @@ import RootLayout from "./components/pages/Root";
 import LoginPage from "./components/pages/Login";
 import AdminArticlesPage from "./components/pages/AdminArticles";
 import AdminRootLayout from "./components/pages/AdminRoot";
+import NewArticlePage from "./components/pages/NewArticle";
+import EditArticlePage from "./components/pages/EditArticle";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/articles",
         element: <AdminArticlesPage />,
+      },
+      {
+        path: "/admin/new",
+        element: <NewArticlePage />,
+      },
+      {
+        path: "/admin/:articleId/edit",
+        element: <EditArticlePage />,
       },
     ],
   },

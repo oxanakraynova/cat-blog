@@ -10,7 +10,7 @@ type ArticleProps = {
   perex: string;
   publicationDate: string;
   author: string;
-  comments: string;
+  comments: number;
 };
 
 type RelatedArticle = {

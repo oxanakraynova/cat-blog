@@ -163,7 +163,7 @@ function MyArticleTable({}: { article: ArticleProps }) {
                 <TableCell>{article.comments}</TableCell>
                 <TableCell>
                   <Stack direction="row">
-                    <Link to={`/articles/edit/${article.id}`}>
+                    <Link to={`/admin/${article.id}/edit`}>
                       <IconButton aria-label="edit">
                         <EditIcon />
                       </IconButton>
