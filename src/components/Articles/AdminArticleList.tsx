@@ -1,41 +1,39 @@
-// import { Grid, Typography } from "@mui/material";
-// import articleList from "./articleList.json";
-// import PostCard from "../UI/PostCard";
-import { Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import MyArticleTable from "./MyArticleTable";
 
-function AdminArticleList() {
-  // const currentArticleList = articleList.map((article: any) => (
-  //   <PostCard
-  //     id={article.id}
-  //     key={article.id}
-  //     image={article.image}
-  //     title={article.title}
-  //     perex={article.perex}
-  //     publicationDate={article.publicationDate}
-  //     author={article.author}
-  //     comments={article.comments}
-  //   />
-  // ));
+type ArticleProps = {
+  id: string;
+  title: string;
+  perex: string;
+  author: string;
+  comments: number;
+};
 
+function AdminArticleList(article: ArticleProps) {
   return (
     <>
-      <Typography
-        variant="h4"
-        gutterBottom
-        sx={{
-          pb: 3,
-          fontWeight: "bold",
-          marginLeft: "224px",
-          marginTop: "120px",
-        }}
+      <Stack
+        direction="row"
+        spacing={5}
+        alignItems="flex-start"
+        sx={{ marginLeft: "224px" }}
       >
-        My articles
-      </Typography>
-      {/* <Grid container spacing={3}>
-        {currentArticleList}
-      </Grid> */}
-      <MyArticleTable />
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            pb: 3,
+            fontWeight: "bold",
+          }}
+        >
+          My articles
+        </Typography>
+        <Link to="/articles/create">
+          <Button variant="contained">Create new article</Button>
+        </Link>
+      </Stack>
+      <MyArticleTable article={article} />
     </>
   );
 }

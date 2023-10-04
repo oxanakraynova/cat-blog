@@ -19,7 +19,7 @@ type ArticleProps = {
   perex: string;
   publicationDate: string;
   author: string;
-  comments: string;
+  comments: number;
 };
 
 function PostCard(article: ArticleProps) {
@@ -86,7 +86,7 @@ function PostCard(article: ArticleProps) {
                     color="text.secondary"
                     component="div"
                   >
-                    {article.comments}
+                    {article.comments} comments
                   </Typography>
                 </Stack>
               </CardActions>

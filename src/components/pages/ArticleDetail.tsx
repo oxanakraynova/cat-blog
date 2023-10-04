@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import articleList from "../Articles/articleList.json";
 import PostView from "../UI/PostView";
@@ -15,7 +15,21 @@ function ArticleDetailPage() {
   );
 
   if (!selectedArticle) {
-    return <div>Article not found</div>;
+    return (
+      <Box
+        sx={{
+          position: "absolute",
+          top: "20%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Article not found
+        </Typography>
+      </Box>
+    );
   }
 
   return (

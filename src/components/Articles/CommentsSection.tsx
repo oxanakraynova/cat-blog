@@ -2,7 +2,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 
 type CommentsProps = {
   id: string;
-  comments: string;
+  comments: number;
 };
 
 function CommentsSection(article: CommentsProps) {
