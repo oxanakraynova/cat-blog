@@ -110,7 +110,6 @@ function MyArticleTable({}: { article: ArticleProps }) {
 
   const handleDeleteClick = (id: string) => {
     const updatedArticles = articles.filter((article) => article.id !== id);
-    console.log(updatedArticles);
     setArticles(updatedArticles);
     setSelected((prevSelected) => prevSelected.filter((item) => item !== id));
   };
