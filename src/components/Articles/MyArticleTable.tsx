@@ -61,6 +61,18 @@ function MyArticleTable({}: { article: ArticleProps }) {
           typeof b.comments === "number"
         ) {
           return a.comments - b.comments;
+        } else if (
+          orderBy === "perex" &&
+          typeof a.perex === "string" &&
+          typeof b.perex === "string"
+        ) {
+          return a.perex.localeCompare(b.perex);
+        } else if (
+          orderBy === "author" &&
+          typeof a.author === "string" &&
+          typeof b.author === "string"
+        ) {
+          return a.author.localeCompare(b.author);
         }
       } else {
         if (
@@ -75,6 +87,18 @@ function MyArticleTable({}: { article: ArticleProps }) {
           typeof b.comments === "number"
         ) {
           return b.comments - a.comments;
+        } else if (
+          orderBy === "perex" &&
+          typeof a.perex === "string" &&
+          typeof b.perex === "string"
+        ) {
+          return b.perex.localeCompare(a.perex);
+        } else if (
+          orderBy === "author" &&
+          typeof a.author === "string" &&
+          typeof b.author === "string"
+        ) {
+          return b.author.localeCompare(a.author);
         }
       }
       return 0;
