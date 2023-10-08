@@ -26,6 +26,7 @@ function MyArticleTable({}: { article: ArticleProps }) {
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = useState<string>("title");
   const [selected, setSelected] = useState<string[]>([]);
+  const [articles, setArticles] = useState<ArticleProps[]>(articleList);
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === "asc";
@@ -104,8 +105,15 @@ function MyArticleTable({}: { article: ArticleProps }) {
       return 0;
     };
 
-    return articleList.sort(comparator);
-  }, [order, orderBy]);
+    return articles.sort(comparator);
+  }, [order, orderBy, articles]);
+
+  const handleDeleteClick = (id: string) => {
+    const updatedArticles = articles.filter((article) => article.id !== id);
+    console.log(updatedArticles);
+    setArticles(updatedArticles);
+    setSelected((prevSelected) => prevSelected.filter((item) => item !== id));
+  };
 
   return (
     <Box sx={{ marginLeft: "224px", width: "1131px" }}>
@@ -194,7 +202,7 @@ function MyArticleTable({}: { article: ArticleProps }) {
                     </Link>
                     <IconButton
                       aria-label="delete"
-                      // onClick={handleDeleteClick(article.id)}
+                      onClick={() => handleDeleteClick(article.id)}
                     >
                       <DeleteIcon />
                     </IconButton>
