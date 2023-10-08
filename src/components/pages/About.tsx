@@ -1,13 +1,24 @@
-import { Box, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
+import AboutArticle from "../Articles/AboutArticle";
 
 function AboutPage() {
   return (
     <>
-      <Box sx={{ width: "100%", maxWidth: 500 }}>
-        <Typography variant="h3" paddingLeft={4} gutterBottom>
+      <Container maxWidth="lg">
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            pb: 3,
+            fontWeight: "bold",
+            marginLeft: "224px",
+            marginTop: "120px",
+          }}
+        >
           About
         </Typography>
-      </Box>
+        <AboutArticle />
+      </Container>
     </>
   );
 }
