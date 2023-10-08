@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useState } from "react";
 import { FormHelperText } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 export default function LoginForm() {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -151,6 +152,9 @@ export default function LoginForm() {
           <Button
             type="submit"
             variant="contained"
+            //TODO 1) implement login, 2) after successful login redirect to next screen, 3) on unsuccesful login display error message
+            component={NavLink}
+            to="/admin"
             // disabled={!formIsValid}
           >
             Log In

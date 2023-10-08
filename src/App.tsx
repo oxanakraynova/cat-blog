@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/admin/articles",
+        index: true,
         element: <AdminArticlesPage />,
       },
       {

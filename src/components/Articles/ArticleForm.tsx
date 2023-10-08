@@ -17,7 +17,12 @@ const ColorButton = styled(Button)<ButtonProps>(({}) => ({
   },
 }));
 
-function ArticleForm() {
+interface ArticleFormProps {
+  mode: string;
+}
+
+function ArticleForm({ mode }: ArticleFormProps) {
+  const pageTitle = mode === "create" ? "Create New Article" : "Edit Article";
   return (
     <>
       <Stack
@@ -34,7 +39,7 @@ function ArticleForm() {
             fontWeight: "bold",
           }}
         >
-          Create new article
+          {pageTitle}
         </Typography>
         <Button variant="contained">Publish Article</Button>
       </Stack>
