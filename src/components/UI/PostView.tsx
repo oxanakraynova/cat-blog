@@ -76,7 +76,7 @@ function PostView({
                 alt={article.title}
               />
               <Typography
-                variant="h6"
+                variant="body1"
                 sx={{
                   marginTop: "24px",
                 }}

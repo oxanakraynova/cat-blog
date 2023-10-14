@@ -9,6 +9,7 @@ import {
   Stack,
   Button,
 } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import getImageByFilename from "../Articles/ImagesList";
 
@@ -27,6 +28,14 @@ type PostCardProps = {
 };
 
 function PostCard({ articles }: PostCardProps) {
+  const [expandedArticleId, setExpandedArticleId] = useState<string | null>(
+    null
+  );
+
+  const handleReadMore = (articleId: string) => {
+    setExpandedArticleId(articleId);
+  };
+
   const sortedArticles = [...articles].sort(
     (a: ArticleProps, b: ArticleProps) => {
       if (
@@ -107,13 +116,26 @@ function PostCard({ articles }: PostCardProps) {
                   variant="body2"
                   sx={{ marginTop: 1 }}
                 >
-                  {article.perex}
+                  {expandedArticleId === article.id
+                    ? article.perex
+                        .split("\n\n")
+                        .map((paragraph, index) => (
+                          <p key={index}>{paragraph}</p>
+                        ))
+                    : `${article.perex.slice(0, 200)}...`}
                 </Typography>
                 <CardActions>
                   <Stack direction="row" spacing={2} alignItems="center">
-                    <Link to={`/articles/${article.id}`}>
-                      <Button variant="text">Read whole article</Button>
-                    </Link>
+                    {expandedArticleId !== article.id && (
+                      <Link to={`/articles/${article.id}`}>
+                        <Button
+                          onClick={() => handleReadMore(article.id)}
+                          variant="outlined"
+                        >
+                          Read whole article
+                        </Button>
+                      </Link>
+                    )}
                     <Typography
                       variant="subtitle2"
                       color="text.secondary"

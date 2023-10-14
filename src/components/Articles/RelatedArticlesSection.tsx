@@ -55,7 +55,7 @@ function RelatedArticlesSection({
                 </Typography>
               </Link>
               <Typography variant="body1" sx={{ marginBottom: "24px" }}>
-                {article.perex}
+                {`${article.perex.slice(0, 200)}...`}
               </Typography>
             </div>
           ))}
