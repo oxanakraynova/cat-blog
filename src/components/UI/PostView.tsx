@@ -2,6 +2,7 @@ import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import getImageByFilename from "../Articles/ImagesList";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Articles/CommentsSection";
+import ReactMarkdown from "react-markdown";
 
 type ArticleProps = {
   id: string;
@@ -26,10 +27,6 @@ function PostView({
   article: ArticleProps;
   articles: RelatedArticle[];
 }) {
-  const renderParagraphs = (text: string) => {
-    const paragraphs = text.split("\n\n");
-    return paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>);
-  };
   return (
     <>
       <Grid container spacing={30}>
@@ -79,7 +76,7 @@ function PostView({
                 src={getImageByFilename(article.image)}
                 alt={article.title}
               />
-              <div>{renderParagraphs(article.perex)}</div>
+              <ReactMarkdown>{article.perex}</ReactMarkdown>
             </CardContent>
           </Card>
           <CommentsSection id={article.id} comments={article.comments} />

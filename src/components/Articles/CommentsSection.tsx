@@ -86,7 +86,7 @@ function CommentsSection(article: CommentsProps) {
         variant="h5"
         color="text.primary"
         component="div"
-        sx={{ fontWeight: "bold" }}
+        sx={{ fontWeight: "bold", marginTop: "25px", marginLeft: "17px" }}
       >
         Comments ({article.comments})
       </Typography>

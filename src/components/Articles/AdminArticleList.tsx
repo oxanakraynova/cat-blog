@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import MyArticleTable from "./MyArticleTable";
 
 type ArticleProps = {
@@ -29,9 +29,10 @@ function AdminArticleList(article: ArticleProps) {
         >
           My articles
         </Typography>
-        <Link to="/articles/create">
-          <Button variant="contained">Create new article</Button>
-        </Link>
+
+        <Button variant="contained" component={NavLink} to="/admin/new">
+          Create new article
+        </Button>
       </Stack>
       <MyArticleTable article={article} />
     </>

@@ -110,7 +110,11 @@ function ArticleForm({ mode }: ArticleFormProps) {
         </Box>
         <Box>
           <InputLabel
-            sx={{ fontWeight: "bold", color: "inherit", marginBottom: "10px" }}
+            sx={{
+              fontWeight: "bold",
+              color: "inherit",
+              marginBottom: "10px",
+            }}
           >
             Content
           </InputLabel>
