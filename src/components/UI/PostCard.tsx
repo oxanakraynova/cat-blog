@@ -118,10 +118,6 @@ function PostCard({ articles }: PostCardProps) {
                 >
                   {expandedArticleId === article.id
                     ? article.perex
-                        .split("\n\n")
-                        .map((paragraph, index) => (
-                          <p key={index}>{paragraph}</p>
-                        ))
                     : `${article.perex.slice(0, 200)}...`}
                 </Typography>
                 <CardActions>

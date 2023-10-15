@@ -26,16 +26,20 @@ function PostView({
   article: ArticleProps;
   articles: RelatedArticle[];
 }) {
+  const renderParagraphs = (text: string) => {
+    const paragraphs = text.split("\n\n");
+    return paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>);
+  };
   return (
     <>
-      <Grid container spacing={35}>
+      <Grid container spacing={30}>
         <Grid item xs={12} sm={8}>
           <Card
             sx={{
               display: "flex",
               flexDirection: "column",
               width: "760px",
-              height: "1664px",
+              minHeight: 0,
               ml: "224px",
               mt: "120px",
               gap: "24px",
@@ -75,14 +79,7 @@ function PostView({
                 src={getImageByFilename(article.image)}
                 alt={article.title}
               />
-              <Typography
-                variant="body1"
-                sx={{
-                  marginTop: "24px",
-                }}
-              >
-                {article.perex}
-              </Typography>
+              <div>{renderParagraphs(article.perex)}</div>
             </CardContent>
           </Card>
           <CommentsSection id={article.id} comments={article.comments} />

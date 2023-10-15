@@ -24,17 +24,23 @@ function RelatedArticlesSection({
       item
       xs={12}
       sm={4}
-      sx={{ width: "371px", height: "596px", marginTop: "136px" }}
+      sx={{
+        width: "371px",
+        height: "596px",
+        position: "sticky",
+        top: "-100px",
+        zIndex: 1,
+      }}
     >
       <Card
         sx={{
           display: "flex",
           flexDirection: "column",
           width: "760px",
-          height: "691px",
+          minHeight: 0,
         }}
       >
-        <CardContent>
+        <CardContent sx={{ flex: 1 }}>
           <Typography
             variant="h4"
             sx={{ fontWeight: "bold", marginBottom: "24px" }}
