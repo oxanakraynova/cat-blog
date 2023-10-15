@@ -6,6 +6,7 @@ import {
   TextField,
   ButtonProps,
   InputLabel,
+  Divider,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
@@ -23,6 +24,28 @@ interface ArticleFormProps {
 
 function ArticleForm({ mode }: ArticleFormProps) {
   const pageTitle = mode === "create" ? "Create New Article" : "Edit Article";
+  const uploadButton =
+    mode === "create" ? (
+      <ColorButton
+        variant="contained"
+        sx={{ width: "180px", marginBottom: "24px" }}
+      >
+        Upload and image
+      </ColorButton>
+    ) : (
+      <>
+        <Box display="flex" alignItems="center">
+          <Button variant="text" sx={{ marginRight: "5px" }}>
+            Upload new
+          </Button>
+          <Divider orientation="vertical" flexItem />
+          <Button variant="text" color="error">
+            Delete
+          </Button>
+        </Box>
+      </>
+    );
+
   return (
     <>
       <Stack
@@ -83,12 +106,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
           >
             Featured image
           </InputLabel>
-          <ColorButton
-            variant="contained"
-            sx={{ width: "170px", marginBottom: "24px" }}
-          >
-            Upload an image
-          </ColorButton>
+          {uploadButton}
         </Box>
         <Box>
           <InputLabel
