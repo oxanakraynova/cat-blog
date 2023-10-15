@@ -26,7 +26,7 @@ function UserLogin() {
             onClick={handleMenu}
             color="inherit"
           >
-            <Avatar alt="Cindy Baker" src={photo} />
+            <Avatar alt="Elisabeth Strain" src={photo} />
           </IconButton>
           <Menu
             id="menu-appbar"

@@ -188,8 +188,9 @@ function MyArticleTable({}: { article: ArticleProps }) {
                     onChange={(event) => handleCheckboxClick(event, article.id)}
                   />
                 </TableCell>
-                <TableCell> {article.title}</TableCell>
-                <TableCell>{article.perex}</TableCell>
+                <TableCell> {`${article.title.slice(0, 30)}... `}</TableCell>
+
+                <TableCell> {`${article.perex.slice(0, 40)}...`}</TableCell>
                 <TableCell>{article.author}</TableCell>
                 <TableCell>{article.comments}</TableCell>
                 <TableCell>
