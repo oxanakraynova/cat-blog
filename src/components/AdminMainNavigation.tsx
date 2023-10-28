@@ -26,8 +26,8 @@ const AdminMainNavigation = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: "16px",
-                ml: "224px",
+                gap: "1rem",
+                ml: "14rem",
               }}
             >
               <Box
@@ -69,7 +69,7 @@ const AdminMainNavigation = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: "16px",
+                gap: "1rem",
                 marginLeft: "auto",
               }}
             >

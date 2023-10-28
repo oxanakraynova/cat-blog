@@ -25,10 +25,10 @@ function RelatedArticlesSection({
       xs={12}
       sm={4}
       sx={{
-        width: "371px",
-        height: "596px",
+        width: "23rem",
+        height: "37rem",
         position: "sticky",
-        top: "-100px",
+        top: "-6rem",
         zIndex: 1,
       }}
     >
@@ -36,14 +36,14 @@ function RelatedArticlesSection({
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "760px",
+          width: "47.5rem",
           minHeight: 0,
         }}
       >
         <CardContent sx={{ flex: 1 }}>
           <Typography
             variant="h4"
-            sx={{ fontWeight: "bold", marginBottom: "24px" }}
+            sx={{ fontWeight: "bold", marginBottom: "1.5rem" }}
           >
             Related Articles
           </Typography>
@@ -55,12 +55,12 @@ function RelatedArticlesSection({
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: "bold", marginBottom: "8px" }}
+                  sx={{ fontWeight: "bold", marginBottom: "0.5rem" }}
                 >
                   {article.title}
                 </Typography>
               </Link>
-              <Typography variant="body1" sx={{ marginBottom: "24px" }}>
+              <Typography variant="body1" sx={{ marginBottom: "1.5rem" }}>
                 {`${article.perex.slice(0, 200)}...`}
               </Typography>
             </div>

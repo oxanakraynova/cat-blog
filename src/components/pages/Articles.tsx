@@ -11,8 +11,8 @@ function ArticlesPage() {
           sx={{
             pb: 3,
             fontWeight: "bold",
-            marginLeft: "224px",
-            marginTop: "120px",
+            marginLeft: "14rem",
+            marginTop: "7.5rem",
           }}
         >
           Recent articles

@@ -28,14 +28,14 @@ function ArticleForm({ mode }: ArticleFormProps) {
     mode === "create" ? (
       <ColorButton
         variant="contained"
-        sx={{ width: "180px", marginBottom: "24px" }}
+        sx={{ width: "180px", marginBottom: "0.5rem" }}
       >
         Upload and image
       </ColorButton>
     ) : (
       <>
         <Box display="flex" alignItems="center">
-          <Button variant="text" sx={{ marginRight: "5px" }}>
+          <Button variant="text" sx={{ marginRight: "0.3rem" }}>
             Upload new
           </Button>
           <Divider orientation="vertical" flexItem />
@@ -52,7 +52,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
         direction="row"
         spacing={5}
         alignItems="flex-start"
-        sx={{ marginLeft: "224px", width: "600px", marginTop: "104px" }}
+        sx={{ marginLeft: "14rem", width: "37.5rem", marginTop: "6.5rem" }}
       >
         <Typography
           variant="h4"
@@ -70,9 +70,9 @@ function ArticleForm({ mode }: ArticleFormProps) {
         component="form"
         sx={{
           marginTop: 1,
-          marginLeft: "224px",
-          width: "760px",
-          height: "1238px",
+          marginLeft: "14rem",
+          width: "47.5rem",
+          height: "77rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
@@ -90,19 +90,23 @@ function ArticleForm({ mode }: ArticleFormProps) {
             placeholder="My First Article"
             name="title"
             autoFocus
-            sx={{ marginBottom: "24px" }}
+            sx={{ marginBottom: "1.5rem" }}
           />
         </Box>
         <Box
           sx={{
             display: "flex",
             justifyContent: "flex-start",
-            marginBottom: "10px",
+            marginBottom: "0.5rem",
             flexDirection: "column",
           }}
         >
           <InputLabel
-            sx={{ fontWeight: "bold", color: "inherit", marginBottom: "10px" }}
+            sx={{
+              fontWeight: "bold",
+              color: "inherit",
+              marginBottom: "0.5rem",
+            }}
           >
             Featured image
           </InputLabel>
@@ -113,7 +117,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
             sx={{
               fontWeight: "bold",
               color: "inherit",
-              marginBottom: "10px",
+              marginBottom: "0.5rem",
             }}
           >
             Content

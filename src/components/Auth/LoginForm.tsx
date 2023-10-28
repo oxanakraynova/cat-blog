@@ -78,8 +78,8 @@ export default function LoginForm() {
           left: "50%",
           transform: "translate(-50%, -50%)",
           textAlign: "center",
-          width: "368px",
-          height: "333px",
+          width: "23rem",
+          height: "20.5rem",
           boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
         }}
       >
@@ -87,8 +87,8 @@ export default function LoginForm() {
           component="h1"
           variant="h5"
           sx={{
-            marginTop: "32px",
-            marginLeft: "32px",
+            marginTop: "2rem",
+            marginLeft: "2rem",
             display: "flex",
             justifyContent: "flex-start",
           }}
@@ -100,9 +100,9 @@ export default function LoginForm() {
           onSubmit={handleSubmit}
           sx={{
             marginTop: 1,
-            marginLeft: "32px",
-            width: "304px",
-            height: "84px",
+            marginLeft: "2rem",
+            width: "19rem",
+            height: "5rem",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
@@ -145,8 +145,8 @@ export default function LoginForm() {
           sx={{
             display: "flex",
             justifyContent: "flex-end",
-            marginRight: "31px",
-            marginTop: "100px",
+            marginRight: "2rem",
+            marginTop: "6rem",
           }}
         >
           <Button

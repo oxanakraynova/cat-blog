@@ -7,16 +7,16 @@ function AboutArticle() {
     <Box
       sx={{
         pb: 3,
-        marginLeft: "224px",
+        marginLeft: "14rem",
       }}
     >
       <CardMedia
         component="img"
         sx={{
           width: "100%",
-          height: "504px",
-          marginTop: "24px",
-          marginBottom: "24px",
+          height: "31.5rem",
+          marginTop: "1.5rem",
+          marginBottom: "1.5rem",
           objectFit: "cover",
         }}
         src={image}

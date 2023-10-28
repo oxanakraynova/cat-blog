@@ -28,7 +28,7 @@ function ErrorPage() {
             component={NavLink}
             variant="contained"
             color="primary"
-            sx={{ height: 40, width: 150 }}
+            sx={{ height: "2.5rem", width: "9rem" }}
             startIcon={<ArrowBackIcon />}
           >
             GO HOME

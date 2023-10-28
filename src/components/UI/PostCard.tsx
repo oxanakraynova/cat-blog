@@ -63,15 +63,15 @@ function PostCard({ articles }: PostCardProps) {
           <Card
             sx={{
               display: "flex",
-              width: "860px",
-              height: "244px",
-              ml: "224px",
-              gap: "16px",
+              width: "53.5rem",
+              height: "14rem",
+              ml: "14rem",
+              gap: "1rem",
             }}
           >
             <CardMedia
               component="img"
-              sx={{ width: "272px", height: "244px" }}
+              sx={{ width: "17rem", height: "14rem" }}
               src={getImageByFilename(article.image)}
               alt={article.title}
             />
@@ -79,8 +79,8 @@ function PostCard({ articles }: PostCardProps) {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: "561px",
-                height: "220px",
+                width: "35rem",
+                height: "13.5rem",
               }}
             >
               <CardContent sx={{ flex: "1 0 auto" }}>

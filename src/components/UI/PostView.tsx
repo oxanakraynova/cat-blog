@@ -35,11 +35,11 @@ function PostView({
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "760px",
+              width: "47.5rem",
               minHeight: 0,
-              ml: "224px",
-              mt: "120px",
-              gap: "24px",
+              ml: "14rem",
+              mt: "7.5rem",
+              gap: "1.5rem",
             }}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
@@ -69,8 +69,8 @@ function PostView({
                 component="img"
                 sx={{
                   width: "100%",
-                  height: "504px",
-                  marginTop: "24px",
+                  height: "31.5rem",
+                  marginTop: "1.5rem",
                   objectFit: "cover",
                 }}
                 src={getImageByFilename(article.image)}

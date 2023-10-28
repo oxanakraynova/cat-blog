@@ -76,17 +76,17 @@ function CommentsSection(article: CommentsProps) {
       sx={{
         display: "flex",
         flexDirection: "column",
-        width: "760px",
+        width: "47.5rem",
         height: "auto",
-        marginTop: "24px",
-        marginLeft: "224px",
+        marginTop: "0.5rem",
+        marginLeft: "14rem",
       }}
     >
       <Typography
         variant="h5"
         color="text.primary"
         component="div"
-        sx={{ fontWeight: "bold", marginTop: "25px", marginLeft: "17px" }}
+        sx={{ fontWeight: "bold", marginTop: "0.5rem", marginLeft: "1rem" }}
       >
         Comments ({article.comments})
       </Typography>
@@ -110,7 +110,7 @@ function CommentsSection(article: CommentsProps) {
         }
       />
       {comments.map((comment) => (
-        <Card key={comment.id} sx={{ marginTop: "16px" }}>
+        <Card key={comment.id} sx={{ marginTop: "1rem" }}>
           <CardHeader
             avatar={
               <Avatar aria-label={comment.name}>{comment.name[0]}</Avatar>
@@ -129,7 +129,7 @@ function CommentsSection(article: CommentsProps) {
                 <Typography
                   variant="subtitle2"
                   color="textSecondary"
-                  style={{ marginLeft: "12px" }}
+                  style={{ marginLeft: "0.75rem" }}
                 >
                   {comment.time}
                 </Typography>
@@ -141,7 +141,7 @@ function CommentsSection(article: CommentsProps) {
           </CardContent>
           <CardContent>
             <Box display="flex" alignItems="center">
-              <Typography variant="subtitle1" style={{ marginRight: "7px" }}>
+              <Typography variant="subtitle1" style={{ marginRight: "0.4rem" }}>
                 +{comment.rating}
               </Typography>
               <Divider orientation="vertical" flexItem />

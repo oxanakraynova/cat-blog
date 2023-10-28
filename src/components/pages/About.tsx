@@ -11,8 +11,7 @@ function AboutPage() {
           sx={{
             pb: 3,
             fontWeight: "bold",
-            marginLeft: "224px",
-            marginTop: "120px",
+            marginLeft: "14rem",
           }}
         >
           About

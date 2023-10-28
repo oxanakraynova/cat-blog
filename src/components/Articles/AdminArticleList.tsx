@@ -17,7 +17,7 @@ function AdminArticleList(article: ArticleProps) {
         direction="row"
         spacing={5}
         alignItems="flex-start"
-        sx={{ marginLeft: "224px" }}
+        sx={{ marginLeft: "14rem" }}
       >
         <Typography
           variant="h4"
