@@ -22,7 +22,7 @@ export default function LoginForm() {
 
   const formik = useFormik({
     initialValues: {
-      email: "foobar@example.com",
+      email: "me@example.com",
       password: "foobar",
     },
     validationSchema: validationSchema,

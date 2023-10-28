@@ -28,7 +28,7 @@ function RelatedArticlesSection({
         width: "23rem",
         height: "37rem",
         position: "sticky",
-        top: "-6rem",
+        top: "-11%",
         zIndex: 1,
       }}
     >
@@ -36,8 +36,9 @@ function RelatedArticlesSection({
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "47.5rem",
-          minHeight: 0,
+          width: "25rem",
+          height: "auto",
+          marginLeft: "30%",
         }}
       >
         <CardContent sx={{ flex: 1 }}>

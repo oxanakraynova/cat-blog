@@ -37,8 +37,8 @@ function PostView({
               flexDirection: "column",
               width: "47.5rem",
               minHeight: 0,
-              ml: "14rem",
-              mt: "7.5rem",
+              ml: "30%",
+              mt: "15%",
               gap: "1.5rem",
             }}
           >

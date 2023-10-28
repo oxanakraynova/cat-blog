@@ -28,13 +28,13 @@ const MainNavigation = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "1rem",
-                ml: "14rem",
+                ml: "15%",
               }}
             >
               <Box
                 component="img"
                 sx={{
-                  height: 50,
+                  height: "3rem",
                 }}
                 alt="cat logo."
                 src={logo}

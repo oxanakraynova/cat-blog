@@ -75,7 +75,7 @@ const AdminMainNavigation = () => {
             >
               <ListItemButton
                 component={NavLink}
-                to="/admin/articles"
+                to="/admin"
                 sx={{
                   textAlign: "center",
                   color: "text.secondary",

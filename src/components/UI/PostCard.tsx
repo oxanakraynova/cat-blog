@@ -64,14 +64,14 @@ function PostCard({ articles }: PostCardProps) {
             sx={{
               display: "flex",
               width: "53.5rem",
-              height: "14rem",
+              height: "15rem",
               ml: "14rem",
               gap: "1rem",
             }}
           >
             <CardMedia
               component="img"
-              sx={{ width: "17rem", height: "14rem" }}
+              sx={{ width: "17rem", height: "15rem" }}
               src={getImageByFilename(article.image)}
               alt={article.title}
             />

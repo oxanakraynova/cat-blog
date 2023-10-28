@@ -79,7 +79,7 @@ function CommentsSection(article: CommentsProps) {
         width: "47.5rem",
         height: "auto",
         marginTop: "0.5rem",
-        marginLeft: "14rem",
+        marginLeft: "30%",
       }}
     >
       <Typography
@@ -136,12 +136,12 @@ function CommentsSection(article: CommentsProps) {
               </div>
             }
           />
-          <CardContent>
+          <CardContent sx={{ marginLeft: "7%" }}>
             <Typography variant="body1">{comment.text}</Typography>
           </CardContent>
           <CardContent>
-            <Box display="flex" alignItems="center">
-              <Typography variant="subtitle1" style={{ marginRight: "0.4rem" }}>
+            <Box display="flex" alignItems="center" sx={{ marginLeft: "7%" }}>
+              <Typography variant="subtitle1" style={{ marginRight: "2%" }}>
                 +{comment.rating}
               </Typography>
               <Divider orientation="vertical" flexItem />

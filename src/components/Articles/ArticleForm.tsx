@@ -18,6 +18,18 @@ const ColorButton = styled(Button)<ButtonProps>(({}) => ({
   },
 }));
 
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
 interface ArticleFormProps {
   mode: string;
 }
@@ -27,14 +39,16 @@ function ArticleForm({ mode }: ArticleFormProps) {
   const uploadButton =
     mode === "create" ? (
       <ColorButton
+        component="label"
         variant="contained"
-        sx={{ width: "180px", marginBottom: "0.5rem" }}
+        sx={{ width: "11.5rem", marginBottom: "0.5rem" }}
       >
-        Upload and image
+        Upload an image
+        <VisuallyHiddenInput type="file" />
       </ColorButton>
     ) : (
       <>
-        <Box display="flex" alignItems="center">
+        <Box display="flex">
           <Button variant="text" sx={{ marginRight: "0.3rem" }}>
             Upload new
           </Button>
