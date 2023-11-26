@@ -1,53 +1,44 @@
-import { CssBaseline } from "@mui/material";
-import { Box } from "@mui/material";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  TextField,
+  Typography,
+} from "@mui/material";
+import * as yup from "yup";
 
-export default function LoginForm() {
-  const navigate = useNavigate();
+const CreateTenant: React.FC = () => {
+  const [apiKey, setApiKey] = useState<string>("");
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      name: "",
       password: "",
-      apiKey: "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22",
     },
     validationSchema: yup.object({
-      username: yup.string().required("Username is required"),
+      username: yup.string().required("Name is required"),
       password: yup.string().required("Password is required"),
-      apiKey: yup.string().required("API Key is required"),
     }),
     onSubmit: async (values) => {
       try {
-        const headers = {
-          "X-API-KEY": values.apiKey,
-        };
-
         const response = await axios.post(
-          "https://fullstack.exercise.applifting.cz/login",
+          "https://fullstack.exercise.applifting.cz/tenants",
           {
-            username: values.username,
+            name: values.name,
             password: values.password,
-          },
-          { headers }
+          }
         );
-
-        console.log(
-          "Login successful. Access Token:",
-          response.data.access_token
-        );
-        navigate("/admin");
+        setApiKey(response.data.apiKey);
       } catch (error) {
-        console.error("Error logging in:", error);
+        console.error("Error creating tenant:", error);
       }
     },
   });
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -75,7 +66,7 @@ export default function LoginForm() {
               justifyContent: "flex-start",
             }}
           >
-            Log In
+            Create new tenant
           </Typography>
           <Box
             sx={{
@@ -92,15 +83,15 @@ export default function LoginForm() {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              value={formik.values.username}
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.username && Boolean(formik.errors.username)}
-              helperText={formik.touched.username && formik.errors.username}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
             />
             <TextField
               margin="normal"
@@ -125,16 +116,14 @@ export default function LoginForm() {
               marginTop: "6rem",
             }}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              //TODO 1) implement login, 2) after successful login redirect to next screen, 3) on unsuccesful login display error message
-            >
-              Log In
+            <Button type="submit" variant="contained">
+              Create Tenant
             </Button>
           </Box>
+          {apiKey && <div>Your API Key: {apiKey}</div>}
         </Box>
       </form>
     </Container>
   );
-}
+};
+export default CreateTenant;

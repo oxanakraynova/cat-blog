@@ -9,6 +9,7 @@ import AdminArticlesPage from "./components/pages/AdminArticles";
 import AdminRootLayout from "./components/pages/AdminRoot";
 import NewArticlePage from "./components/pages/NewArticle";
 import EditArticlePage from "./components/pages/EditArticle";
+import CreateTenant from "./components/CreateTenant";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/test",
+        element: <CreateTenant />,
       },
       {
         index: true,
