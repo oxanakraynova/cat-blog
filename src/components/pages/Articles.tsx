@@ -1,22 +1,12 @@
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import ArticleList from "../Articles/ArticleList";
+import Header from "../UI/Header";
 
 function ArticlesPage() {
   return (
     <>
       <Container maxWidth="lg">
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{
-            pb: 3,
-            fontWeight: "bold",
-            marginLeft: "14rem",
-            marginTop: "7.5rem",
-          }}
-        >
-          Recent articles
-        </Typography>
+        <Header title="Recent articles" />
         <ArticleList />
       </Container>
     </>

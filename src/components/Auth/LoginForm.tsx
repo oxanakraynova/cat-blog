@@ -37,6 +37,7 @@ export default function LoginForm() {
         <Box
           sx={{
             position: "absolute",
+            marginTop: "8%",
             top: "20%",
             left: "50%",
             transform: "translate(-50%, -50%)",

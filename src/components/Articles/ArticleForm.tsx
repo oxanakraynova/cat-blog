@@ -1,6 +1,5 @@
 import {
   Stack,
-  Typography,
   Button,
   Box,
   TextField,
@@ -10,6 +9,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
+import Header from "../UI/Header";
 
 const ColorButton = styled(Button)<ButtonProps>(({}) => ({
   backgroundColor: grey[600],
@@ -68,16 +68,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
         alignItems="flex-start"
         sx={{ marginLeft: "14rem", width: "37.5rem", marginTop: "6.5rem" }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{
-            pb: 3,
-            fontWeight: "bold",
-          }}
-        >
-          {pageTitle}
-        </Typography>
+        <Header title={pageTitle} />
         <Button variant="contained">Publish Article</Button>
       </Stack>
       <Box

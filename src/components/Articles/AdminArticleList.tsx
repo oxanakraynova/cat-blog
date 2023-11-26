@@ -1,5 +1,6 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import Header from "../UI/Header";
 import MyArticleTable from "./MyArticleTable";
 
 type ArticleProps = {
@@ -19,17 +20,7 @@ function AdminArticleList(article: ArticleProps) {
         alignItems="flex-start"
         sx={{ marginLeft: "14rem" }}
       >
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{
-            pb: 3,
-            fontWeight: "bold",
-          }}
-        >
-          My articles
-        </Typography>
-
+        <Header title="My articles" />
         <Button variant="contained" component={NavLink} to="/admin/new">
           Create new article
         </Button>
