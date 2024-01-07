@@ -1,19 +1,24 @@
 import { Grid } from "@mui/material";
-import articleList from "./articleList.json";
 import PostCard from "../UI/PostCard";
-
-type ArticleData = {
-  id: string;
-  image: string;
-  title: string;
-  perex: string;
-  publicationDate: string;
-  author: string;
-  comments: number;
-};
+import { useEffect, useState } from "react";
+import { ArticleData, getArticles } from "../../services/apiService";
 
 function ArticleList() {
-  const currentArticleList = articleList.map((article: ArticleData) => article);
+  const [articles, setArticles] = useState<ArticleData[]>([]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const articlesData = await getArticles();
+        setArticles(articlesData);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        throw error;
+      }
+    };
+    fetchArticles();
+  }, []);
+  const currentArticleList = articles.map((article: ArticleData) => article);
 
   return (
     <>

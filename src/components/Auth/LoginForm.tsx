@@ -45,6 +45,7 @@ export default function LoginForm() {
         navigate("/admin");
       } catch (error) {
         console.error("Error logging in:", error);
+        navigate("/error");
       }
     },
   });
@@ -125,11 +126,7 @@ export default function LoginForm() {
               marginTop: "6rem",
             }}
           >
-            <Button
-              type="submit"
-              variant="contained"
-              //TODO 1) implement login, 2) after successful login redirect to next screen, 3) on unsuccesful login display error message
-            >
+            <Button type="submit" variant="contained">
               Log In
             </Button>
           </Box>
