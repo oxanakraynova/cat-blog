@@ -10,28 +10,34 @@ export interface ArticleData {
   comments: number;
 }
 
+export interface ApiResponse {
+  items: ArticleData[];
+  pagination: {};
+}
+
 export interface NewArticle {
   id?: string;
-  image: string;
+  // imageId: string | null;
   title: string;
-  perex: string;
+  content: string;
   publicationDate: string;
   author: string;
   comments?: number;
 }
 
+const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
+const baseUrl = "https://fullstack.exercise.applifting.cz/articles";
+const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";
+
 export const getArticles = async (): Promise<ArticleData[]> => {
   try {
     const headers = {
       "Content-Type": "application/json",
-      apiKey: "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22",
-      Authorization: "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d",
+      "X-API-KEY": apiKey,
+      Authorization: bearerToken,
     };
 
-    const response = await axios.get(
-      "https://fullstack.exercise.applifting.cz/articles",
-      { headers }
-    );
+    const response = await axios.get(baseUrl, { headers });
     return response.data;
   } catch (error) {
     console.error("Error fetching articles:", error);
@@ -39,24 +45,18 @@ export const getArticles = async (): Promise<ArticleData[]> => {
   }
 };
 
-export const postArticles = async (
-  newArticle: NewArticle
-): Promise<ArticleData[]> => {
+export const postArticle = async (data: NewArticle): Promise<ArticleData[]> => {
   try {
     const headers = {
-      "Content-Type": "application/json",
-      apiKey: "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22",
-      Authorization: "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d",
+      "Content-Type": "multipart/form-data",
+      apiKey: apiKey,
+      Authorization: bearerToken,
     };
 
-    const response = await axios.post(
-      "https://fullstack.exercise.applifting.cz/articles",
-      newArticle,
-      { headers }
-    );
+    const response = await axios.post(baseUrl, data, { headers });
     return response.data;
   } catch (error) {
-    console.error("Error fetching articles:", error);
+    console.error("Error creating article:", error);
     throw error;
   }
 };

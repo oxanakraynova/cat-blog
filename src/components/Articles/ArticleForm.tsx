@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import { NewArticle, postArticles } from "../../services/apiService";
+import { NewArticle, postArticle } from "../../services/apiService";
 import Header from "../UI/Header";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ColorButton = styled(Button)<ButtonProps>(({}) => ({
   backgroundColor: grey[600],
@@ -48,7 +49,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
         sx={{ width: "11.5rem", marginBottom: "0.5rem" }}
       >
         Upload an image
-        <VisuallyHiddenInput type="file" />
+        <VisuallyHiddenInput type="file" id="imageId" />
       </ColorButton>
     ) : (
       <>
@@ -64,22 +65,42 @@ function ArticleForm({ mode }: ArticleFormProps) {
       </>
     );
 
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
-      image: "",
+      // imageId: null,
       title: "",
-      perex: "",
+      content: "",
       publicationDate: "",
       author: "",
     },
     validationSchema: yup.object({
-      title: yup.string().required("Title is required"),
-      perex: yup.string().required("Perex is required"),
-      // image: yup.string().required("Image is required"),
+      title: yup.string().trim().required("Title is required"),
+      content: yup.string().trim().required("Content is required"),
+      // imageId: yup.string().required("Image is required"),
     }),
     onSubmit: async (values: NewArticle) => {
+      const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";
+      const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
       try {
-        await postArticles(values);
+        const headers = {
+          "Content-Type": "application/json",
+          "X-API-KEY": apiKey,
+          Authorization: bearerToken,
+        };
+        const response = await axios.post(
+          "https://fullstack.exercise.applifting.cz/articles",
+          {
+            title: values.title,
+            content: values.content,
+            // imageId: values.imageId,
+          },
+          { headers }
+        );
+
+        console.log("Article created successful.", response.data);
+
         navigate("/articles");
       } catch (error) {
         console.error("Error creating article:", error);
@@ -87,8 +108,6 @@ function ArticleForm({ mode }: ArticleFormProps) {
       }
     },
   });
-
-  const navigate = useNavigate();
 
   return (
     <>
@@ -116,69 +135,71 @@ function ArticleForm({ mode }: ArticleFormProps) {
           }}
         >
           <Box>
-            <InputLabel sx={{ fontWeight: "bold", color: "inherit" }}>
-              Article Title
-            </InputLabel>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="title"
-              placeholder="My First Article"
-              name="title"
-              autoFocus
-              sx={{ marginBottom: "1.5rem" }}
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              marginBottom: "0.5rem",
-              flexDirection: "column",
-            }}
-          >
-            <InputLabel
+            <Box>
+              <InputLabel sx={{ fontWeight: "bold", color: "inherit" }}>
+                Article Title
+              </InputLabel>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="title"
+                placeholder="My First Article"
+                name="title"
+                autoFocus
+                sx={{ marginBottom: "1.5rem" }}
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.title && Boolean(formik.errors.title)}
+                helperText={formik.touched.title && formik.errors.title}
+              />
+            </Box>
+            <Box
               sx={{
-                fontWeight: "bold",
-                color: "inherit",
+                display: "flex",
+                justifyContent: "flex-start",
                 marginBottom: "0.5rem",
+                flexDirection: "column",
               }}
             >
-              Featured image
-            </InputLabel>
-            {uploadButton}
-          </Box>
-          <Box>
-            <InputLabel
-              sx={{
-                fontWeight: "bold",
-                color: "inherit",
-                marginBottom: "0.5rem",
-              }}
-            >
-              Content
-            </InputLabel>
-            <TextField
-              id="outlined-multiline-static"
-              placeholder="Supports markdown.Yay!"
-              fullWidth
-              multiline
-              rows={30}
-              margin="normal"
-              required
-              autoFocus
-              value={formik.values.perex}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.perex && Boolean(formik.errors.perex)}
-              helperText={formik.touched.perex && formik.errors.perex}
-            />
+              <InputLabel
+                sx={{
+                  fontWeight: "bold",
+                  color: "inherit",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Featured image
+              </InputLabel>
+              {uploadButton}
+            </Box>
+            <Box>
+              <InputLabel
+                sx={{
+                  fontWeight: "bold",
+                  color: "inherit",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Content
+              </InputLabel>
+              <TextField
+                id="content"
+                placeholder="Supports markdown.Yay!"
+                fullWidth
+                multiline
+                rows={30}
+                margin="normal"
+                required
+                autoFocus
+                value={formik.values.content}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.content && Boolean(formik.errors.content)}
+                helperText={formik.touched.content && formik.errors.content}
+              />
+            </Box>
           </Box>
         </Box>
       </form>
