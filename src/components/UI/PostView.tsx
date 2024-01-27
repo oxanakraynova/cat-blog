@@ -3,19 +3,10 @@ import getImageByFilename from "../Articles/ImagesList";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Articles/CommentsSection";
 import ReactMarkdown from "react-markdown";
-
-type ArticleProps = {
-  id: string;
-  image: string;
-  title: string;
-  perex: string;
-  publicationDate: string;
-  author: string;
-  comments: number;
-};
+import { ArticleData } from "../../services/apiService";
 
 type RelatedArticle = {
-  id: string;
+  articleId: string;
   title: string;
   perex: string;
 };
@@ -24,9 +15,15 @@ function PostView({
   article,
   articles,
 }: {
-  article: ArticleProps;
+  article: ArticleData;
   articles: RelatedArticle[];
 }) {
+  const createdAtDate = new Date(article.createdAt);
+  const formattedDate = createdAtDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   return (
     <>
       <Grid container spacing={30}>
@@ -61,7 +58,7 @@ function PostView({
                 </Grid>
                 <Grid item xs={7}>
                   <Typography variant="subtitle2" color="text.secondary">
-                    • {article.publicationDate}
+                    • {formattedDate}
                   </Typography>
                 </Grid>
               </Grid>
@@ -73,16 +70,16 @@ function PostView({
                   marginTop: "1.5rem",
                   objectFit: "cover",
                 }}
-                src={getImageByFilename(article.image)}
+                src={getImageByFilename(article.imageId)}
                 alt={article.title}
               />
               <ReactMarkdown>{article.perex}</ReactMarkdown>
             </CardContent>
           </Card>
-          <CommentsSection id={article.id} comments={article.comments} />
+          <CommentsSection id={article.articleId} comments={article.comments} />
         </Grid>
         <RelatedArticlesSection
-          openedArticleId={article.id}
+          openedArticleId={article.articleId}
           articles={articles}
         />
       </Grid>

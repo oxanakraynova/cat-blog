@@ -2,7 +2,7 @@ import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 type RelatedArticle = {
-  id: string;
+  articleId: string;
   title: string;
   perex: string;
 };
@@ -17,7 +17,7 @@ function RelatedArticlesSection({
   articles,
 }: RelatedArticlesSectionProps) {
   const filteredRelatedArticles = articles.filter(
-    (article) => article.id !== openedArticleId
+    (article) => article.articleId !== openedArticleId
   );
   return (
     <Grid
@@ -49,9 +49,9 @@ function RelatedArticlesSection({
             Related Articles
           </Typography>
           {filteredRelatedArticles.map((article) => (
-            <div key={article.id}>
+            <div key={article.articleId}>
               <Link
-                to={`/articles/${article.id}`}
+                to={`/articles/${article.articleId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <Typography

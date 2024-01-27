@@ -1,17 +1,10 @@
 import { Button, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { ArticleData } from "../../services/apiService";
 import Header from "../UI/Header";
 import MyArticleTable from "./MyArticleTable";
 
-type ArticleProps = {
-  id: string;
-  title: string;
-  perex: string;
-  author: string;
-  comments: number;
-};
-
-function AdminArticleList(article: ArticleProps) {
+function AdminArticleList(article: ArticleData) {
   return (
     <>
       <Stack

@@ -16,7 +16,7 @@ import photo from "../../assets/3.jpg";
 
 type CommentsProps = {
   id: string;
-  comments: number;
+  comments: number | undefined;
 };
 
 function CommentsSection(article: CommentsProps) {

@@ -13,20 +13,13 @@ import { Link } from "react-router-dom";
 import articleList from "./articleList.json";
 import { Checkbox, Stack, TableSortLabel } from "@mui/material";
 import { useMemo, useState } from "react";
+import { ArticleData } from "../../services/apiService";
 
-type ArticleProps = {
-  id: string;
-  title: string;
-  perex: string;
-  author: string;
-  comments: number;
-};
-
-function MyArticleTable({}: { article: ArticleProps }) {
+function MyArticleTable({}: { article: ArticleData }) {
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = useState<string>("title");
   const [selected, setSelected] = useState<string[]>([]);
-  const [articles, setArticles] = useState<ArticleProps[]>(articleList);
+  const [articles, setArticles] = useState<ArticleData[]>(articleList);
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === "asc";
@@ -48,7 +41,7 @@ function MyArticleTable({}: { article: ArticleProps }) {
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   const sortedArticles = useMemo(() => {
-    const comparator = (a: ArticleProps, b: ArticleProps) => {
+    const comparator = (a: ArticleData, b: ArticleData) => {
       if (order === "asc") {
         if (
           orderBy === "title" &&
@@ -109,7 +102,9 @@ function MyArticleTable({}: { article: ArticleProps }) {
   }, [order, orderBy, articles]);
 
   const handleDeleteClick = (id: string) => {
-    const updatedArticles = articles.filter((article) => article.id !== id);
+    const updatedArticles = articles.filter(
+      (article) => article.articleId !== id
+    );
     setArticles(updatedArticles);
     setSelected((prevSelected) => prevSelected.filter((item) => item !== id));
   };
@@ -132,7 +127,9 @@ function MyArticleTable({}: { article: ArticleProps }) {
                   }
                   onChange={(event) => {
                     if (event.target.checked) {
-                      setSelected(articleList.map((article) => article.id));
+                      setSelected(
+                        articleList.map((article) => article.articleId)
+                      );
                     } else {
                       setSelected([]);
                     }
@@ -180,12 +177,14 @@ function MyArticleTable({}: { article: ArticleProps }) {
           </TableHead>
           <TableBody>
             {sortedArticles.map((article) => (
-              <TableRow key={article.id}>
+              <TableRow key={article.articleId}>
                 <TableCell>
                   <Checkbox
                     color="primary"
-                    checked={isSelected(article.id)}
-                    onChange={(event) => handleCheckboxClick(event, article.id)}
+                    checked={isSelected(article.articleId)}
+                    onChange={(event) =>
+                      handleCheckboxClick(event, article.articleId)
+                    }
                   />
                 </TableCell>
                 <TableCell> {`${article.title.slice(0, 30)}... `}</TableCell>
@@ -195,14 +194,14 @@ function MyArticleTable({}: { article: ArticleProps }) {
                 <TableCell>{article.comments}</TableCell>
                 <TableCell>
                   <Stack direction="row">
-                    <Link to={`/admin/${article.id}/edit`}>
+                    <Link to={`/admin/${article.articleId}/edit`}>
                       <IconButton aria-label="edit">
                         <EditIcon />
                       </IconButton>
                     </Link>
                     <IconButton
                       aria-label="delete"
-                      onClick={() => handleDeleteClick(article.id)}
+                      onClick={() => handleDeleteClick(article.articleId)}
                     >
                       <DeleteIcon />
                     </IconButton>

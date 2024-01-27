@@ -11,20 +11,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ArticleData } from "../../services/apiService";
 import getImageByFilename from "../Articles/ImagesList";
 
-type ArticleProps = {
-  id: string;
-  image: string;
-  title: string;
-  perex: string;
-  publicationDate: string;
-  author: string;
-  comments: number;
-};
-
 type PostCardProps = {
-  articles: ArticleProps[];
+  articles: ArticleData[];
 };
 
 function PostCard({ articles }: PostCardProps) {
@@ -37,12 +28,9 @@ function PostCard({ articles }: PostCardProps) {
   };
 
   const sortedArticles = [...articles].sort(
-    (a: ArticleProps, b: ArticleProps) => {
-      if (
-        typeof a.publicationDate === "string" &&
-        typeof b.publicationDate === "string"
-      ) {
-        return b.publicationDate.localeCompare(a.publicationDate);
+    (a: ArticleData, b: ArticleData) => {
+      if (typeof a.createdAt === "string" && typeof b.createdAt === "string") {
+        return b.createdAt.localeCompare(a.createdAt);
       }
       return 0;
     }
@@ -59,7 +47,7 @@ function PostCard({ articles }: PostCardProps) {
   return (
     <>
       {sortedArticles.map((article) => (
-        <Grid item xs={12} key={article.id}>
+        <Grid item xs={12} key={article.articleId}>
           <Card
             sx={{
               display: "flex",
@@ -72,7 +60,7 @@ function PostCard({ articles }: PostCardProps) {
             <CardMedia
               component="img"
               sx={{ width: "17rem", height: "15rem" }}
-              src={getImageByFilename(article.image)}
+              src={getImageByFilename(article.imageId)}
               alt={article.title}
             />
             <Box
@@ -92,7 +80,7 @@ function PostCard({ articles }: PostCardProps) {
                   {article.title}
                 </Typography>
                 <Grid container spacing={2}>
-                  <Grid item xs={3}>
+                  {/* <Grid item xs={3}>
                     <Typography
                       variant="subtitle2"
                       color="text.secondary"
@@ -100,14 +88,14 @@ function PostCard({ articles }: PostCardProps) {
                     >
                       {article.author}
                     </Typography>
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={7}>
                     <Typography
                       variant="subtitle2"
                       color="text.secondary"
                       component="div"
                     >
-                      • {formatDate(article.publicationDate)}
+                      • {formatDate(article.createdAt)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -116,29 +104,30 @@ function PostCard({ articles }: PostCardProps) {
                   variant="body2"
                   sx={{ marginTop: 1 }}
                 >
-                  {expandedArticleId === article.id
-                    ? article.perex
-                    : `${article.perex.slice(0, 200)}...`}
+                  {expandedArticleId === article.articleId && article.perex
+                    ? article.perex.slice(0, 200) +
+                      (article.perex.length > 200 ? "..." : "")
+                    : "No description available"}
                 </Typography>
                 <CardActions>
                   <Stack direction="row" spacing={2} alignItems="center">
-                    {expandedArticleId !== article.id && (
-                      <Link to={`/articles/${article.id}`}>
+                    {expandedArticleId !== article.articleId && (
+                      <Link to={`/articles/${article.articleId}`}>
                         <Button
-                          onClick={() => handleReadMore(article.id)}
+                          onClick={() => handleReadMore(article.articleId)}
                           variant="outlined"
                         >
                           Read whole article
                         </Button>
                       </Link>
                     )}
-                    <Typography
+                    {/* <Typography
                       variant="subtitle2"
                       color="text.secondary"
                       component="div"
                     >
                       {article.comments} comments
-                    </Typography>
+                    </Typography> */}
                   </Stack>
                 </CardActions>
               </CardContent>

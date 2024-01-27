@@ -3,98 +3,55 @@ import {
   Button,
   Box,
   TextField,
-  ButtonProps,
   InputLabel,
-  Divider,
+  Input,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import { styled } from "@mui/material/styles";
-import { NewArticle, postArticle } from "../../services/apiService";
+import { NewArticle, postImage } from "../../services/apiService";
 import Header from "../UI/Header";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const ColorButton = styled(Button)<ButtonProps>(({}) => ({
-  backgroundColor: grey[600],
-  "&:hover": {
-    backgroundColor: grey[700],
-  },
-}));
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import { useState } from "react";
 
 interface ArticleFormProps {
   mode: string;
 }
 
 function ArticleForm({ mode }: ArticleFormProps) {
+  const [image, setImage] = useState<File | null>(null);
+
   const pageTitle = mode === "create" ? "Create New Article" : "Edit Article";
-  const uploadButton =
-    mode === "create" ? (
-      <ColorButton
-        component="label"
-        variant="contained"
-        sx={{ width: "11.5rem", marginBottom: "0.5rem" }}
-      >
-        Upload an image
-        <VisuallyHiddenInput type="file" id="imageId" />
-      </ColorButton>
-    ) : (
-      <>
-        <Box display="flex">
-          <Button variant="text" sx={{ marginRight: "0.3rem" }}>
-            Upload new
-          </Button>
-          <Divider orientation="vertical" flexItem />
-          <Button variant="text" color="error">
-            Delete
-          </Button>
-        </Box>
-      </>
-    );
 
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      // imageId: null,
       title: "",
       content: "",
-      publicationDate: "",
-      author: "",
     },
     validationSchema: yup.object({
       title: yup.string().trim().required("Title is required"),
       content: yup.string().trim().required("Content is required"),
-      // imageId: yup.string().required("Image is required"),
     }),
     onSubmit: async (values: NewArticle) => {
       const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";
       const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
       try {
+        const uploadedImage = await postImage(image);
+
         const headers = {
           "Content-Type": "application/json",
           "X-API-KEY": apiKey,
           Authorization: bearerToken,
         };
+
         const response = await axios.post(
           "https://fullstack.exercise.applifting.cz/articles",
           {
             title: values.title,
             content: values.content,
-            // imageId: values.imageId,
+            imageId: uploadedImage,
           },
           { headers }
         );
@@ -108,6 +65,13 @@ function ArticleForm({ mode }: ArticleFormProps) {
       }
     },
   });
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setImage(files[0]);
+    }
+  };
 
   return (
     <>
@@ -172,7 +136,14 @@ function ArticleForm({ mode }: ArticleFormProps) {
               >
                 Featured image
               </InputLabel>
-              {uploadButton}
+              <Input
+                id="imageId"
+                type="file"
+                inputProps={{
+                  accept: "image/*",
+                }}
+                onChange={handleImageChange}
+              />
             </Box>
             <Box>
               <InputLabel
