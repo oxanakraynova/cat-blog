@@ -1,5 +1,4 @@
 import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
-import getImageByFilename from "../Articles/ImagesList";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Articles/CommentsSection";
 import ReactMarkdown from "react-markdown";
@@ -70,7 +69,7 @@ function PostView({
                   marginTop: "1.5rem",
                   objectFit: "cover",
                 }}
-                src={getImageByFilename(article.imageId)}
+                src={article.imageId}
                 alt={article.title}
               />
               <ReactMarkdown>{article.content}</ReactMarkdown>

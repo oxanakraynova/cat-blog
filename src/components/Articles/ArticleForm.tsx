@@ -42,7 +42,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
       const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";
       const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
       try {
-        // const uploadedImage = await postImage(image);
+        const uploadedImage = await postImage(image);
         const perex = generatePerex(values.content);
 
         const headers = {
@@ -56,7 +56,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
           {
             title: values.title,
             content: values.content,
-            // imageId: uploadedImage,
+            imageId: uploadedImage,
             perex: perex,
           },
           { headers }

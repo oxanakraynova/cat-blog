@@ -33,7 +33,8 @@ export interface ImageInfo {
 }
 
 const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
-const baseUrl = "https://fullstack.exercise.applifting.cz/articles";
+const baseUrl = "https://fullstack.exercise.applifting.cz";
+const articleUrl = "https://fullstack.exercise.applifting.cz/articles";
 const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";
 const sortBy = "createdAt";
 const sortOrder = "desc";
@@ -47,7 +48,7 @@ export const getArticles = async (): Promise<ApiResponse> => {
     };
 
     const response = await axios.get(
-      `${baseUrl}?sortBy=${sortBy}&sortOrder=${sortOrder}`,
+      `${articleUrl}?sortBy=${sortBy}&sortOrder=${sortOrder}`,
       { headers }
     );
     return response.data;
@@ -67,7 +68,7 @@ export const getArticleById = async (
       Authorization: bearerToken,
     };
 
-    const response = await axios.get(`${baseUrl}/${articleId}`, { headers });
+    const response = await axios.get(`${articleUrl}/${articleId}`, { headers });
     return response.data;
   } catch (error) {
     console.error("Error fetching articles:", error);
@@ -83,7 +84,9 @@ export const getImageById = async (imageId: string): Promise<ArticleData> => {
       Authorization: bearerToken,
     };
 
-    const response = await axios.get(`images/${imageId}`, { headers });
+    const response = await axios.get(`${baseUrl}/images/${imageId}`, {
+      headers,
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching articles:", error);
@@ -99,10 +102,28 @@ export const postArticle = async (data: NewArticle): Promise<ArticleData[]> => {
       Authorization: bearerToken,
     };
 
-    const response = await axios.post(baseUrl, data, { headers });
+    const response = await axios.post(articleUrl, data, { headers });
     return response.data;
   } catch (error) {
     console.error("Error creating article:", error);
+    throw error;
+  }
+};
+
+export const updateArticle = async (
+  data: NewArticle
+): Promise<ArticleData[]> => {
+  try {
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      apiKey: apiKey,
+      Authorization: bearerToken,
+    };
+
+    const response = await axios.put(articleUrl, data, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating article:", error);
     throw error;
   }
 };
@@ -115,7 +136,7 @@ export const postImage = async (data: File | null): Promise<string> => {
       Authorization: bearerToken,
     };
 
-    const response = await axios.post("/images", data, { headers });
+    const response = await axios.post(`${baseUrl}/images`, data, { headers });
     return response.data;
   } catch (error) {
     console.error("Error uploading an image:", error);
@@ -131,7 +152,9 @@ export const deleteArticle = async (articleId: string) => {
       Authorization: bearerToken,
     };
 
-    const response = await axios.delete(`${baseUrl}/${articleId}`, { headers });
+    const response = await axios.delete(`${articleUrl}/${articleId}`, {
+      headers,
+    });
 
     console.log("Article deleted successfully.", response.data);
   } catch (error) {
