@@ -6,7 +6,7 @@ function Header({ title }: { title: string }) {
       variant="h4"
       gutterBottom
       sx={{
-        pb: 3,
+        paddingBottom: 3,
         fontWeight: "bold",
         marginLeft: "14rem",
         marginTop: "8%",

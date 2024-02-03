@@ -3,16 +3,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ArticleData, getArticleById } from "../../services/apiService";
 import articleList from "../Articles/articleList.json";
+import Loading from "../UI/Loading";
 import PostView from "../UI/PostView";
 
 function ArticleDetailPage() {
   const [article, setArticle] = useState<ArticleData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const params = useParams<{ articleId?: string }>();
 
   useEffect(() => {
     const fetchArticle = async () => {
       try {
+        setLoading(true);
+
         const articleId = params.articleId;
         if (!articleId) {
           console.error("Article ID is undefined");
@@ -23,6 +27,8 @@ function ArticleDetailPage() {
       } catch (error) {
         console.error("Error fetching article:", error);
         throw error;
+      } finally {
+        setLoading(false);
       }
     };
     fetchArticle();
@@ -31,6 +37,10 @@ function ArticleDetailPage() {
   const filteredRelatedArticles = articleList.filter(
     (article) => article.articleId !== params.articleId
   );
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (!article) {
     return (

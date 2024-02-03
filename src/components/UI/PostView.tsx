@@ -73,7 +73,7 @@ function PostView({
                 src={getImageByFilename(article.imageId)}
                 alt={article.title}
               />
-              <ReactMarkdown>{article.perex}</ReactMarkdown>
+              <ReactMarkdown>{article.content}</ReactMarkdown>
             </CardContent>
           </Card>
           <CommentsSection id={article.articleId} comments={article.comments} />

@@ -5,6 +5,7 @@ export interface ArticleData {
   imageId: string;
   title: string;
   perex: string;
+  content: string;
   createdAt: string;
   lastUpdatedAt?: string;
   author?: string;

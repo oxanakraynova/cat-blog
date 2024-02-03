@@ -104,9 +104,8 @@ function PostCard({ articles }: PostCardProps) {
                   variant="body2"
                   sx={{ marginTop: 1 }}
                 >
-                  {expandedArticleId === article.articleId && article.perex
-                    ? article.perex.slice(0, 200) +
-                      (article.perex.length > 200 ? "..." : "")
+                  {article.perex
+                    ? article.perex + " ..."
                     : "No description available"}
                 </Typography>
                 <CardActions>
