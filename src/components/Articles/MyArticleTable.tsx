@@ -10,22 +10,59 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import { Link } from "react-router-dom";
-import articleList from "./articleList.json";
-import { Checkbox, Stack, TableSortLabel } from "@mui/material";
-import { useMemo, useState } from "react";
-import { ArticleData } from "../../services/apiService";
+import { Checkbox, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  ApiResponse,
+  ArticleData,
+  deleteArticle,
+  getArticles,
+} from "../../services/apiService";
+import Loading from "../UI/Loading";
 
 function MyArticleTable({}: { article: ArticleData }) {
-  const [order, setOrder] = useState<"asc" | "desc">("asc");
-  const [orderBy, setOrderBy] = useState<string>("title");
   const [selected, setSelected] = useState<string[]>([]);
-  const [articles, setArticles] = useState<ArticleData[]>(articleList);
+  const [articles, setArticles] = useState<ArticleData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const handleRequestSort = (property: string) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+
+        const response: ApiResponse = await getArticles();
+        setArticles(response.items || []);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!articles.length) {
+    return (
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Articles not found
+        </Typography>
+      </Box>
+    );
+  }
 
   const handleCheckboxClick = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -40,73 +77,22 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
-  const sortedArticles = useMemo(() => {
-    const comparator = (a: ArticleData, b: ArticleData) => {
-      if (order === "asc") {
-        if (
-          orderBy === "title" &&
-          typeof a.title === "string" &&
-          typeof b.title === "string"
-        ) {
-          return a.title.localeCompare(b.title);
-        } else if (
-          orderBy === "comments" &&
-          typeof a.comments === "number" &&
-          typeof b.comments === "number"
-        ) {
-          return a.comments - b.comments;
-        } else if (
-          orderBy === "perex" &&
-          typeof a.perex === "string" &&
-          typeof b.perex === "string"
-        ) {
-          return a.perex.localeCompare(b.perex);
-        } else if (
-          orderBy === "author" &&
-          typeof a.author === "string" &&
-          typeof b.author === "string"
-        ) {
-          return a.author.localeCompare(b.author);
-        }
-      } else {
-        if (
-          orderBy === "title" &&
-          typeof a.title === "string" &&
-          typeof b.title === "string"
-        ) {
-          return b.title.localeCompare(a.title);
-        } else if (
-          orderBy === "comments" &&
-          typeof a.comments === "number" &&
-          typeof b.comments === "number"
-        ) {
-          return b.comments - a.comments;
-        } else if (
-          orderBy === "perex" &&
-          typeof a.perex === "string" &&
-          typeof b.perex === "string"
-        ) {
-          return b.perex.localeCompare(a.perex);
-        } else if (
-          orderBy === "author" &&
-          typeof a.author === "string" &&
-          typeof b.author === "string"
-        ) {
-          return b.author.localeCompare(a.author);
-        }
-      }
-      return 0;
-    };
+  const handleDeleteClick = async (id: string) => {
+    try {
+      setLoading(true);
 
-    return articles.sort(comparator);
-  }, [order, orderBy, articles]);
+      await deleteArticle(id);
+      console.log("Article deleted successfully.");
 
-  const handleDeleteClick = (id: string) => {
-    const updatedArticles = articles.filter(
-      (article) => article.articleId !== id
-    );
-    setArticles(updatedArticles);
-    setSelected((prevSelected) => prevSelected.filter((item) => item !== id));
+      const response: ApiResponse = await getArticles();
+
+      setArticles(response.items || []);
+    } catch (error) {
+      console.error("Error fetching article:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -119,64 +105,29 @@ function MyArticleTable({}: { article: ArticleData }) {
                 <Checkbox
                   color="primary"
                   indeterminate={
-                    selected.length > 0 && selected.length < articleList.length
+                    selected.length > 0 && selected.length < articles.length
                   }
                   checked={
-                    articleList.length > 0 &&
-                    selected.length === articleList.length
+                    articles.length > 0 && selected.length === articles.length
                   }
                   onChange={(event) => {
                     if (event.target.checked) {
-                      setSelected(
-                        articleList.map((article) => article.articleId)
-                      );
+                      setSelected(articles.map((article) => article.articleId));
                     } else {
                       setSelected([]);
                     }
                   }}
                 />
               </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "title"}
-                  direction={orderBy === "title" ? order : "asc"}
-                  onClick={() => handleRequestSort("title")}
-                >
-                  Article title
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "perex"}
-                  direction={orderBy === "perex" ? order : "asc"}
-                  onClick={() => handleRequestSort("perex")}
-                >
-                  Perex
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "author"}
-                  direction={orderBy === "author" ? order : "asc"}
-                  onClick={() => handleRequestSort("author")}
-                >
-                  Author
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === "comments"}
-                  direction={orderBy === "comments" ? order : "asc"}
-                  onClick={() => handleRequestSort("comments")}
-                >
-                  # of comments
-                </TableSortLabel>
-              </TableCell>
+              <TableCell>Article title</TableCell>
+              <TableCell>Perex</TableCell>
+              <TableCell>Author</TableCell>
+              <TableCell># of comments</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedArticles.map((article) => (
+            {articles.map((article) => (
               <TableRow key={article.articleId}>
                 <TableCell>
                   <Checkbox
@@ -187,11 +138,20 @@ function MyArticleTable({}: { article: ArticleData }) {
                     }
                   />
                 </TableCell>
-                <TableCell> {`${article.title.slice(0, 30)}... `}</TableCell>
-
-                <TableCell> {`${article.perex.slice(0, 40)}...`}</TableCell>
-                <TableCell>{article.author}</TableCell>
-                <TableCell>{article.comments}</TableCell>
+                <TableCell> {article.title}</TableCell>
+                <TableCell>
+                  {article.perex
+                    ? article.perex + " ..."
+                    : "No description available."}
+                </TableCell>
+                <TableCell>
+                  {article.author ? article.author : "No author available."}
+                </TableCell>
+                <TableCell>
+                  {article.comments
+                    ? article.comments
+                    : "No comments available."}
+                </TableCell>
                 <TableCell>
                   <Stack direction="row">
                     <Link to={`/admin/${article.articleId}/edit`}>
