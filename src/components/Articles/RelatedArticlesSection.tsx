@@ -1,15 +1,10 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-
-type RelatedArticle = {
-  articleId: string;
-  title: string;
-  perex: string;
-};
+import { ArticleData } from "../../services/apiService";
 
 type RelatedArticlesSectionProps = {
   openedArticleId: string;
-  articles: RelatedArticle[];
+  articles: ArticleData[];
 };
 
 function RelatedArticlesSection({
@@ -62,7 +57,7 @@ function RelatedArticlesSection({
                 </Typography>
               </Link>
               <Typography variant="body1" sx={{ marginBottom: "1.5rem" }}>
-                {`${article.perex.slice(0, 200)}...`}
+                {`${article.perex!.slice(0, 200)}...`}
               </Typography>
             </div>
           ))}

@@ -4,20 +4,14 @@ import CommentsSection from "../Articles/CommentsSection";
 import ReactMarkdown from "react-markdown";
 import { ArticleData } from "../../services/apiService";
 
-type RelatedArticle = {
-  articleId: string;
-  title: string;
-  perex: string;
-};
-
 function PostView({
   article,
   articles,
 }: {
   article: ArticleData;
-  articles: RelatedArticle[];
+  articles: ArticleData[];
 }) {
-  const createdAtDate = new Date(article.createdAt);
+  const createdAtDate = new Date(article.createdAt!);
   const formattedDate = createdAtDate.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -52,7 +46,7 @@ function PostView({
               <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <Typography variant="subtitle2" color="text.secondary">
-                    {article.author}
+                    {article.author ? article.author : "No author available."}
                   </Typography>
                 </Grid>
                 <Grid item xs={7}>
@@ -75,10 +69,13 @@ function PostView({
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </CardContent>
           </Card>
-          <CommentsSection id={article.articleId} comments={article.comments} />
+          <CommentsSection
+            id={article.articleId!}
+            comments={article.comments}
+          />
         </Grid>
         <RelatedArticlesSection
-          openedArticleId={article.articleId}
+          openedArticleId={article.articleId!}
           articles={articles}
         />
       </Grid>

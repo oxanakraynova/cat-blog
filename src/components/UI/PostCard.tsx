@@ -12,7 +12,6 @@ import {
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArticleData } from "../../services/apiService";
-import getImageByFilename from "../Articles/ImagesList";
 
 type PostCardProps = {
   articles: ArticleData[];
@@ -60,7 +59,7 @@ function PostCard({ articles }: PostCardProps) {
             <CardMedia
               component="img"
               sx={{ width: "17rem", height: "15rem" }}
-              src={getImageByFilename(article.imageId)}
+              src={article.imageId}
               alt={article.title}
             />
             <Box
@@ -80,22 +79,22 @@ function PostCard({ articles }: PostCardProps) {
                   {article.title}
                 </Typography>
                 <Grid container spacing={2}>
-                  {/* <Grid item xs={3}>
+                  <Grid item xs={5}>
                     <Typography
                       variant="subtitle2"
                       color="text.secondary"
                       component="div"
                     >
-                      {article.author}
+                      {article.author ? article.author : "No author available."}
                     </Typography>
-                  </Grid> */}
-                  <Grid item xs={7}>
+                  </Grid>
+                  <Grid item xs={5}>
                     <Typography
                       variant="subtitle2"
                       color="text.secondary"
                       component="div"
                     >
-                      • {formatDate(article.createdAt)}
+                      • {formatDate(article.createdAt!)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -106,27 +105,29 @@ function PostCard({ articles }: PostCardProps) {
                 >
                   {article.perex
                     ? article.perex + " ..."
-                    : "No description available"}
+                    : "No description available."}
                 </Typography>
                 <CardActions>
                   <Stack direction="row" spacing={2} alignItems="center">
                     {expandedArticleId !== article.articleId && (
                       <Link to={`/articles/${article.articleId}`}>
                         <Button
-                          onClick={() => handleReadMore(article.articleId)}
-                          variant="outlined"
+                          onClick={() => handleReadMore(article.articleId!)}
+                          variant="text"
                         >
                           Read whole article
                         </Button>
                       </Link>
                     )}
-                    {/* <Typography
+                    <Typography
                       variant="subtitle2"
                       color="text.secondary"
                       component="div"
                     >
-                      {article.comments} comments
-                    </Typography> */}
+                      {article.comments
+                        ? article.comments + " comments"
+                        : "No comments available."}{" "}
+                    </Typography>
                   </Stack>
                 </CardActions>
               </CardContent>

@@ -6,7 +6,7 @@ import {
   InputLabel,
   Input,
 } from "@mui/material";
-import { NewArticle, postImage } from "../../services/apiService";
+import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
 import Header from "../UI/Header";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -38,12 +38,39 @@ function ArticleForm({ mode }: ArticleFormProps) {
       title: yup.string().trim().required("Title is required"),
       content: yup.string().trim().required("Content is required"),
     }),
-    onSubmit: async (values: NewArticle) => {
-      const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";
-      const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
+    onSubmit: async (values: ArticleData) => {
       try {
-        const uploadedImage = await postImage(image);
-        const perex = generatePerex(values.content);
+        const perex = generatePerex(values.content!);
+
+        let uploadedImageId = null;
+
+        if (image) {
+          const formData = new FormData();
+          formData.append("image", image);
+
+          const headers = {
+            "Content-Type": "multipart/form-data",
+            "X-API-KEY": apiKey,
+            Authorization: bearerToken,
+          };
+
+          const response = await axios.post(
+            "https://fullstack.exercise.applifting.cz/images",
+            formData,
+            { headers }
+          );
+
+          console.log("Image Upload Response:", response);
+
+          if (response && response.data && response.data.imageId) {
+            uploadedImageId = response.data.imageId;
+            console.log("Uploaded Image ID:", uploadedImageId);
+          } else {
+            throw new Error(
+              "Image upload response data is missing or invalid."
+            );
+          }
+        }
 
         const headers = {
           "Content-Type": "application/json",
@@ -51,14 +78,15 @@ function ArticleForm({ mode }: ArticleFormProps) {
           Authorization: bearerToken,
         };
 
+        const articleFormData = new FormData();
+        articleFormData.append("title", values.title);
+        articleFormData.append("content", values.content!);
+        articleFormData.append("imageId", uploadedImageId);
+        articleFormData.append("perex", perex);
+
         const response = await axios.post(
           "https://fullstack.exercise.applifting.cz/articles",
-          {
-            title: values.title,
-            content: values.content,
-            imageId: uploadedImage,
-            perex: perex,
-          },
+          articleFormData,
           { headers }
         );
 
@@ -66,7 +94,9 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
         navigate("/articles");
       } catch (error) {
-        console.error("Error creating article:", error);
+        const err: Error = error as Error;
+        console.error("Error creating article:", err.message);
+        console.error("Error details:", err);
         throw error;
       }
     },
