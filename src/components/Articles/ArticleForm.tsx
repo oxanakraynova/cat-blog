@@ -42,7 +42,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
       try {
         const perex = generatePerex(values.content!);
 
-        let uploadedImageId = null;
+        let uploadedImageId: string | null = null;
 
         if (image) {
           const formData = new FormData();
@@ -62,12 +62,33 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
           console.log("Image Upload Response:", response);
 
-          if (response && response.data && response.data.imageId) {
-            uploadedImageId = response.data.imageId;
-            console.log("Uploaded Image ID:", uploadedImageId);
+          const findImageId = (data: any): string | undefined => {
+            if (data && typeof data === "object") {
+              if (data.imageId) {
+                return data.imageId;
+              }
+              for (const key in data) {
+                if (Object.prototype.hasOwnProperty.call(data, key)) {
+                  const value = data[key];
+                  if (value && typeof value === "object") {
+                    const imageId = findImageId(value);
+                    if (imageId) {
+                      return imageId;
+                    }
+                  }
+                }
+              }
+            }
+            return undefined;
+          };
+
+          const imageId = findImageId(response.data);
+
+          if (imageId) {
+            uploadedImageId = imageId;
           } else {
-            throw new Error(
-              "Image upload response data is missing or invalid."
+            console.error(
+              "ImageId not found in response data or has invalid format"
             );
           }
         }
@@ -78,15 +99,16 @@ function ArticleForm({ mode }: ArticleFormProps) {
           Authorization: bearerToken,
         };
 
-        const articleFormData = new FormData();
-        articleFormData.append("title", values.title);
-        articleFormData.append("content", values.content!);
-        articleFormData.append("imageId", uploadedImageId);
-        articleFormData.append("perex", perex);
+        const articleData = {
+          title: values.title,
+          content: values.content,
+          imageId: uploadedImageId,
+          perex: perex,
+        };
 
         const response = await axios.post(
           "https://fullstack.exercise.applifting.cz/articles",
-          articleFormData,
+          articleData,
           { headers }
         );
 
