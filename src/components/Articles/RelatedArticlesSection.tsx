@@ -21,9 +21,8 @@ function RelatedArticlesSection({
       sm={4}
       sx={{
         width: "23rem",
-        height: "37rem",
+        height: "auto",
         position: "sticky",
-        top: "-11%",
         zIndex: 1,
       }}
     >
@@ -34,6 +33,7 @@ function RelatedArticlesSection({
           width: "25rem",
           height: "auto",
           marginLeft: "30%",
+          marginTop: "45%",
         }}
       >
         <CardContent sx={{ flex: 1 }}>
