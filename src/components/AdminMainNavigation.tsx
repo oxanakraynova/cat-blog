@@ -27,7 +27,7 @@ const AdminMainNavigation = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "1rem",
-                ml: "14rem",
+                ml: "5%",
               }}
             >
               <Box

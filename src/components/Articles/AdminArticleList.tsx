@@ -11,7 +11,7 @@ function AdminArticleList(article: ArticleData) {
         direction="row"
         spacing={5}
         alignItems="flex-start"
-        sx={{ marginLeft: "14rem" }}
+        sx={{ marginLeft: "5%" }}
       >
         <Header title="My articles" />
         <Button variant="contained" component={NavLink} to="/admin/new">

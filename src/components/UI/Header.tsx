@@ -8,8 +8,8 @@ function Header({ title }: { title: string }) {
       sx={{
         paddingBottom: 3,
         fontWeight: "bold",
-        marginLeft: "14rem",
-        marginTop: "8%",
+        marginLeft: "5%",
+        marginTop: "10%",
       }}
     >
       {title}

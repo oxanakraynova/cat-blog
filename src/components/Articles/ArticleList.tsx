@@ -33,29 +33,27 @@ function ArticleList() {
     return <Loading />;
   }
 
-  if (!articles.length) {
-    return (
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
-          Articles not found
-        </Typography>
-      </Box>
-    );
-  }
-
   return (
     <>
-      <Grid container spacing={3}>
-        <PostCard articles={articles} />
-      </Grid>
+      {articles.length ? (
+        <Grid container spacing={3}>
+          <PostCard articles={articles} />
+        </Grid>
+      ) : (
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Articles not found
+          </Typography>
+        </Box>
+      )}
     </>
   );
 }

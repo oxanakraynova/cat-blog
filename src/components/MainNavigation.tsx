@@ -28,7 +28,7 @@ const MainNavigation = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "1rem",
-                ml: "15%",
+                ml: "5%",
               }}
             >
               <Box

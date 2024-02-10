@@ -7,7 +7,7 @@ function AboutArticle() {
     <Box
       sx={{
         pb: 3,
-        marginLeft: "14rem",
+        marginLeft: "5%",
       }}
     >
       <CardMedia

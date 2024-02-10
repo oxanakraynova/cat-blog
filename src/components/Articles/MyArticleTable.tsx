@@ -96,7 +96,7 @@ function MyArticleTable({}: { article: ArticleData }) {
   };
 
   return (
-    <Box sx={{ marginLeft: "14rem", width: "70.5rem" }}>
+    <Box sx={{ marginLeft: "5%", width: "70.5rem" }}>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

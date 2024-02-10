@@ -26,15 +26,6 @@ function PostCard({ articles }: PostCardProps) {
     setExpandedArticleId(articleId);
   };
 
-  const sortedArticles = [...articles].sort(
-    (a: ArticleData, b: ArticleData) => {
-      if (typeof a.createdAt === "string" && typeof b.createdAt === "string") {
-        return b.createdAt.localeCompare(a.createdAt);
-      }
-      return 0;
-    }
-  );
-
   function formatDate(dateStr: string) {
     const date = new Date(dateStr);
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -45,14 +36,14 @@ function PostCard({ articles }: PostCardProps) {
 
   return (
     <>
-      {sortedArticles.map((article) => (
+      {articles.map((article) => (
         <Grid item xs={12} key={article.articleId}>
           <Card
             sx={{
               display: "flex",
-              width: "53.5rem",
+              width: "auto",
               height: "15rem",
-              ml: "14rem",
+              ml: "5%",
               gap: "1rem",
             }}
           >
