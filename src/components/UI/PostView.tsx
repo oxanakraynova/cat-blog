@@ -25,9 +25,9 @@ function PostView({
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "47.5rem",
-              minHeight: 0,
-              ml: "30%",
+              width: "50rem",
+              height: "auto",
+              ml: "15%",
               mt: "15%",
               gap: "1.5rem",
             }}
