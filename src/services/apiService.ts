@@ -2,7 +2,7 @@ import axios from "axios";
 
 export interface ArticleData {
   articleId?: string;
-  imageId: string;
+  imageId?: string;
   title: string;
   perex?: string;
   content?: string;

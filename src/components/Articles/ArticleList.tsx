@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import PostCard from "../UI/PostCard";
 import { useEffect, useState } from "react";
 import {
@@ -35,25 +35,13 @@ function ArticleList() {
 
   return (
     <>
-      {articles.length ? (
+      {articles.map((article) => (
         <Grid container spacing={3}>
-          <PostCard articles={articles} />
+          <Grid item xs={12} key={article.articleId}>
+            <PostCard article={article} />
+          </Grid>
         </Grid>
-      ) : (
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h6" gutterBottom>
-            Articles not found
-          </Typography>
-        </Box>
-      )}
+      ))}
     </>
   );
 }
