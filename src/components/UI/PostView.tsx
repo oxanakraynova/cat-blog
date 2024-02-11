@@ -2,7 +2,9 @@ import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Articles/CommentsSection";
 import ReactMarkdown from "react-markdown";
-import { ArticleData } from "../../services/apiService";
+import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function PostView({
   article,
@@ -11,6 +13,37 @@ function PostView({
   article: ArticleData;
   articles: ArticleData[];
 }) {
+  const [imageData, setImageData] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchImageData = async () => {
+      try {
+        const response = await axios.get(
+          `https://fullstack.exercise.applifting.cz/images/${article.imageId}`,
+          {
+            responseType: "arraybuffer",
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-KEY": apiKey,
+              Authorization: bearerToken,
+            },
+          }
+        );
+        const blob = new Blob([response.data], { type: "image/jpeg" });
+
+        const imageUrl = URL.createObjectURL(blob);
+
+        setImageData(imageUrl);
+      } catch (error) {
+        console.error("Error fetching image data:", error);
+      }
+    };
+
+    if (article.imageId) {
+      fetchImageData();
+    }
+  }, [article.imageId]);
+
   const createdAtDate = new Date(article.createdAt!);
   const formattedDate = createdAtDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -55,17 +88,19 @@ function PostView({
                   </Typography>
                 </Grid>
               </Grid>
-              <CardMedia
-                component="img"
-                sx={{
-                  width: "100%",
-                  height: "31.5rem",
-                  marginTop: "1.5rem",
-                  objectFit: "cover",
-                }}
-                src={article.imageId}
-                alt={article.title}
-              />
+              {imageData && (
+                <CardMedia
+                  component="img"
+                  sx={{
+                    width: "100%",
+                    height: "31.5rem",
+                    marginTop: "1.5rem",
+                    objectFit: "cover",
+                  }}
+                  src={imageData}
+                  alt={article.title}
+                />
+              )}
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </CardContent>
           </Card>
