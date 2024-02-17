@@ -2,9 +2,9 @@ import { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import photo from "../../assets/3.jpg";
+import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
-  const [auth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -14,10 +14,21 @@ function UserLogin() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const userDataString = localStorage.getItem("access_token");
+  const userData = userDataString ? userDataString : null;
+  const loginInProcess = userData ? userData : null;
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/articles");
+  };
   return (
     <>
-      {auth && (
-        <div>
+      {loginInProcess && (
+        <>
           <IconButton
             size="large"
             aria-label="account of current user"
@@ -43,10 +54,9 @@ function UserLogin() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
-        </div>
+        </>
       )}
     </>
   );

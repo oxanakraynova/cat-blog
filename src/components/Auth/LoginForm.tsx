@@ -38,10 +38,9 @@ export default function LoginForm() {
           { headers }
         );
 
-        console.log(
-          "Login successful. Access Token:",
-          response.data.access_token
-        );
+        const accessToken = response.data.access_token;
+        localStorage.setItem("access_token", accessToken);
+        console.log("Login successful. Access Token:", accessToken);
         navigate("/admin");
       } catch (error) {
         console.error("Error logging in:", error);

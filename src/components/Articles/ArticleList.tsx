@@ -36,8 +36,8 @@ function ArticleList() {
   return (
     <>
       {articles.map((article) => (
-        <Grid container spacing={3}>
-          <Grid item xs={12} key={article.articleId}>
+        <Grid container spacing={3} key={article.articleId}>
+          <Grid item xs={12}>
             <PostCard article={article} />
           </Grid>
         </Grid>

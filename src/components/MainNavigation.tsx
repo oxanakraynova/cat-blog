@@ -8,6 +8,7 @@ import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { List, ListItemButton, ListItemText } from "@mui/material";
+import User from "./Articles/User";
 
 const theme = createTheme({
   palette: {
@@ -18,6 +19,9 @@ const theme = createTheme({
 });
 
 const MainNavigation = () => {
+  const userDataString = localStorage.getItem("access_token");
+  const userData = userDataString ? userDataString : null;
+  const loginInProcess = userData ? userData : null;
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
@@ -67,15 +71,44 @@ const MainNavigation = () => {
                 <ListItemText>About</ListItemText>
               </ListItemButton>
             </List>
-            <Button
-              variant="text"
-              sx={{ marginLeft: "auto" }}
-              endIcon={<ArrowForwardIcon />}
-              component={NavLink}
-              to="/login"
-            >
-              Log in
-            </Button>
+            {loginInProcess ? (
+              <List
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  marginLeft: "auto",
+                }}
+              >
+                <ListItemButton
+                  component={NavLink}
+                  to="/admin"
+                  sx={{
+                    textAlign: "center",
+                    color: "text.secondary",
+                    "&.active": {
+                      color: "text.primary",
+                    },
+                  }}
+                >
+                  <ListItemText>My Articles</ListItemText>
+                </ListItemButton>
+                <Button variant="text" component={NavLink} to="/admin/new">
+                  Create Article
+                </Button>
+                <User />
+              </List>
+            ) : (
+              <Button
+                variant="text"
+                sx={{ marginLeft: "auto" }}
+                endIcon={<ArrowForwardIcon />}
+                component={NavLink}
+                to="/login"
+              >
+                Log in
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
       </Box>

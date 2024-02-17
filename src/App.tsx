@@ -6,7 +6,6 @@ import ArticlesPage from "./components/pages/Articles";
 import RootLayout from "./components/pages/Root";
 import LoginPage from "./components/pages/Login";
 import AdminArticlesPage from "./components/pages/AdminArticles";
-import AdminRootLayout from "./components/pages/AdminRoot";
 import NewArticlePage from "./components/pages/NewArticle";
 import EditArticlePage from "./components/pages/EditArticle";
 import CreateTenant from "./components/CreateTenant";
@@ -45,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminRootLayout />,
+    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
