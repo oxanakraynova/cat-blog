@@ -5,21 +5,34 @@ import {
   TextField,
   InputLabel,
   Input,
+  CardMedia,
 } from "@mui/material";
-import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
+import {
+  apiKey,
+  ArticleData,
+  bearerToken,
+  getArticleById,
+} from "../../services/apiService";
 import Header from "../UI/Header";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ArticleFormProps {
   mode: string;
 }
 
+interface InitialValuesForm {
+  title: string;
+  content: string;
+}
+
 function ArticleForm({ mode }: ArticleFormProps) {
   const [image, setImage] = useState<File | null>(null);
+  const [article, setArticle] = useState<ArticleData | null>(null);
+  const [imageData, setImageData] = useState<string | null>(null);
 
   const generatePerex = (content: string) => {
     return content.slice(0, 200);
@@ -27,18 +40,63 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
   const pageTitle = mode === "create" ? "Create New Article" : "Edit Article";
 
+  const { articleId } = useParams<{ articleId: string }>();
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        if (!articleId) {
+          console.error("Article ID is undefined");
+          return;
+        }
+        const response = await getArticleById(articleId);
+        setArticle(response);
+        if (response.imageId) {
+          fetchImageData(response.imageId);
+        }
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      }
+    };
+
+    if (mode === "edit") {
+      fetchArticle();
+    }
+  }, [articleId, mode]);
+
+  const fetchImageData = async (imageId: string) => {
+    try {
+      const response = await axios.get(
+        `https://fullstack.exercise.applifting.cz/images/${imageId}`,
+        {
+          responseType: "arraybuffer",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
+            Authorization: bearerToken,
+          },
+        }
+      );
+      const blob = new Blob([response.data], { type: "image/jpeg" });
+      const imageUrl = URL.createObjectURL(blob);
+      setImageData(imageUrl);
+    } catch (error) {
+      console.error("Error fetching image data:", error);
+    }
+  };
+
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      content: "",
+      title: article?.title || "",
+      content: article?.content || "",
     },
     validationSchema: yup.object({
       title: yup.string().trim().required("Title is required"),
       content: yup.string().trim().required("Content is required"),
     }),
-    onSubmit: async (values: ArticleData) => {
+    onSubmit: async (values: InitialValuesForm) => {
       try {
         const perex = generatePerex(values.content!);
 
@@ -106,20 +164,25 @@ function ArticleForm({ mode }: ArticleFormProps) {
           perex: perex,
         };
 
-        const response = await axios.post(
-          "https://fullstack.exercise.applifting.cz/articles",
-          articleData,
-          { headers }
-        );
-
-        console.log("Article created successful.", response.data);
+        if (mode === "create") {
+          await axios.post(
+            "https://fullstack.exercise.applifting.cz/articles",
+            articleData,
+            { headers }
+          );
+          console.log("Article created successfully.");
+        } else {
+          await axios.put(
+            `https://fullstack.exercise.applifting.cz/articles${articleId}`,
+            articleData,
+            { headers }
+          );
+          console.log("Article updated successfully.");
+        }
 
         navigate("/articles");
       } catch (error) {
-        const err: Error = error as Error;
-        console.error("Error creating article:", err.message);
-        console.error("Error details:", err);
-        throw error;
+        console.error("Error:", error);
       }
     },
   });
@@ -166,7 +229,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                 required
                 fullWidth
                 id="title"
-                placeholder="My First Article"
+                placeholder={article?.title || "My First Article"}
                 name="title"
                 autoFocus
                 sx={{ marginBottom: "1.5rem" }}
@@ -194,14 +257,39 @@ function ArticleForm({ mode }: ArticleFormProps) {
               >
                 Featured image
               </InputLabel>
-              <Input
-                id="imageId"
-                type="file"
-                inputProps={{
-                  accept: "image/*",
-                }}
-                onChange={handleImageChange}
-              />
+              {imageData ? (
+                <>
+                  <CardMedia
+                    component="img"
+                    src={imageData}
+                    alt="Article Image"
+                    sx={{
+                      maxWidth: "10rem",
+                      height: "100%",
+                      objectFit: "cover",
+                      maxHeight: "5rem",
+                      paddingBottom: 2,
+                    }}
+                  />
+                  <Stack direction="row" gap={2}>
+                    <Button variant="text" onClick={() => handleImageChange}>
+                      Upload New
+                    </Button>
+                    <Button variant="text" color="error">
+                      Delete
+                    </Button>
+                  </Stack>
+                </>
+              ) : (
+                <Input
+                  id="imageId"
+                  type="file"
+                  inputProps={{
+                    accept: "image/*",
+                  }}
+                  onChange={handleImageChange}
+                />
+              )}
             </Box>
             <Box>
               <InputLabel
@@ -215,7 +303,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
               </InputLabel>
               <TextField
                 id="content"
-                placeholder="Supports markdown.Yay!"
+                placeholder={article?.content || "Supports markdown.Yay!"}
                 fullWidth
                 multiline
                 rows={30}
