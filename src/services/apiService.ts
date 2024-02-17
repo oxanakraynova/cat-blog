@@ -66,6 +66,24 @@ export const getArticleById = async (
   }
 };
 
+export const getTenantById = async (tenantId: string): Promise<any> => {
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      "X-API-KEY": apiKey,
+      Authorization: bearerToken,
+    };
+
+    const response = await axios.get(`${baseUrl}/tenants/${tenantId}`, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+    throw error;
+  }
+};
+
 export const getImageById = async (imageId: string): Promise<ArticleData> => {
   try {
     const headers = {

@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import MainNavigation from "../MainNavigation";
+import MainNavigation from "../Layout/MainNavigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function ErrorPage() {

@@ -3,6 +3,7 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import photo from "../../assets/3.jpg";
 import { useNavigate } from "react-router-dom";
+import { loginInProcess } from "../../auth/Auth";
 
 function UserLogin() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -15,16 +16,13 @@ function UserLogin() {
     setAnchorEl(null);
   };
 
-  const userDataString = localStorage.getItem("access_token");
-  const userData = userDataString ? userDataString : null;
-  const loginInProcess = userData ? userData : null;
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     navigate("/articles");
   };
+
   return (
     <>
       {loginInProcess && (
