@@ -172,7 +172,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
           );
           console.log("Article created successfully.");
         } else {
-          await axios.put(
+          await axios.patch(
             `https://fullstack.exercise.applifting.cz/articles${articleId}`,
             articleData,
             { headers }
@@ -272,9 +272,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                     }}
                   />
                   <Stack direction="row" gap={2}>
-                    <Button variant="text" onClick={() => handleImageChange}>
-                      Upload New
-                    </Button>
+                    <Button variant="text">Upload New</Button>
                     <Button variant="text" color="error">
                       Delete
                     </Button>
