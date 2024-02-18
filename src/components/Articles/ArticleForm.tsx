@@ -21,7 +21,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface ArticleFormProps {
-  mode: string;
+  mode: "create" | "edit";
 }
 
 interface InitialValuesForm {
@@ -92,10 +92,14 @@ function ArticleForm({ mode }: ArticleFormProps) {
       title: article?.title || "",
       content: article?.content || "",
     },
-    validationSchema: yup.object({
-      title: yup.string().trim().required("Title is required"),
-      content: yup.string().trim().required("Content is required"),
-    }),
+    enableReinitialize: true,
+    validationSchema:
+      mode === "create"
+        ? yup.object({
+            title: yup.string().trim().required("Title is required"),
+            content: yup.string().trim().required("Content is required"),
+          })
+        : yup.object().shape({}),
     onSubmit: async (values: InitialValuesForm) => {
       try {
         const perex = generatePerex(values.content!);
@@ -173,7 +177,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
           console.log("Article created successfully.");
         } else {
           await axios.patch(
-            `https://fullstack.exercise.applifting.cz/articles${articleId}`,
+            `https://fullstack.exercise.applifting.cz/articles/${articleId}`,
             articleData,
             { headers }
           );
@@ -229,7 +233,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                 required
                 fullWidth
                 id="title"
-                placeholder={article?.title || "My First Article"}
+                placeholder={mode === "create" ? "My First Article" : ""}
                 name="title"
                 autoFocus
                 sx={{ marginBottom: "1.5rem" }}
@@ -271,7 +275,11 @@ function ArticleForm({ mode }: ArticleFormProps) {
                       paddingBottom: 2,
                     }}
                   />
-                  <Stack direction="row" gap={2}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    justifyContent="flex-start"
+                  >
                     <Button variant="text">Upload New</Button>
                     <Button variant="text" color="error">
                       Delete
@@ -301,7 +309,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
               </InputLabel>
               <TextField
                 id="content"
-                placeholder={article?.content || "Supports markdown.Yay!"}
+                placeholder={mode === "create" ? "Supports markdown.Yay!" : ""}
                 fullWidth
                 multiline
                 rows={30}

@@ -85,7 +85,9 @@ function PostCard({ article }: PostCardProps) {
             maxWidth: "15rem",
             height: "100%",
             objectFit: "cover",
-            maxHeight: "10rem",
+            maxHeight: "12rem",
+            marginTop: 1,
+            marginBottom: 1,
           }}
           src={imageData}
           alt={article.title}
