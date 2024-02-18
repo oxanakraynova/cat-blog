@@ -75,7 +75,7 @@ function PostCard({ article }: PostCardProps) {
         display: "flex",
         flexDirection: "row",
         ml: "5%",
-        gap: "1rem",
+        mb: "3%",
       }}
     >
       {imageData ? (
@@ -83,11 +83,8 @@ function PostCard({ article }: PostCardProps) {
           component="img"
           sx={{
             maxWidth: "15rem",
-            height: "100%",
             objectFit: "cover",
-            maxHeight: "12rem",
-            marginTop: 1,
-            marginBottom: 1,
+            maxHeight: "13rem",
           }}
           src={imageData}
           alt={article.title}
