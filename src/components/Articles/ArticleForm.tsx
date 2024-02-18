@@ -198,6 +198,53 @@ function ArticleForm({ mode }: ArticleFormProps) {
     }
   };
 
+  const handleUploadImage = async (image: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const response = await axios.post(
+        "https://fullstack.exercise.applifting.cz/images",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "X-API-KEY": apiKey,
+            Authorization: bearerToken,
+          },
+        }
+      );
+
+      const newImageId = response.data.imageId;
+      console.log("Image uploaded successfully. Image ID:", newImageId);
+
+      fetchImageData(newImageId);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const handleDeleteImage = async () => {
+    try {
+      if (mode === "edit" && article?.imageId) {
+        await axios.delete(
+          `https://fullstack.exercise.applifting.cz/images/${article.imageId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-KEY": apiKey,
+              Authorization: bearerToken,
+            },
+          }
+        );
+        setImageData(null);
+        console.log("Image deleted successfully.");
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    }
+  };
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -280,8 +327,17 @@ function ArticleForm({ mode }: ArticleFormProps) {
                     spacing={2}
                     justifyContent="flex-start"
                   >
-                    <Button variant="text">Upload New</Button>
-                    <Button variant="text" color="error">
+                    <Button
+                      variant="text"
+                      onClick={() => handleUploadImage(image)}
+                    >
+                      Upload New
+                    </Button>
+                    <Button
+                      variant="text"
+                      color="error"
+                      onClick={handleDeleteImage}
+                    >
                       Delete
                     </Button>
                   </Stack>
