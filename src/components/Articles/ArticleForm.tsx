@@ -199,30 +199,8 @@ function ArticleForm({ mode }: ArticleFormProps) {
     }
   };
 
-  const handleUploadImage = async (image: File) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", image);
-
-      const response = await axios.post(
-        "https://fullstack.exercise.applifting.cz/images",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "X-API-KEY": apiKey,
-            Authorization: bearerToken,
-          },
-        }
-      );
-
-      const newImageId = response.data.imageId;
-      console.log("Image uploaded successfully. Image ID:", newImageId);
-
-      fetchImageData(newImageId);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+  const handleUploadImage = async () => {
+    //TODO
   };
 
   const handleDeleteImage = async (id: string) => {
@@ -319,10 +297,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                     spacing={2}
                     justifyContent="flex-start"
                   >
-                    <Button
-                      variant="text"
-                      onClick={() => handleUploadImage(image)}
-                    >
+                    <Button variant="text" onClick={handleUploadImage}>
                       Upload New
                     </Button>
                     <Button
