@@ -11,6 +11,7 @@ import {
   apiKey,
   ArticleData,
   bearerToken,
+  deleteImage,
   getArticleById,
 } from "../../services/apiService";
 import Header from "../UI/Header";
@@ -224,19 +225,10 @@ function ArticleForm({ mode }: ArticleFormProps) {
     }
   };
 
-  const handleDeleteImage = async () => {
+  const handleDeleteImage = async (id: string) => {
     try {
       if (mode === "edit" && article?.imageId) {
-        await axios.delete(
-          `https://fullstack.exercise.applifting.cz/images/${article.imageId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "X-API-KEY": apiKey,
-              Authorization: bearerToken,
-            },
-          }
-        );
+        await deleteImage(id);
         setImageData(null);
         console.log("Image deleted successfully.");
       }
@@ -336,7 +328,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                     <Button
                       variant="text"
                       color="error"
-                      onClick={handleDeleteImage}
+                      onClick={() => handleDeleteImage(article!.imageId!)}
                     >
                       Delete
                     </Button>
