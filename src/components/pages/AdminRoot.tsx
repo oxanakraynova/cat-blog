@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import AdminMainNavigation from "../AdminMainNavigation";
+import AdminNavigation from "../Layout/AdminNavigation";
 
 function AdminRootLayout() {
   return (
     <>
-      <AdminMainNavigation />
+      <AdminNavigation />
       <Outlet />
     </>
   );

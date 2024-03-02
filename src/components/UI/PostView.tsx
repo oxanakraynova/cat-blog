@@ -105,8 +105,13 @@ function PostView({
             </CardContent>
           </Card>
           <CommentsSection
-            id={article.articleId!}
-            comments={article.comments}
+            articleId={
+              article.articleId ? article.articleId : "No id available."
+            }
+            author={article.author ? article.author : "No author available."}
+            content={
+              article.content ? article.content : "No comments available."
+            }
           />
         </Grid>
         <RelatedArticlesSection
