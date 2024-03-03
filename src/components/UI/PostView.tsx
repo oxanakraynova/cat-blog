@@ -2,9 +2,17 @@ import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Articles/CommentsSection";
 import ReactMarkdown from "react-markdown";
-import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
+import {
+  apiKey,
+  ArticleData,
+  bearerToken,
+  getTenantById,
+  Tenant,
+  tenantId,
+} from "../../services/apiService";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "./Loading";
 
 function PostView({
   article,
@@ -14,6 +22,8 @@ function PostView({
   articles: ArticleData[];
 }) {
   const [imageData, setImageData] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [tenant, setTenant] = useState<Tenant | null>(null);
 
   useEffect(() => {
     const fetchImageData = async () => {
@@ -44,12 +54,32 @@ function PostView({
     }
   }, [article.imageId]);
 
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        setLoading(true);
+        const response = await getTenantById(tenantId);
+        setTenant(response);
+      } catch (error) {
+        console.error("Error fetching tenant:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAuthor();
+  }, []);
+
   const createdAtDate = new Date(article.createdAt!);
   const formattedDate = createdAtDate.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <Grid container spacing={30}>
@@ -79,7 +109,7 @@ function PostView({
               <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <Typography variant="subtitle2" color="text.secondary">
-                    {article.author ? article.author : "No author available."}
+                    {tenant ? tenant.name : "No author available."}
                   </Typography>
                 </Grid>
                 <Grid item xs={7}>
@@ -104,15 +134,7 @@ function PostView({
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </CardContent>
           </Card>
-          <CommentsSection
-            articleId={
-              article.articleId ? article.articleId : "No id available."
-            }
-            author={article.author ? article.author : "No author available."}
-            content={
-              article.content ? article.content : "No comments available."
-            }
-          />
+          <CommentsSection />
         </Grid>
         <RelatedArticlesSection
           openedArticleId={article.articleId!}

@@ -6,7 +6,6 @@ import {
   CardContent,
   Box,
   Divider,
-  IconButton,
 } from "@mui/material";
 import { CommentsProps } from "./CommentsSection";
 

@@ -1,6 +1,6 @@
 import { Avatar, Card, CardHeader, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import photo from "../../assets/3.jpg";
+import photo from "../../assets/1.jpg";
 import {
   apiKey,
   ArticleData,
@@ -116,10 +116,10 @@ function CommentsSection() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "47.5rem",
+          width: "50rem",
           height: "auto",
-          marginTop: "0.5rem",
-          marginLeft: "30%",
+          marginTop: "1rem",
+          marginLeft: "15%",
         }}
       >
         <Typography
@@ -134,10 +134,10 @@ function CommentsSection() {
           avatar={
             <Avatar
               aria-label="join the discussion"
-              alt="Elisabeth Strain"
+              alt={tenant?.name}
               src={photo}
             >
-              ES
+              {tenant?.name}
             </Avatar>
           }
           title={
@@ -163,7 +163,18 @@ function CommentsSection() {
           <CommentCard key={comment.commentId} comment={comment} />
         ))
       ) : (
-        <p>No comments available.</p>
+        <Typography
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "50rem",
+            height: "auto",
+            marginTop: "1rem",
+            marginLeft: "15%",
+          }}
+        >
+          No comments available.
+        </Typography>
       )}
     </form>
   );
