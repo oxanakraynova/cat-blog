@@ -17,6 +17,9 @@ import {
   ArticleData,
   deleteArticle,
   getArticles,
+  getTenantById,
+  Tenant,
+  tenantId,
 } from "../../services/apiService";
 import Loading from "../UI/Loading";
 
@@ -24,6 +27,7 @@ function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
   const [articles, setArticles] = useState<ArticleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [tenant, setTenant] = useState<Tenant | null>(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -40,6 +44,22 @@ function MyArticleTable({}: { article: ArticleData }) {
       }
     };
     fetchArticles();
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        setLoading(true);
+        const response = await getTenantById(tenantId);
+        setTenant(response);
+      } catch (error) {
+        console.error("Error fetching tenant:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAuthor();
   }, []);
 
   if (loading) {
@@ -145,7 +165,7 @@ function MyArticleTable({}: { article: ArticleData }) {
                     : "No description available."}
                 </TableCell>
                 <TableCell>
-                  {article.author ? article.author : "No author available."}
+                  {tenant ? tenant.name : "No author available."}
                 </TableCell>
                 <TableCell>
                   {article.comments

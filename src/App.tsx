@@ -8,7 +8,7 @@ import LoginPage from "./components/pages/Login";
 import AdminArticlesPage from "./components/pages/AdminArticles";
 import NewArticlePage from "./components/pages/NewArticle";
 import EditArticlePage from "./components/pages/EditArticle";
-import CreateTenant from "./components/CreateTenant";
+import RegistrationForm from "./components/RegistrationForm";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/test",
-        element: <CreateTenant />,
+        path: "/register",
+        element: <RegistrationForm />,
       },
       {
         index: true,

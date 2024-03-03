@@ -12,7 +12,15 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
+import {
+  apiKey,
+  ArticleData,
+  bearerToken,
+  getTenantById,
+  Tenant,
+  tenantId,
+} from "../../services/apiService";
+import Loading from "./Loading";
 
 type PostCardProps = {
   article: ArticleData;
@@ -23,10 +31,28 @@ function PostCard({ article }: PostCardProps) {
     null
   );
   const [imageData, setImageData] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [tenant, setTenant] = useState<Tenant | null>(null);
 
   const handleReadMore = (articleId: string) => {
     setExpandedArticleId(articleId);
   };
+
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        setLoading(true);
+        const response = await getTenantById(tenantId);
+        setTenant(response);
+      } catch (error) {
+        console.error("Error fetching tenant:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAuthor();
+  }, []);
 
   function formatDate(dateStr: string) {
     const date = new Date(dateStr);
@@ -69,6 +95,10 @@ function PostCard({ article }: PostCardProps) {
     };
   }, [article.imageId]);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Card
       sx={{
@@ -105,16 +135,16 @@ function PostCard({ article }: PostCardProps) {
             {article.title}
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={5}>
+            <Grid item xs={3}>
               <Typography
                 variant="subtitle2"
                 color="text.secondary"
                 component="div"
               >
-                {article.author ? article.author : "No author available."}
+                {tenant ? tenant.name : "No author available."}
               </Typography>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={8}>
               <Typography
                 variant="subtitle2"
                 color="text.secondary"

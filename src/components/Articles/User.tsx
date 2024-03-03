@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import photo from "../../assets/3.jpg";
+import photo from "../../assets/1.jpg";
 import { useNavigate } from "react-router-dom";
 import { loginInProcess } from "../../auth/Auth";
 
@@ -35,7 +35,7 @@ function UserLogin() {
             onClick={handleMenu}
             color="inherit"
           >
-            <Avatar alt="Elisabeth Strain" src={photo} />
+            <Avatar alt="Current user" src={photo} />
           </IconButton>
           <Menu
             id="menu-appbar"

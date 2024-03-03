@@ -20,7 +20,10 @@ export default function LoginForm() {
     },
     validationSchema: yup.object({
       username: yup.string().required("Username is required"),
-      password: yup.string().required("Password is required"),
+      password: yup
+        .string()
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
       apiKey: yup.string().required("API Key is required"),
     }),
     onSubmit: async (values) => {
@@ -44,7 +47,7 @@ export default function LoginForm() {
         navigate("/admin");
       } catch (error) {
         console.error("Error logging in:", error);
-        navigate("/error");
+        // setStatus("Incorrect password/username. Please try again.");
       }
     },
   });
@@ -61,7 +64,7 @@ export default function LoginForm() {
             transform: "translate(-50%, -50%)",
             textAlign: "center",
             width: "23rem",
-            height: "20.5rem",
+            height: "auto",
             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
           }}
         >
@@ -122,10 +125,20 @@ export default function LoginForm() {
               display: "flex",
               justifyContent: "flex-end",
               marginRight: "2rem",
-              marginTop: "6rem",
+              marginTop: "25%",
             }}
           >
-            <Button type="submit" variant="contained">
+            {/* {status && <div style={{ color: "red" }}>{status}</div>} */}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginRight: "2rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <Button color="primary" type="submit" variant="contained">
               Log In
             </Button>
           </Box>

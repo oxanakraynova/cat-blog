@@ -4,11 +4,11 @@ import photo from "../../assets/3.jpg";
 import {
   apiKey,
   ArticleData,
-  baseUrl,
   bearerToken,
   getArticleById,
   getTenantById,
   Tenant,
+  tenantId,
 } from "../../services/apiService";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -55,32 +55,21 @@ function CommentsSection() {
     fetchArticle();
   }, [params.articleId]);
 
-  // useEffect(() => {
-  //   const fetchAuthor = async () => {
-  //     try {
-  //       setLoading(true);
-
-  //       const tenantId = "1709406898639";
-
-  //       const headers = {
-  //         "Content-Type": "application/json",
-  //         "X-API-KEY": apiKey,
-  //         Authorization: bearerToken,
-  //       };
-
-  //       const response = await axios.get(`${baseUrl}/tenants/${tenantId}`, {
-  //         headers,
-  //       });
-  //       setTenant(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching tenant:", error);
-  //       throw error;
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchAuthor();
-  // }, []);
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        setLoading(true);
+        const response = await getTenantById(tenantId);
+        setTenant(response);
+      } catch (error) {
+        console.error("Error fetching tenant:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAuthor();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -93,7 +82,7 @@ function CommentsSection() {
         const commentsData = {
           articleId: article?.articleId,
           content: values.content,
-          author: "1709406898639",
+          author: tenant?.name,
         };
 
         const headers = {

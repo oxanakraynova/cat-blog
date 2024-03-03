@@ -28,6 +28,7 @@ export interface Tenant {
 
 export const apiKey = "c98db5eb-b5f8-4ebc-8e8d-8281f7e6ec22";
 export const baseUrl = "https://fullstack.exercise.applifting.cz";
+export const tenantId = "65d9149a-d9e7-47ac-b353-b198a3d036c9";
 const articleUrl = "https://fullstack.exercise.applifting.cz/articles";
 const imageUrl = "https://fullstack.exercise.applifting.cz/images";
 export const bearerToken = "Bearer 17ffeeee-82c9-4aed-a6ca-e4155c28ae6d";

@@ -10,17 +10,26 @@ import {
   Typography,
 } from "@mui/material";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 
-const CreateTenant: React.FC = () => {
+const RegistrationForm: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
       name: "",
+      email: "",
       password: "",
     },
     validationSchema: yup.object({
-      username: yup.string().required("Name is required"),
+      name: yup
+        .string()
+        .min(2, "Too Short!")
+        .max(70, "Too Long!")
+        .required("Name is required"),
+      email: yup.string().required("Email is required"),
       password: yup.string().required("Password is required"),
     }),
     onSubmit: async (values) => {
@@ -29,10 +38,14 @@ const CreateTenant: React.FC = () => {
           "https://fullstack.exercise.applifting.cz/tenants",
           {
             name: values.name,
+            email: values.email,
             password: values.password,
           }
         );
         setApiKey(response.data.apiKey);
+        console.log("Your API Key:", response.data.apiKey);
+        console.log("Your response data:", response.data);
+        navigate("/articles");
       } catch (error) {
         console.error("Error creating tenant:", error);
       }
@@ -52,7 +65,7 @@ const CreateTenant: React.FC = () => {
             transform: "translate(-50%, -50%)",
             textAlign: "center",
             width: "23rem",
-            height: "20.5rem",
+            height: "25rem",
             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
           }}
         >
@@ -66,7 +79,7 @@ const CreateTenant: React.FC = () => {
               justifyContent: "flex-start",
             }}
           >
-            Create new tenant
+            Registration Form
           </Typography>
           <Box
             sx={{
@@ -97,6 +110,20 @@ const CreateTenant: React.FC = () => {
               margin="normal"
               required
               fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
               name="password"
               label="Password"
               type="password"
@@ -113,11 +140,11 @@ const CreateTenant: React.FC = () => {
               display: "flex",
               justifyContent: "flex-end",
               marginRight: "2rem",
-              marginTop: "6rem",
+              marginTop: "50%",
             }}
           >
             <Button type="submit" variant="contained">
-              Create Tenant
+              Submit
             </Button>
           </Box>
           {apiKey && <div>Your API Key: {apiKey}</div>}
@@ -126,4 +153,4 @@ const CreateTenant: React.FC = () => {
     </Container>
   );
 };
-export default CreateTenant;
+export default RegistrationForm;
