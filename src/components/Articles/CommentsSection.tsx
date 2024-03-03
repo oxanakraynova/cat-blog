@@ -18,12 +18,18 @@ import Loading from "../UI/Loading";
 
 export type CommentsProps = {
   articleId: string;
-  commentId?: string;
+  commentId: string;
   author: string;
   content: string;
-  postedAt?: string;
-  score?: number;
+  postedAt: string;
+  score: number;
 };
+
+export interface InitialValuesForm {
+  articleId: string | undefined;
+  author: string | undefined;
+  content: string;
+}
 
 function CommentsSection() {
   const [comments, setComments] = useState<CommentsProps[]>([]);
@@ -77,9 +83,10 @@ function CommentsSection() {
       author: "",
       content: "",
     },
-    onSubmit: async (values: CommentsProps) => {
+    onSubmit: async (values: InitialValuesForm, { resetForm }) => {
       try {
-        const commentsData = {
+        setLoading(true);
+        const commentData = {
           articleId: article?.articleId,
           content: values.content,
           author: tenant?.name,
@@ -93,15 +100,18 @@ function CommentsSection() {
 
         const response = await axios.post(
           "https://fullstack.exercise.applifting.cz/comments",
-          commentsData,
+          commentData,
           { headers }
         );
 
         console.log("Comment Upload Response:", response);
 
         setComments((prevComments) => [...prevComments, response.data]);
+        resetForm();
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -164,14 +174,10 @@ function CommentsSection() {
         ))
       ) : (
         <Typography
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "50rem",
-            height: "auto",
-            marginTop: "1rem",
-            marginLeft: "15%",
-          }}
+          variant="subtitle1"
+          color="text.primary"
+          component="div"
+          sx={{ marginTop: "1rem", marginLeft: "15%" }}
         >
           No comments available.
         </Typography>
