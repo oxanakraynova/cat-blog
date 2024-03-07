@@ -3,12 +3,14 @@ import AboutPage from "./components/pages/About";
 import ArticleDetailPage from "./components/pages/ArticleDetail";
 import ErrorPage from "./components/pages/Error";
 import ArticlesPage from "./components/pages/Articles";
-import RootLayout from "./components/Layout/Root";
 import LoginPage from "./components/pages/Login";
 import AdminArticlesPage from "./components/pages/AdminArticles";
 import NewArticlePage from "./components/pages/NewArticle";
 import EditArticlePage from "./components/pages/EditArticle";
 import RegistrationForm from "./components/RegistrationForm";
+import { lazy } from "react";
+
+const RootLayout = lazy(() => import("./components/Layout/Root"));
 
 const router = createBrowserRouter([
   {
