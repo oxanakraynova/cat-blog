@@ -7,9 +7,10 @@ import logo from "../../assets/4E0649A4-85D5-4B6D-9FCA-BCC3D598108B_4_5005_c.jpe
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { List, ListItemButton, ListItemText } from "@mui/material";
+import { List } from "@mui/material";
 import { loginInProcess } from "../../auth/Auth";
 import AdminNavigation from "./AdminNavigation";
+import { CustomLink } from "./CustomLink";
 
 const theme = createTheme({
   palette: {
@@ -41,33 +42,8 @@ const MainNavigation = () => {
                 alt="cat logo."
                 src={logo}
               />
-
-              <ListItemButton
-                component={NavLink}
-                to="/articles"
-                sx={{
-                  textAlign: "center",
-                  color: "text.secondary",
-                  "&.active": {
-                    color: "text.primary",
-                  },
-                }}
-              >
-                <ListItemText>Recent Articles</ListItemText>
-              </ListItemButton>
-              <ListItemButton
-                component={NavLink}
-                to="/about"
-                sx={{
-                  textAlign: "center",
-                  color: "text.secondary",
-                  "&.active": {
-                    color: "text.primary",
-                  },
-                }}
-              >
-                <ListItemText>About</ListItemText>
-              </ListItemButton>
+              <CustomLink to="/articles">Recent Articles</CustomLink>
+              <CustomLink to="/about">About</CustomLink>
             </List>
             {loginInProcess ? (
               <AdminNavigation />

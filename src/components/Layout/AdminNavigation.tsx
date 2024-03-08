@@ -1,6 +1,7 @@
-import { List, ListItemButton, ListItemText, Button } from "@mui/material";
+import { List, Button } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import User from "../Articles/User";
+import { CustomLink } from "./CustomLink";
 
 const AdminNavigation = () => {
   return (
@@ -12,19 +13,7 @@ const AdminNavigation = () => {
         marginLeft: "auto",
       }}
     >
-      <ListItemButton
-        component={NavLink}
-        to="/admin"
-        sx={{
-          textAlign: "center",
-          color: "text.secondary",
-          "&.active": {
-            color: "text.primary",
-          },
-        }}
-      >
-        <ListItemText>My Articles</ListItemText>
-      </ListItemButton>
+      <CustomLink to="/admin">My Articles</CustomLink>
       <Button variant="text" component={NavLink} to="/admin/new">
         Create Article
       </Button>
