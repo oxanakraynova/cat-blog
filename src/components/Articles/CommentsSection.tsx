@@ -6,15 +6,13 @@ import {
   ArticleData,
   bearerToken,
   getArticleById,
-  getTenantById,
-  Tenant,
-  tenantId,
 } from "../../services/apiService";
 import axios from "axios";
 import { useFormik } from "formik";
 import CommentCard from "./CommentCard";
 import { useParams } from "react-router-dom";
 import Loading from "../UI/Loading";
+import { useAuth } from "../../auth/AuthProvider";
 
 export type CommentsProps = {
   articleId: string;
@@ -34,8 +32,9 @@ export interface InitialValuesForm {
 function CommentsSection() {
   const [comments, setComments] = useState<CommentsProps[]>([]);
   const [article, setArticle] = useState<ArticleData | null>(null);
-  const [tenant, setTenant] = useState<Tenant | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { tenant } = useAuth();
 
   const params = useParams<{ articleId?: string }>();
 
@@ -60,22 +59,6 @@ function CommentsSection() {
     };
     fetchArticle();
   }, [params.articleId]);
-
-  useEffect(() => {
-    const fetchAuthor = async () => {
-      try {
-        setLoading(true);
-        const response = await getTenantById(tenantId);
-        setTenant(response);
-      } catch (error) {
-        console.error("Error fetching tenant:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAuthor();
-  }, []);
 
   const formik = useFormik({
     initialValues: {

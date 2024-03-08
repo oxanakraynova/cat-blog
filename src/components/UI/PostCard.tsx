@@ -12,15 +12,8 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  apiKey,
-  ArticleData,
-  bearerToken,
-  getTenantById,
-  Tenant,
-  tenantId,
-} from "../../services/apiService";
-import Loading from "./Loading";
+import { useAuth } from "../../auth/AuthProvider";
+import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
 
 type PostCardProps = {
   article: ArticleData;
@@ -31,28 +24,12 @@ function PostCard({ article }: PostCardProps) {
     null
   );
   const [imageData, setImageData] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [tenant, setTenant] = useState<Tenant | null>(null);
+
+  const { tenant } = useAuth();
 
   const handleReadMore = (articleId: string) => {
     setExpandedArticleId(articleId);
   };
-
-  useEffect(() => {
-    const fetchAuthor = async () => {
-      try {
-        setLoading(true);
-        const response = await getTenantById(tenantId);
-        setTenant(response);
-      } catch (error) {
-        console.error("Error fetching tenant:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAuthor();
-  }, []);
 
   function formatDate(dateStr: string) {
     const date = new Date(dateStr);
@@ -94,10 +71,6 @@ function PostCard({ article }: PostCardProps) {
       }
     };
   }, [article.imageId]);
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <Card

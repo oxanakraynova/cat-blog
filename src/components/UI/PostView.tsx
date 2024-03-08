@@ -2,17 +2,10 @@ import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Articles/CommentsSection";
 import ReactMarkdown from "react-markdown";
-import {
-  apiKey,
-  ArticleData,
-  bearerToken,
-  getTenantById,
-  Tenant,
-  tenantId,
-} from "../../services/apiService";
+import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "./Loading";
+import { useAuth } from "../../auth/AuthProvider";
 
 function PostView({
   article,
@@ -22,8 +15,8 @@ function PostView({
   articles: ArticleData[];
 }) {
   const [imageData, setImageData] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [tenant, setTenant] = useState<Tenant | null>(null);
+
+  const { tenant } = useAuth();
 
   useEffect(() => {
     const fetchImageData = async () => {
@@ -54,22 +47,6 @@ function PostView({
     }
   }, [article.imageId]);
 
-  useEffect(() => {
-    const fetchAuthor = async () => {
-      try {
-        setLoading(true);
-        const response = await getTenantById(tenantId);
-        setTenant(response);
-      } catch (error) {
-        console.error("Error fetching tenant:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAuthor();
-  }, []);
-
   const createdAtDate = new Date(article.createdAt!);
   const formattedDate = createdAtDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -77,9 +54,6 @@ function PostView({
     day: "numeric",
   });
 
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <>
       <Grid container spacing={30}>

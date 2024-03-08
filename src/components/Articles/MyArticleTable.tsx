@@ -11,44 +11,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import { Link, useLoaderData } from "react-router-dom";
 import { Checkbox, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ApiResponse,
   ArticleData,
   deleteArticle,
   getArticles,
-  getTenantById,
-  Tenant,
-  tenantId,
 } from "../../services/apiService";
-import Loading from "../UI/Loading";
+import { useAuth } from "../../auth/AuthProvider";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [tenant, setTenant] = useState<Tenant | null>(null);
 
   const articles: ArticleData[] = useLoaderData() as ArticleData[];
 
-  useEffect(() => {
-    const fetchAuthor = async () => {
-      try {
-        setLoading(true);
-        const response = await getTenantById(tenantId);
-        setTenant(response);
-      } catch (error) {
-        console.error("Error fetching tenant:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAuthor();
-  }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
+  const { tenant } = useAuth();
 
   if (!articles.length) {
     return (
@@ -83,8 +60,6 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   const handleDeleteClick = async (id: string) => {
     try {
-      setLoading(true);
-
       await deleteArticle(id);
       console.log("Article deleted successfully.");
 
@@ -94,8 +69,6 @@ function MyArticleTable({}: { article: ArticleData }) {
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 
