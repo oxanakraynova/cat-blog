@@ -1,6 +1,6 @@
 import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
-import CommentsSection from "../Articles/CommentsSection";
+import CommentsSection from "../Comments/CommentsSection";
 import ReactMarkdown from "react-markdown";
 import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
 import { useEffect, useState } from "react";

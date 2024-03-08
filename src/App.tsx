@@ -13,7 +13,7 @@ import LoginPage from "./components/pages/Login";
 import AdminArticlesPage from "./components/pages/AdminArticles";
 import NewArticlePage from "./components/pages/NewArticle";
 import EditArticlePage from "./components/pages/EditArticle";
-import RegistrationForm from "./components/RegistrationForm";
+import RegistrationForm from "./components/Forms/RegistrationForm";
 import { lazy } from "react";
 import NotFound from "./components/pages/NotFound";
 import { AuthProvider } from "./auth/AuthProvider";
