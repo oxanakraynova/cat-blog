@@ -23,6 +23,7 @@ import Loading from "../UI/Loading";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
+
   const [articles, setArticles] = useState<ArticleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -82,8 +83,6 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   const handleDeleteClick = async (id: string) => {
     try {
-      setLoading(true);
-
       await deleteArticle(id);
       console.log("Article deleted successfully.");
 
@@ -93,8 +92,6 @@ function MyArticleTable({}: { article: ArticleData }) {
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -19,6 +19,7 @@ import NotFound from "./components/pages/NotFound";
 import { AuthProvider } from "./auth/AuthProvider";
 import { articlesLoader } from "./components/Articles/ArticleList";
 import ArticlesError from "./components/Articles/ArticlesError";
+import { ArticleProvider } from "./auth/ArticleProvider";
 
 const RootLayout = lazy(() => import("./components/Layout/Root"));
 
@@ -54,7 +55,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ArticleProvider>
+        <RouterProvider router={router} />
+      </ArticleProvider>
     </AuthProvider>
   );
 }

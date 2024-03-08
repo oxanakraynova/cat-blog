@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useLoaderData, useParams } from "react-router-dom";
+import { useArticle } from "../../auth/ArticleProvider";
 import { ArticleData, getArticleById } from "../../services/apiService";
-import articleList from "../Articles/articleList.json";
 import PostView from "../UI/PostView";
 
 function ArticleDetailPage() {
@@ -9,7 +9,9 @@ function ArticleDetailPage() {
 
   const params = useParams<{ articleId?: string }>();
 
-  const filteredRelatedArticles = articleList.filter(
+  const { articles } = useArticle();
+
+  const filteredRelatedArticles = articles.filter(
     (article) => article.articleId !== params.articleId
   );
 
