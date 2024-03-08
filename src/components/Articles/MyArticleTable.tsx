@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditOutlined";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { Checkbox, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
@@ -25,26 +25,10 @@ import Loading from "../UI/Loading";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
-  const [articles, setArticles] = useState<ArticleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [tenant, setTenant] = useState<Tenant | null>(null);
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        setLoading(true);
-
-        const response: ApiResponse = await getArticles();
-        setArticles(response.items || []);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticles();
-  }, []);
+  const articles: ArticleData[] = useLoaderData() as ArticleData[];
 
   useEffect(() => {
     const fetchAuthor = async () => {
@@ -106,7 +90,7 @@ function MyArticleTable({}: { article: ArticleData }) {
 
       const response: ApiResponse = await getArticles();
 
-      setArticles(response.items || []);
+      // setArticles(response.items || []);
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;

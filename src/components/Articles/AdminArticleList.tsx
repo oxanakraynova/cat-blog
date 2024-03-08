@@ -14,7 +14,7 @@ function AdminArticleList(article: ArticleData) {
         sx={{ marginLeft: "5%" }}
       >
         <Header title="My articles" />
-        <Button variant="contained" component={NavLink} to="/admin/new">
+        <Button variant="contained" component={NavLink} to="new">
           Create new article
         </Button>
       </Stack>

@@ -1,37 +1,10 @@
 import { Grid } from "@mui/material";
 import PostCard from "../UI/PostCard";
-import { useEffect, useState } from "react";
-import {
-  ApiResponse,
-  ArticleData,
-  getArticles,
-} from "../../services/apiService";
-import Loading from "../UI/Loading";
+import { ArticleData, getArticles } from "../../services/apiService";
+import { useLoaderData } from "react-router-dom";
 
 function ArticleList() {
-  const [articles, setArticles] = useState<ArticleData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        setLoading(true);
-
-        const response: ApiResponse = await getArticles();
-        setArticles(response.items || []);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticles();
-  }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
+  const articles: ArticleData[] = useLoaderData() as ArticleData[];
 
   return (
     <>
@@ -47,3 +20,13 @@ function ArticleList() {
 }
 
 export default ArticleList;
+
+export const articlesLoader = async () => {
+  const response = await getArticles();
+
+  if (!response) {
+    throw Error("Could not fetch the articles");
+  }
+
+  return response.items;
+};
