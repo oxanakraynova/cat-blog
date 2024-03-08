@@ -3,10 +3,12 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import photo from "../../assets/1.jpg";
 import { useNavigate } from "react-router-dom";
-import { loginInProcess } from "../../auth/Auth";
+import { useAuth } from "../../auth/AuthProvider";
 
 function UserLogin() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const { logout } = useAuth();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,13 +21,15 @@ function UserLogin() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("access_token");
+    logout();
     navigate("/articles");
   };
 
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
-      {loginInProcess && (
+      {isAuthenticated && (
         <>
           <IconButton
             size="large"

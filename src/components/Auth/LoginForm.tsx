@@ -6,10 +6,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
+import { useAuth } from "../../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+  const { login } = useAuth();
+
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -28,22 +30,7 @@ export default function LoginForm() {
     }),
     onSubmit: async (values) => {
       try {
-        const headers = {
-          "X-API-KEY": values.apiKey,
-        };
-
-        const response = await axios.post(
-          "https://fullstack.exercise.applifting.cz/login",
-          {
-            username: values.username,
-            password: values.password,
-          },
-          { headers }
-        );
-
-        const accessToken = response.data.access_token;
-        localStorage.setItem("access_token", accessToken);
-        console.log("Login successful. Access Token:", accessToken);
+        await login(values.username, values.password, values.apiKey);
         navigate("/admin");
       } catch (error) {
         console.error("Error logging in:", error);

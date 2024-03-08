@@ -8,9 +8,9 @@ import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { List } from "@mui/material";
-import { loginInProcess } from "../../auth/Auth";
 import AdminNavigation from "./AdminNavigation";
 import { CustomLink } from "./CustomLink";
+import { useAuth } from "../../auth/AuthProvider";
 
 const theme = createTheme({
   palette: {
@@ -21,6 +21,7 @@ const theme = createTheme({
 });
 
 const MainNavigation = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }}>
@@ -45,7 +46,7 @@ const MainNavigation = () => {
               <CustomLink to="/articles">Recent Articles</CustomLink>
               <CustomLink to="/about">About</CustomLink>
             </List>
-            {loginInProcess ? (
+            {isAuthenticated ? (
               <AdminNavigation />
             ) : (
               <Button
