@@ -42,7 +42,7 @@ const router = createBrowserRouter(
         />
       </Route>
       <Route path="admin" element={<RootLayout />}>
-        <Route index element={<AdminArticlesPage />} loader={articlesLoader} />
+        <Route index element={<AdminArticlesPage />} />
         <Route path="new" element={<NewArticlePage />} />
         <Route path=":articleId/edit" element={<EditArticlePage />} />
       </Route>

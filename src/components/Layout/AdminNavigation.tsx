@@ -14,7 +14,7 @@ const AdminNavigation = () => {
       }}
     >
       <CustomLink to="/admin">My Articles</CustomLink>
-      <Button variant="text" component={NavLink} to="/new">
+      <Button variant="text" component={NavLink} to="/admin/new">
         Create Article
       </Button>
       <User />

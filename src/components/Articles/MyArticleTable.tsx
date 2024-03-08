@@ -9,9 +9,9 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditOutlined";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Checkbox, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ApiResponse,
   ArticleData,
@@ -19,11 +19,33 @@ import {
   getArticles,
 } from "../../services/apiService";
 import { useAuth } from "../../auth/AuthProvider";
+import Loading from "../UI/Loading";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
+  const [articles, setArticles] = useState<ArticleData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const articles: ArticleData[] = useLoaderData() as ArticleData[];
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+
+        const response: ApiResponse = await getArticles();
+        setArticles(response.items || []);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        throw error;
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const { tenant } = useAuth();
 
@@ -60,15 +82,19 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   const handleDeleteClick = async (id: string) => {
     try {
+      setLoading(true);
+
       await deleteArticle(id);
       console.log("Article deleted successfully.");
 
       const response: ApiResponse = await getArticles();
 
-      // setArticles(response.items || []);
+      setArticles(response.items || []);
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,11 +150,7 @@ function MyArticleTable({}: { article: ArticleData }) {
                 <TableCell>
                   {tenant ? tenant.name : "No author available."}
                 </TableCell>
-                <TableCell>
-                  {article.comments
-                    ? article.comments
-                    : "No comments available."}
-                </TableCell>
+                <TableCell>{article.comments ? article.comments : 0}</TableCell>
                 <TableCell>
                   <Stack direction="row">
                     <Link to={`/admin/${article.articleId}/edit`}>

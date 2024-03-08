@@ -162,7 +162,7 @@ function CommentsSection() {
           component="div"
           sx={{ marginTop: "1rem", marginLeft: "15%" }}
         >
-          No comments available.
+          0
         </Typography>
       )}
     </form>

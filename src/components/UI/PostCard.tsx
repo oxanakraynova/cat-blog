@@ -151,7 +151,7 @@ function PostCard({ article }: PostCardProps) {
               >
                 {article.comments
                   ? article.comments + " comments"
-                  : "No comments available."}
+                  : 0 + " comments"}
               </Typography>
             </Stack>
           </CardActions>
