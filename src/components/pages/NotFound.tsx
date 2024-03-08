@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import MainNavigation from "../Layout/MainNavigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-function ErrorPage() {
+function NotFound() {
   return (
     <>
       <MainNavigation />
@@ -39,4 +39,4 @@ function ErrorPage() {
   );
 }
 
-export default ErrorPage;
+export default NotFound;
