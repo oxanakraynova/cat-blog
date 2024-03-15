@@ -13,7 +13,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
-import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
+import { apiKey, bearerToken } from "../../services/apiService";
+import { ArticleData } from "../../services/articleService";
 
 type PostCardProps = {
   article: ArticleData;

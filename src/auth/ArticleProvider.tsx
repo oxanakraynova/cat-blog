@@ -1,5 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { ApiResponse, ArticleData, getArticles } from "../services/apiService";
+import {
+  ArticleData,
+  ApiResponse,
+  getArticles,
+} from "../services/articleService";
 import { Children } from "../types/common";
 
 interface ArticleContextType {

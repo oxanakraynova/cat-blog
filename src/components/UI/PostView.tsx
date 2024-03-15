@@ -2,10 +2,11 @@ import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Comments/CommentsSection";
 import ReactMarkdown from "react-markdown";
-import { apiKey, ArticleData, bearerToken } from "../../services/apiService";
+import { apiKey, bearerToken } from "../../services/apiService";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../auth/AuthProvider";
+import { ArticleData } from "../../services/articleService";
 
 function PostView({
   article,
@@ -108,7 +109,7 @@ function PostView({
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </CardContent>
           </Card>
-          <CommentsSection />
+          <CommentsSection article={article} />
         </Grid>
         <RelatedArticlesSection
           openedArticleId={article.articleId!}

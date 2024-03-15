@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import PostCard from "../UI/PostCard";
-import { ArticleData, getArticles } from "../../services/apiService";
+import { ArticleData, getArticles } from "../../services/articleService";
 import { useLoaderData } from "react-router-dom";
 
 function ArticleList() {
