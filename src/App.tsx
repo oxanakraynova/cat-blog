@@ -20,6 +20,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { articlesLoader } from "./components/Articles/ArticleList";
 import ArticlesError from "./components/Articles/ArticlesError";
 import { ArticleProvider } from "./auth/ArticleProvider";
+import { action as commentAction } from "./components/Comments/CommentsSection";
 
 const RootLayout = lazy(() => import("./components/Layout/Root"));
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
           path=":articleId"
           element={<ArticleDetailPage />}
           loader={articleDetailsLoader}
+          action={commentAction}
         />
       </Route>
       <Route path="admin" element={<RootLayout />}>
