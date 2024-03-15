@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import ArticleForm from "../Articles/ArticleForm";
+import ArticleForm from "../Forms/ArticleForm/ArticleForm";
 
 function EditArticlePage() {
   return (

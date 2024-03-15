@@ -26,7 +26,7 @@ function ArticleDetailPage() {
 
 export default ArticleDetailPage;
 
-export const articleDetailsLoader = async ({ params }: { params: any }) => {
+export const loader = async ({ params }: { params: any }) => {
   const { articleId } = params;
   if (!articleId) {
     console.error("Article ID is undefined");

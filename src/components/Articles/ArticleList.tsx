@@ -21,7 +21,7 @@ function ArticleList() {
 
 export default ArticleList;
 
-export const articlesLoader = async () => {
+export const loader = async () => {
   const response = await getArticles();
 
   if (!response) {

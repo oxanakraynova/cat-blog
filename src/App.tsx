@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import AboutPage from "./components/pages/About";
 import ArticleDetailPage, {
-  articleDetailsLoader,
+  loader as articleDetailsLoader,
 } from "./components/pages/ArticleDetail";
 import ArticlesPage from "./components/pages/Articles";
 import LoginPage from "./components/pages/Login";
@@ -17,7 +17,7 @@ import RegistrationForm from "./components/Forms/RegistrationForm";
 import { lazy } from "react";
 import NotFound from "./components/pages/NotFound";
 import { AuthProvider } from "./auth/AuthProvider";
-import { articlesLoader } from "./components/Articles/ArticleList";
+import { loader as articlesLoader } from "./components/Articles/ArticleList";
 import ArticlesError from "./components/Articles/ArticlesError";
 import { ArticleProvider } from "./auth/ArticleProvider";
 import { action as commentAction } from "./components/Comments/CommentsSection";
@@ -47,7 +47,11 @@ const router = createBrowserRouter(
       <Route path="admin" element={<RootLayout />}>
         <Route index element={<AdminArticlesPage />} />
         <Route path="new" element={<NewArticlePage />} />
-        <Route path=":articleId/edit" element={<EditArticlePage />} />
+        <Route
+          path=":articleId/edit"
+          element={<EditArticlePage />}
+          loader={articleDetailsLoader}
+        />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>

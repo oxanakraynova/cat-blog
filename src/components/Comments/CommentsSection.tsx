@@ -46,8 +46,8 @@ function CommentsSection({ article }: { article: ArticleData }) {
       try {
         const commentData = {
           articleId: article?.articleId,
-          content: values.content,
           author: tenant?.name,
+          content: values.content,
         };
 
         const response = await action(commentData);
@@ -109,20 +109,10 @@ function CommentsSection({ article }: { article: ArticleData }) {
           }
         />
       </Card>
-      {comment.length > 0 ? (
+      {comment.length > 0 &&
         comment.map((comment) => (
           <CommentCard key={comment.commentId} comment={comment} />
-        ))
-      ) : (
-        <Typography
-          variant="subtitle1"
-          color="text.primary"
-          component="div"
-          sx={{ marginTop: "1rem", marginLeft: "15%" }}
-        >
-          0
-        </Typography>
-      )}
+        ))}
     </Form>
   );
 }

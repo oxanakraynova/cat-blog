@@ -1,6 +1,8 @@
 import axios from "axios";
 import { InitialValuesForm } from "../components/Comments/CommentsSection";
-import { apiKey, bearerToken, baseUrl } from "./apiService";
+import { apiKey, bearerToken } from "./apiService";
+
+export const commentUrl = "https://fullstack.exercise.applifting.cz/comments";
 
 export const createComment = async (
   data: InitialValuesForm
@@ -12,7 +14,7 @@ export const createComment = async (
       Authorization: bearerToken,
     };
 
-    const response = await axios.post(`${baseUrl}/comments`, data, {
+    const response = await axios.post(`${commentUrl}`, data, {
       headers,
     });
     return response.data;

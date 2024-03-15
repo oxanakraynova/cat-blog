@@ -7,17 +7,17 @@ import {
   Input,
   CardMedia,
 } from "@mui/material";
-import { apiKey, bearerToken } from "../../services/apiService";
-import Header from "../UI/Header";
+import { apiKey, bearerToken } from "../../../services/apiService";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ArticleData, getArticleById } from "../../services/articleService";
-import { deleteImage } from "../../services/imageService";
+import { ArticleData, getArticleById } from "../../../services/articleService";
+import { deleteImage } from "../../../services/imageService";
+import FormHeader from "./FormHeader";
 
-interface ArticleFormProps {
+export interface ArticleFormProps {
   mode: "create" | "edit";
 }
 
@@ -34,8 +34,6 @@ function ArticleForm({ mode }: ArticleFormProps) {
   const generatePerex = (content: string) => {
     return content.slice(0, 200);
   };
-
-  const pageTitle = mode === "create" ? "Create New Article" : "Edit Article";
 
   const { articleId } = useParams<{ articleId: string }>();
 
@@ -223,18 +221,8 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
-        <Stack
-          direction="row"
-          spacing={5}
-          alignItems="flex-start"
-          sx={{ marginLeft: "14rem", width: "37.5rem", marginTop: "6.5rem" }}
-        >
-          <Header title={pageTitle} />
-          <Button variant="contained" type="submit">
-            Publish Article
-          </Button>
-        </Stack>
+      <Form method="post" onSubmit={formik.handleSubmit}>
+        <FormHeader mode={mode} />
         <Box
           sx={{
             marginTop: 1,
@@ -291,17 +279,20 @@ function ArticleForm({ mode }: ArticleFormProps) {
                     src={imageData}
                     alt="Article Image"
                     sx={{
-                      maxWidth: "10rem",
+                      maxWidth: "12rem",
                       height: "100%",
                       objectFit: "cover",
-                      maxHeight: "5rem",
-                      paddingBottom: 2,
+                      maxHeight: "6rem",
                     }}
                   />
                   <Stack
                     direction="row"
                     spacing={2}
                     justifyContent="flex-start"
+                    sx={{
+                      marginTop: "0.5rem",
+                      marginBottom: "0.5rem",
+                    }}
                   >
                     <Button variant="text" onClick={handleUploadImage}>
                       Upload New
@@ -354,9 +345,21 @@ function ArticleForm({ mode }: ArticleFormProps) {
             </Box>
           </Box>
         </Box>
-      </form>
+      </Form>
     </>
   );
 }
 
 export default ArticleForm;
+
+// export async function action({ request }) {
+//   const data = await request.formData();
+//   const articleData = {
+
+//   }
+//   const response = await axios.post(
+//     "https://fullstack.exercise.applifting.cz/articles",
+//     articleData,
+//     { headers }
+//   );
+// }
