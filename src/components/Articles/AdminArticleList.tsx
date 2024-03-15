@@ -1,6 +1,6 @@
 import { Button, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { ArticleData } from "../../services/apiService";
+import { ArticleData } from "../../services/articleService";
 import Header from "../UI/Header";
 import MyArticleTable from "./MyArticleTable";
 

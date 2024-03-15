@@ -5,13 +5,7 @@ function AdminArticlesPage() {
   return (
     <>
       <Container maxWidth="lg">
-        <AdminArticleList
-          id={""}
-          title={""}
-          perex={""}
-          author={""}
-          comments={0}
-        />
+        <AdminArticleList articleId={""} title={""} />
       </Container>
     </>
   );

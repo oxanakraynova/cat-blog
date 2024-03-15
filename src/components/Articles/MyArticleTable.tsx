@@ -23,9 +23,10 @@ import {
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
-
   const [articles, setArticles] = useState<ArticleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { tenant } = useAuth();
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -47,8 +48,6 @@ function MyArticleTable({}: { article: ArticleData }) {
   if (loading) {
     return <Loading />;
   }
-
-  const { tenant } = useAuth();
 
   if (!articles.length) {
     return (
