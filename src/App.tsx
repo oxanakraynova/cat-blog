@@ -26,7 +26,7 @@ const RootLayout = lazy(() => import("./components/Layout/Root"));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      <Route index element={<ArticlesPage />} />
+      <Route index element={<ArticlesPage />} loader={articlesLoader} />
       <Route path="about" element={<AboutPage />} />
       <Route path="login" element={<LoginPage />} />
       <Route path="register" element={<RegistrationForm />} />

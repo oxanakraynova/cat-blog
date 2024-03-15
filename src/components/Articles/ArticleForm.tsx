@@ -97,8 +97,18 @@ function ArticleForm({ mode }: ArticleFormProps) {
     validationSchema:
       mode === "create"
         ? yup.object({
-            title: yup.string().trim().required("Title is required"),
-            content: yup.string().trim().required("Content is required"),
+            title: yup
+              .string()
+              .min(2, "Too Short!")
+              .max(100, "Too Long!")
+              .trim()
+              .required("Title is required"),
+            content: yup
+              .string()
+              .min(2, "Too Short!")
+              .max(10000, "Too Long!")
+              .trim()
+              .required("Content is required"),
           })
         : yup.object().shape({}),
     onSubmit: async (values: InitialValuesForm) => {
