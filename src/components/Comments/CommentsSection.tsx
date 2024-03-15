@@ -1,18 +1,12 @@
 import { Avatar, Card, CardHeader, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import photo from "../../assets/1.jpg";
-import {
-  apiKey,
-  ArticleData,
-  bearerToken,
-  getArticleById,
-} from "../../services/apiService";
-import axios from "axios";
+import { ArticleData } from "../../services/articleService";
 import { useFormik } from "formik";
 import CommentCard from "./CommentCard";
-import { useParams } from "react-router-dom";
-import Loading from "../UI/Loading";
+import { Form } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
+import { createComment } from "../../services/commentService";
 
 export type CommentsProps = {
   articleId: string;
@@ -27,38 +21,20 @@ export interface InitialValuesForm {
   articleId: string | undefined;
   author: string | undefined;
   content: string;
+  commentId?: string;
+  postedAt?: string;
+  score?: number;
 }
 
-function CommentsSection() {
-  const [comments, setComments] = useState<CommentsProps[]>([]);
-  const [article, setArticle] = useState<ArticleData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+export async function action(commentData: any) {
+  const comment = await createComment(commentData);
+  return { comment };
+}
+
+function CommentsSection({ article }: { article: ArticleData }) {
+  const [comment, setComment] = useState<InitialValuesForm[]>([]);
 
   const { tenant } = useAuth();
-
-  const params = useParams<{ articleId?: string }>();
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        setLoading(true);
-
-        const articleId = params.articleId;
-        if (!articleId) {
-          console.error("Article ID is undefined");
-          return;
-        }
-        const response = await getArticleById(articleId);
-        setArticle(response);
-      } catch (error) {
-        console.error("Error fetching article:", error);
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticle();
-  }, [params.articleId]);
 
   const formik = useFormik({
     initialValues: {
@@ -68,43 +44,25 @@ function CommentsSection() {
     },
     onSubmit: async (values: InitialValuesForm, { resetForm }) => {
       try {
-        setLoading(true);
         const commentData = {
           articleId: article?.articleId,
           content: values.content,
           author: tenant?.name,
         };
 
-        const headers = {
-          "Content-Type": "application/json",
-          "X-API-KEY": apiKey,
-          Authorization: bearerToken,
-        };
-
-        const response = await axios.post(
-          "https://fullstack.exercise.applifting.cz/comments",
-          commentData,
-          { headers }
-        );
-
+        const response = await action(commentData);
         console.log("Comment Upload Response:", response);
 
-        setComments((prevComments) => [...prevComments, response.data]);
+        setComment((prevComments) => [...prevComments, response.comment]);
         resetForm();
       } catch (error) {
         console.error("Error:", error);
-      } finally {
-        setLoading(false);
       }
     },
   });
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <Form method="post" onSubmit={formik.handleSubmit}>
       <Card
         sx={{
           display: "flex",
@@ -121,7 +79,7 @@ function CommentsSection() {
           component="div"
           sx={{ fontWeight: "bold", marginTop: "0.5rem", marginLeft: "1rem" }}
         >
-          Comments ({comments.length})
+          Comments ({comment.length})
         </Typography>
         <CardHeader
           avatar={
@@ -151,8 +109,8 @@ function CommentsSection() {
           }
         />
       </Card>
-      {comments.length > 0 ? (
-        comments.map((comment) => (
+      {comment.length > 0 ? (
+        comment.map((comment) => (
           <CommentCard key={comment.commentId} comment={comment} />
         ))
       ) : (
@@ -165,7 +123,7 @@ function CommentsSection() {
           0
         </Typography>
       )}
-    </form>
+    </Form>
   );
 }
 export default CommentsSection;

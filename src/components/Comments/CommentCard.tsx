@@ -7,9 +7,9 @@ import {
   Box,
   Divider,
 } from "@mui/material";
-import { CommentsProps } from "./CommentsSection";
+import { CommentsProps, InitialValuesForm } from "./CommentsSection";
 
-function CommentCard({ comment }: { comment: CommentsProps }) {
+function CommentCard({ comment }: { comment: InitialValuesForm }) {
   // const handleUpvote = (commentId: number) => {
   //   const updatedComments = comments.map((comment) => {
   //     if (comment.id === commentId) {
