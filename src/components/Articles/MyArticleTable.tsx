@@ -82,12 +82,17 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   const handleDeleteClick = async (id: string) => {
     try {
-      await deleteArticle(id);
-      console.log("Article deleted successfully.");
+      const proceed = window.confirm("Are you sure?");
+      if (proceed) {
+        await deleteArticle(id);
+        console.log("Article deleted successfully.");
 
-      const response: ApiResponse = await getArticles();
+        const response: ApiResponse = await getArticles();
 
-      setArticles(response.items || []);
+        setArticles(response.items || []);
+      } else {
+        console.error("Error fetching article:");
+      }
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;

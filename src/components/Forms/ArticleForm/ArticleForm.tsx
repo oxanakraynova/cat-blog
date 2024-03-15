@@ -351,15 +351,3 @@ function ArticleForm({ mode }: ArticleFormProps) {
 }
 
 export default ArticleForm;
-
-// export async function action({ request }) {
-//   const data = await request.formData();
-//   const articleData = {
-
-//   }
-//   const response = await axios.post(
-//     "https://fullstack.exercise.applifting.cz/articles",
-//     articleData,
-//     { headers }
-//   );
-// }
