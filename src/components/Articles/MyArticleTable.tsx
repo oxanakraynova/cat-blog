@@ -12,14 +12,14 @@ import EditIcon from "@mui/icons-material/EditOutlined";
 import { Link } from "react-router-dom";
 import { Checkbox, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import {
-  ApiResponse,
-  ArticleData,
-  deleteArticle,
-  getArticles,
-} from "../../services/apiService";
 import { useAuth } from "../../auth/AuthProvider";
 import Loading from "../UI/Loading";
+import {
+  ArticleData,
+  ApiResponse,
+  getArticles,
+  deleteArticle,
+} from "../../services/articleService";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);

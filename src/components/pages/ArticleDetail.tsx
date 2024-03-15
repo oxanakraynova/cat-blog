@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useLoaderData, useParams } from "react-router-dom";
 import { useArticle } from "../../auth/ArticleProvider";
-import { ArticleData, getArticleById } from "../../services/apiService";
+import { ArticleData, getArticleById } from "../../services/articleService";
 import PostView from "../UI/PostView";
 
 function ArticleDetailPage() {

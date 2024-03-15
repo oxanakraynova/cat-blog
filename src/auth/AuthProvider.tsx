@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { getTenantById, Tenant, tenantId } from "../services/apiService";
+import { getTenantById, Tenant, tenantId } from "../services/tenantService";
 import { Children } from "../types/common";
 
 interface AuthContextType {
