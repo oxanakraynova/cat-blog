@@ -7,12 +7,15 @@ import {
   Input,
   CardMedia,
 } from "@mui/material";
-import { apiKey, bearerToken } from "../../../services/apiService";
 import { useFormik } from "formik";
 import { Form, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { ArticleData, getArticleById } from "../../../services/articleService";
+import {
+  ArticleData,
+  createArticle,
+  getArticleById,
+  updateArticle,
+} from "../../../services/articleService";
 import {
   deleteImage,
   getImageById,
@@ -128,12 +131,6 @@ function ArticleForm({ mode }: ArticleFormProps) {
           }
         }
 
-        const headers = {
-          "Content-Type": "application/json",
-          "X-API-KEY": apiKey,
-          Authorization: bearerToken,
-        };
-
         const articleData = {
           title: values.title,
           content: values.content,
@@ -142,18 +139,10 @@ function ArticleForm({ mode }: ArticleFormProps) {
         };
 
         if (mode === "CREATE") {
-          await axios.post(
-            "https://fullstack.exercise.applifting.cz/articles",
-            articleData,
-            { headers }
-          );
+          await createArticle(articleData);
           console.log("Article created successfully.");
         } else {
-          await axios.patch(
-            `https://fullstack.exercise.applifting.cz/articles/${articleId}`,
-            articleData,
-            { headers }
-          );
+          await updateArticle(articleId, articleData);
           console.log("Article updated successfully.");
         }
 

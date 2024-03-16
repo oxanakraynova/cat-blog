@@ -34,7 +34,7 @@ export const postImage = async (data: FormData): Promise<ImageInfo> => {
       Authorization: bearerToken,
     };
 
-    const response = await axios.post(`${imageUrl}`, data, { headers });
+    const response = await axios.post(imageUrl, data, { headers });
     return response.data;
   } catch (error) {
     console.error("Error uploading an image:", error);

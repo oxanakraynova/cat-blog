@@ -5,12 +5,12 @@ import MainNavigation from "./MainNavigation";
 
 function RootLayout() {
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <MainNavigation />
       <Suspense fallback={<Loading />}>
         <Outlet />
       </Suspense>
-    </>
+    </Suspense>
   );
 }
 

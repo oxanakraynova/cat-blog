@@ -17,6 +17,13 @@ export interface ApiResponse {
   pagination: {};
 }
 
+export interface ArticleValuesForm {
+  title: string;
+  content: string;
+  imageId: string | null;
+  perex: string;
+}
+
 const sortBy = "createdAt";
 const sortOrder = "desc";
 const articleUrl = "https://fullstack.exercise.applifting.cz/articles";
@@ -59,12 +66,12 @@ export const getArticleById = async (
 };
 
 export const createArticle = async (
-  data: ArticleData
+  data: ArticleValuesForm
 ): Promise<ArticleData> => {
   try {
     const headers = {
       "Content-Type": "application/json",
-      apiKey: apiKey,
+      "X-API-KEY": apiKey,
       Authorization: bearerToken,
     };
 
@@ -77,16 +84,19 @@ export const createArticle = async (
 };
 
 export const updateArticle = async (
-  data: ArticleData
+  articleId: string | undefined,
+  data: ArticleValuesForm
 ): Promise<ArticleData> => {
   try {
     const headers = {
       "Content-Type": "application/json",
-      apiKey: apiKey,
+      "X-API-KEY": apiKey,
       Authorization: bearerToken,
     };
 
-    const response = await axios.patch(articleUrl, data, { headers });
+    const response = await axios.patch(`${articleUrl}/${articleId}`, data, {
+      headers,
+    });
     return response.data;
   } catch (error) {
     console.error("Error updating article:", error);
