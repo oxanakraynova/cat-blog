@@ -72,29 +72,30 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
   const navigate = useNavigate();
 
+  const creationSchema = yup.object({
+    title: yup
+      .string()
+      .min(2, "Too Short!")
+      .max(100, "Too Long!")
+      .trim()
+      .required("Title is required"),
+    content: yup
+      .string()
+      .min(2, "Too Short!")
+      .max(10000, "Too Long!")
+      .trim()
+      .required("Content is required"),
+  });
+
+  const editionSchema = yup.object().shape({});
+
   const formik = useFormik({
     initialValues: {
       title: article?.title || "",
       content: article?.content || "",
     },
     enableReinitialize: true,
-    validationSchema:
-      mode === "create"
-        ? yup.object({
-            title: yup
-              .string()
-              .min(2, "Too Short!")
-              .max(100, "Too Long!")
-              .trim()
-              .required("Title is required"),
-            content: yup
-              .string()
-              .min(2, "Too Short!")
-              .max(10000, "Too Long!")
-              .trim()
-              .required("Content is required"),
-          })
-        : yup.object().shape({}),
+    validationSchema: mode === "create" ? creationSchema : editionSchema,
     onSubmit: async (values: InitialValuesForm) => {
       try {
         const perex = generatePerex(values.content!);
