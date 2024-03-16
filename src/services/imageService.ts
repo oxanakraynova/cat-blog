@@ -26,11 +26,11 @@ export const getImageById = async (imageId: string): Promise<ArrayBuffer> => {
   }
 };
 
-export const postImage = async (data: File | null): Promise<ImageInfo> => {
+export const postImage = async (data: FormData): Promise<ImageInfo> => {
   try {
     const headers = {
       "Content-Type": "multipart/form-data",
-      apiKey: apiKey,
+      "X-API-KEY": apiKey,
       Authorization: bearerToken,
     };
 

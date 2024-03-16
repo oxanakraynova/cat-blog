@@ -14,7 +14,11 @@ import { Form, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ArticleData, getArticleById } from "../../../services/articleService";
-import { deleteImage, getImageById } from "../../../services/imageService";
+import {
+  deleteImage,
+  getImageById,
+  postImage,
+} from "../../../services/imageService";
 import FormHeader from "./FormHeader";
 
 export interface ArticleFormProps {
@@ -106,17 +110,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
           const formData = new FormData();
           formData.append("image", image);
 
-          const headers = {
-            "Content-Type": "multipart/form-data",
-            "X-API-KEY": apiKey,
-            Authorization: bearerToken,
-          };
-
-          const response = await axios.post(
-            "https://fullstack.exercise.applifting.cz/images",
-            formData,
-            { headers }
-          );
+          const response = await postImage(formData);
 
           console.log("Image Upload Response:", response);
 
@@ -140,7 +134,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
             return undefined;
           };
 
-          const imageId = findImageId(response.data);
+          const imageId = findImageId(response);
 
           if (imageId) {
             uploadedImageId = imageId;
