@@ -1,14 +1,13 @@
 import axios from "axios";
-import { ArticleData } from "../services/articleService";
 import { apiKey, bearerToken } from "./apiService";
 
 export interface ImageInfo {
-  imageId: File | null;
+  imageId: string | null;
   name: string;
 }
 export const imageUrl = "https://fullstack.exercise.applifting.cz/images";
 
-export const getImageById = async (imageId: string): Promise<ArticleData> => {
+export const getImageById = async (imageId: string): Promise<ArrayBuffer> => {
   try {
     const headers = {
       "Content-Type": "application/json",
@@ -18,10 +17,11 @@ export const getImageById = async (imageId: string): Promise<ArticleData> => {
 
     const response = await axios.get(`${imageUrl}/${imageId}`, {
       headers,
+      responseType: "arraybuffer",
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching articles:", error);
+    console.error("Error fetching an image:", error);
     throw error;
   }
 };

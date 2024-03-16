@@ -14,7 +14,7 @@ import { Form, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ArticleData, getArticleById } from "../../../services/articleService";
-import { deleteImage } from "../../../services/imageService";
+import { deleteImage, getImageById } from "../../../services/imageService";
 import FormHeader from "./FormHeader";
 
 export interface ArticleFormProps {
@@ -61,18 +61,8 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
   const fetchImageData = async (imageId: string) => {
     try {
-      const response = await axios.get(
-        `https://fullstack.exercise.applifting.cz/images/${imageId}`,
-        {
-          responseType: "arraybuffer",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": apiKey,
-            Authorization: bearerToken,
-          },
-        }
-      );
-      const blob = new Blob([response.data], { type: "image/jpeg" });
+      const response = await getImageById(imageId);
+      const blob = new Blob([response], { type: "image/jpeg" });
       const imageUrl = URL.createObjectURL(blob);
       setImageData(imageUrl);
     } catch (error) {

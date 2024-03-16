@@ -2,11 +2,10 @@ import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Comments/CommentsSection";
 import ReactMarkdown from "react-markdown";
-import { apiKey, bearerToken } from "../../services/apiService";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useAuth } from "../../auth/AuthProvider";
 import { ArticleData } from "../../services/articleService";
+import { getImageById } from "../../services/imageService";
 
 function PostView({
   article,
@@ -22,21 +21,13 @@ function PostView({
   useEffect(() => {
     const fetchImageData = async () => {
       try {
-        const response = await axios.get(
-          `https://fullstack.exercise.applifting.cz/images/${article.imageId}`,
-          {
-            responseType: "arraybuffer",
-            headers: {
-              "Content-Type": "application/json",
-              "X-API-KEY": apiKey,
-              Authorization: bearerToken,
-            },
-          }
-        );
-        const blob = new Blob([response.data], { type: "image/jpeg" });
-
+        if (!article.imageId) {
+          console.error("Image ID is undefined");
+          return;
+        }
+        const response = await getImageById(article.imageId);
+        const blob = new Blob([response], { type: "image/jpeg" });
         const imageUrl = URL.createObjectURL(blob);
-
         setImageData(imageUrl);
       } catch (error) {
         console.error("Error fetching image data:", error);
