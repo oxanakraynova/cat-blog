@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { apiKey, bearerToken } from "../../../services/apiService";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import { Form, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -20,9 +19,10 @@ import {
   postImage,
 } from "../../../services/imageService";
 import FormHeader from "./FormHeader";
+import { creationSchema, editionSchema } from "./ValidationShema";
 
 export interface ArticleFormProps {
-  mode: "create" | "edit";
+  mode: "CREATE" | "EDIT";
 }
 
 interface InitialValuesForm {
@@ -58,7 +58,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
       }
     };
 
-    if (mode === "edit") {
+    if (mode === "EDIT") {
       fetchArticle();
     }
   }, [articleId, mode]);
@@ -76,30 +76,13 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
   const navigate = useNavigate();
 
-  const creationSchema = yup.object({
-    title: yup
-      .string()
-      .min(2, "Too Short!")
-      .max(100, "Too Long!")
-      .trim()
-      .required("Title is required"),
-    content: yup
-      .string()
-      .min(2, "Too Short!")
-      .max(10000, "Too Long!")
-      .trim()
-      .required("Content is required"),
-  });
-
-  const editionSchema = yup.object().shape({});
-
   const formik = useFormik({
     initialValues: {
       title: article?.title || "",
       content: article?.content || "",
     },
     enableReinitialize: true,
-    validationSchema: mode === "create" ? creationSchema : editionSchema,
+    validationSchema: mode === "CREATE" ? creationSchema : editionSchema,
     onSubmit: async (values: InitialValuesForm) => {
       try {
         const perex = generatePerex(values.content!);
@@ -158,7 +141,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
           perex: perex,
         };
 
-        if (mode === "create") {
+        if (mode === "CREATE") {
           await axios.post(
             "https://fullstack.exercise.applifting.cz/articles",
             articleData,
@@ -194,7 +177,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
   const handleDeleteImage = async (id: string) => {
     try {
-      if (mode === "edit" && article?.imageId) {
+      if (mode === "EDIT" && article?.imageId) {
         await deleteImage(id);
         setImageData(null);
         console.log("Image deleted successfully.");
@@ -229,7 +212,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                 required
                 fullWidth
                 id="title"
-                placeholder={mode === "create" ? "My First Article" : ""}
+                placeholder={mode === "CREATE" ? "My First Article" : ""}
                 name="title"
                 autoFocus
                 sx={{ marginBottom: "1.5rem" }}
@@ -314,7 +297,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
               </InputLabel>
               <TextField
                 id="content"
-                placeholder={mode === "create" ? "Supports markdown.Yay!" : ""}
+                placeholder={mode === "CREATE" ? "Supports markdown.Yay!" : ""}
                 fullWidth
                 multiline
                 rows={30}

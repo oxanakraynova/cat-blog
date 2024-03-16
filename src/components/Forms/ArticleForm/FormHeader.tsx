@@ -4,7 +4,7 @@ import Header from "../../UI/Header";
 import { ArticleFormProps } from "./ArticleForm";
 
 const FormHeader = ({ mode }: ArticleFormProps) => {
-  const pageTitle = mode === "create" ? "Create New Article" : "Edit Article";
+  const pageTitle = mode === "CREATE" ? "Create New Article" : "Edit Article";
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (

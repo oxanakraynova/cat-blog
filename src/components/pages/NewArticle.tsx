@@ -5,7 +5,7 @@ function NewArticlePage() {
   return (
     <>
       <Container maxWidth="lg">
-        <ArticleForm mode="create" />
+        <ArticleForm mode="CREATE" />
       </Container>
     </>
   );

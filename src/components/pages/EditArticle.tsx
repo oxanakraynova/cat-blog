@@ -5,7 +5,7 @@ function EditArticlePage() {
   return (
     <>
       <Container maxWidth="lg">
-        <ArticleForm mode="edit" />
+        <ArticleForm mode="EDIT" />
       </Container>
     </>
   );
