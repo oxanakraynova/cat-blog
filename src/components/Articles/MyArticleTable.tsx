@@ -116,7 +116,9 @@ function MyArticleTable({}: { article: ArticleData }) {
                   }
                   onChange={(event) => {
                     if (event.target.checked) {
-                      setSelected(articles.map((article) => article.articleId));
+                      setSelected(
+                        articles.map((article) => article.articleId!)
+                      );
                     } else {
                       setSelected([]);
                     }
@@ -136,9 +138,9 @@ function MyArticleTable({}: { article: ArticleData }) {
                 <TableCell>
                   <Checkbox
                     color="primary"
-                    checked={isSelected(article.articleId)}
+                    checked={isSelected(article.articleId!)}
                     onChange={(event) =>
-                      handleCheckboxClick(event, article.articleId)
+                      handleCheckboxClick(event, article.articleId!)
                     }
                   />
                 </TableCell>
@@ -161,7 +163,7 @@ function MyArticleTable({}: { article: ArticleData }) {
                     </Link>
                     <IconButton
                       aria-label="delete"
-                      onClick={() => handleDeleteClick(article.articleId)}
+                      onClick={() => handleDeleteClick(article.articleId!)}
                     >
                       <DeleteIcon />
                     </IconButton>

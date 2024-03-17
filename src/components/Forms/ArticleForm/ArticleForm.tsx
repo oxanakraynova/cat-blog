@@ -4,7 +4,6 @@ import {
   Box,
   TextField,
   InputLabel,
-  Input,
   CardMedia,
 } from "@mui/material";
 import { useFormik } from "formik";
@@ -23,6 +22,7 @@ import {
 } from "../../../services/imageService";
 import FormHeader from "./FormHeader";
 import { creationSchema, editionSchema } from "./ValidationShema";
+import FileInput from "./FileInput";
 
 export interface ArticleFormProps {
   mode: "CREATE" | "EDIT";
@@ -34,7 +34,7 @@ interface InitialValuesForm {
 }
 
 function ArticleForm({ mode }: ArticleFormProps) {
-  const [image, setImage] = useState<File | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [article, setArticle] = useState<ArticleData | null>(null);
   const [imageData, setImageData] = useState<string | null>(null);
 
@@ -92,9 +92,9 @@ function ArticleForm({ mode }: ArticleFormProps) {
 
         let uploadedImageId: string | null = null;
 
-        if (image) {
+        if (selectedImage) {
           const formData = new FormData();
-          formData.append("image", image);
+          formData.append("image", selectedImage);
 
           const response = await postImage(formData);
 
@@ -152,13 +152,6 @@ function ArticleForm({ mode }: ArticleFormProps) {
       }
     },
   });
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      setImage(files[0]);
-    }
-  };
 
   const handleUploadImage = async () => {
     //TODO
@@ -220,17 +213,17 @@ function ArticleForm({ mode }: ArticleFormProps) {
                 flexDirection: "column",
               }}
             >
-              <InputLabel
-                sx={{
-                  fontWeight: "bold",
-                  color: "inherit",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Featured image
-              </InputLabel>
               {imageData ? (
                 <>
+                  <InputLabel
+                    sx={{
+                      fontWeight: "bold",
+                      color: "inherit",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    Featured image
+                  </InputLabel>
                   <CardMedia
                     component="img"
                     src={imageData}
@@ -264,14 +257,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                   </Stack>
                 </>
               ) : (
-                <Input
-                  id="imageId"
-                  type="file"
-                  inputProps={{
-                    accept: "image/*",
-                  }}
-                  onChange={handleImageChange}
-                />
+                <FileInput />
               )}
             </Box>
             <Box>
