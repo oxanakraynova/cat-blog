@@ -5,7 +5,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 interface RouteError {
   message: string;
-  // Add additional properties if necessary
 }
 
 function ArticlesError() {

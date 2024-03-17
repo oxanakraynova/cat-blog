@@ -2,9 +2,9 @@ import axios from "axios";
 import { apiKey, bearerToken } from "./apiService";
 
 export interface ArticleData {
-  articleId: string;
+  articleId?: string;
   imageId?: string;
-  title: string;
+  title?: string;
   perex?: string;
   content?: string;
   createdAt?: string;

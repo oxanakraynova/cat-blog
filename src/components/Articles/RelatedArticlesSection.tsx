@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ArticleData } from "../../services/apiService";
+import { ArticleData } from "../../services/articleService";
 
 type RelatedArticlesSectionProps = {
   openedArticleId: string;
@@ -57,7 +57,9 @@ function RelatedArticlesSection({
                 </Typography>
               </Link>
               <Typography variant="body1" sx={{ marginBottom: "1.5rem" }}>
-                {`${article.perex!.slice(0, 200)}...`}
+                {article.perex
+                  ? article.perex + " ..."
+                  : "No description available."}
               </Typography>
             </div>
           ))}

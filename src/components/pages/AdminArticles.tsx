@@ -5,7 +5,7 @@ function AdminArticlesPage() {
   return (
     <>
       <Container maxWidth="lg">
-        <AdminArticleList articleId={""} title={""} />
+        <AdminArticleList />
       </Container>
     </>
   );
