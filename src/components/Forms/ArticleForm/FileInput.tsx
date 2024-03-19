@@ -1,5 +1,22 @@
-import { Button, Box, InputLabel, Input, CardMedia } from "@mui/material";
+import {
+  Button,
+  Box,
+  InputLabel,
+  Input,
+  CardMedia,
+  styled,
+  ButtonProps,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { useState, useEffect } from "react";
+
+const ColorButton = styled(Button)<ButtonProps>({
+  color: "white",
+  backgroundColor: grey[600],
+  "&:hover": {
+    backgroundColor: grey[800],
+  },
+});
 
 const FileInput = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -39,9 +56,9 @@ const FileInput = () => {
         onChange={handleImageChange}
       />
       <InputLabel htmlFor="select-image">
-        <Button variant="contained" color="primary" component="span">
+        <ColorButton variant="contained" color="info" component="span">
           Upload Image
-        </Button>
+        </ColorButton>
       </InputLabel>
       {imageData && (
         <Box mt={2} textAlign="left">
