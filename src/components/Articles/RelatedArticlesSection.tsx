@@ -1,4 +1,5 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { ArticleData } from "../../services/articleService";
 
@@ -11,9 +12,9 @@ function RelatedArticlesSection({
   openedArticleId,
   articles,
 }: RelatedArticlesSectionProps) {
-  const filteredRelatedArticles = articles.filter(
-    (article) => article.articleId !== openedArticleId
-  );
+  const filteredRelatedArticles = articles
+    .filter((article) => article.articleId !== openedArticleId)
+    .slice(0, 5);
   return (
     <Grid
       item
@@ -44,7 +45,7 @@ function RelatedArticlesSection({
             Related Articles
           </Typography>
           {filteredRelatedArticles.map((article) => (
-            <div key={article.articleId}>
+            <Fragment key={article.articleId}>
               <Link
                 to={`/articles/${article.articleId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
@@ -61,7 +62,7 @@ function RelatedArticlesSection({
                   ? article.perex + " ..."
                   : "No description available."}
               </Typography>
-            </div>
+            </Fragment>
           ))}
         </CardContent>
       </Card>
