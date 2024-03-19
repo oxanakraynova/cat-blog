@@ -27,8 +27,8 @@ export interface InitialValuesForm {
 }
 
 export async function action(commentData: any) {
-  const comment = await createComment(commentData);
-  return { comment };
+  const data = await createComment(commentData);
+  return { data };
 }
 
 function CommentsSection({ article }: { article: ArticleData }) {
@@ -53,7 +53,7 @@ function CommentsSection({ article }: { article: ArticleData }) {
         const response = await action(commentData);
         console.log("Comment Upload Response:", response);
 
-        setComment((prevComments) => [...prevComments, response.comment]);
+        setComment((prevComments) => [...prevComments, response.data]);
         resetForm();
       } catch (error) {
         console.error("Error:", error);

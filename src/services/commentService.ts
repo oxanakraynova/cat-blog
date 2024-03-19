@@ -14,12 +14,12 @@ export const createComment = async (
       Authorization: bearerToken,
     };
 
-    const response = await axios.post(`${commentUrl}`, data, {
+    const response = await axios.post(commentUrl, data, {
       headers,
     });
     return response.data;
   } catch (error) {
-    console.error("Error uploading an image:", error);
+    console.error("Error uploading a comment:", error);
     throw error;
   }
 };
