@@ -8,12 +8,11 @@ import {
   Input,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { Form, useNavigate, useParams } from "react-router-dom";
+import { Form, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   ArticleData,
   createArticle,
-  getArticleById,
   updateArticle,
 } from "../../../services/articleService";
 import {
@@ -24,6 +23,11 @@ import {
 import FormHeader from "./FormHeader";
 import { creationSchema, editionSchema } from "./ValidationShema";
 import FileInput from "./FileInput";
+import {
+  CustomBox,
+  CustomInputLabel,
+  FlexColumnBox,
+} from "../../UI/styled/styledForm";
 
 export interface ArticleFormProps {
   mode: "CREATE" | "EDIT";
@@ -36,42 +40,15 @@ interface InitialValuesForm {
 
 function ArticleForm({ mode }: ArticleFormProps) {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [article, setArticle] = useState<ArticleData | null>(null);
   const [imageData, setImageData] = useState<string | null>(null);
 
   const generatePerex = (content: string) => {
     return content.slice(0, 200);
   };
 
+  const article: ArticleData = useLoaderData() as ArticleData;
+
   const { articleId } = useParams<{ articleId: string }>();
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        if (!articleId) {
-          console.error("Article ID is undefined");
-          return;
-        }
-        const response = await getArticleById(articleId);
-        setArticle(response);
-        if (response.imageId) {
-          fetchImageData(response.imageId);
-        }
-      } catch (error) {
-        console.error("Error fetching article:", error);
-      }
-    };
-
-    if (mode === "EDIT") {
-      fetchArticle();
-    }
-  }, [articleId, mode]);
-
-  useEffect(() => {
-    if (selectedImage) {
-      setImageData(URL.createObjectURL(selectedImage));
-    }
-  }, [selectedImage]);
 
   const fetchImageData = async (imageId: string) => {
     try {
@@ -83,6 +60,18 @@ function ArticleForm({ mode }: ArticleFormProps) {
       console.error("Error fetching image data:", error);
     }
   };
+
+  useEffect(() => {
+    if (mode === "EDIT") {
+      fetchImageData(article.imageId!);
+    }
+  }, [mode, articleId]);
+
+  useEffect(() => {
+    if (selectedImage) {
+      setImageData(URL.createObjectURL(selectedImage));
+    }
+  }, [selectedImage]);
 
   const navigate = useNavigate();
 
@@ -180,137 +169,100 @@ function ArticleForm({ mode }: ArticleFormProps) {
   };
 
   return (
-    <>
-      <Form method="post" onSubmit={formik.handleSubmit}>
-        <FormHeader mode={mode} />
-        <Box
-          sx={{
-            marginTop: 1,
-            marginLeft: "14rem",
-            width: "47.5rem",
-            height: "77rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-          }}
-        >
+    <Form method="post" onSubmit={formik.handleSubmit}>
+      <FormHeader mode={mode} />
+      <CustomBox>
+        <Box>
           <Box>
-            <Box>
-              <InputLabel sx={{ fontWeight: "bold", color: "inherit" }}>
-                Article Title
-              </InputLabel>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="title"
-                placeholder={mode === "CREATE" ? "My First Article" : ""}
-                name="title"
-                autoFocus
-                sx={{ marginBottom: "1.5rem" }}
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.title && Boolean(formik.errors.title)}
-                helperText={formik.touched.title && formik.errors.title}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                marginBottom: "0.5rem",
-                flexDirection: "column",
-              }}
-            >
-              {imageData ? (
-                <>
-                  <InputLabel
-                    sx={{
-                      fontWeight: "bold",
-                      color: "inherit",
-                      marginBottom: "0.5rem",
+            <CustomInputLabel>Article Title</CustomInputLabel>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="title"
+              placeholder={mode === "CREATE" ? "My First Article" : ""}
+              name="title"
+              autoFocus
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+            />
+          </Box>
+          <FlexColumnBox>
+            {imageData ? (
+              <>
+                <CustomInputLabel>Featured image</CustomInputLabel>
+                <CardMedia
+                  component="img"
+                  src={imageData}
+                  alt="Article Image"
+                  sx={{
+                    maxWidth: "12rem",
+                    height: "100%",
+                    objectFit: "cover",
+                    maxHeight: "6rem",
+                    marginTop: "0.5rem",
+                    marginBottom: "0.5rem",
+                  }}
+                />
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="flex-start"
+                  sx={{
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  <Input
+                    id="select-image"
+                    type="file"
+                    inputProps={{
+                      accept: "image/*",
                     }}
-                  >
-                    Featured image
-                  </InputLabel>
-                  <CardMedia
-                    component="img"
-                    src={imageData}
-                    alt="Article Image"
-                    sx={{
-                      maxWidth: "12rem",
-                      height: "100%",
-                      objectFit: "cover",
-                      maxHeight: "6rem",
-                    }}
+                    style={{ display: "none" }}
+                    onChange={handleImageChange}
                   />
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="flex-start"
-                    sx={{
-                      marginTop: "0.5rem",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    <Input
-                      id="select-image"
-                      type="file"
-                      inputProps={{
-                        accept: "image/*",
-                      }}
-                      style={{ display: "none" }}
-                      onChange={handleImageChange}
-                    />
-                    <InputLabel htmlFor="select-image">
-                      <Button variant="text" component="span">
-                        Upload New
-                      </Button>
-                    </InputLabel>
-                    <Button
-                      variant="text"
-                      color="error"
-                      onClick={() => handleDeleteImage(article!.imageId!)}
-                    >
-                      Delete
+                  <InputLabel htmlFor="select-image">
+                    <Button variant="text" component="span">
+                      Upload New
                     </Button>
-                  </Stack>
-                </>
-              ) : (
-                <FileInput />
-              )}
-            </Box>
-            <Box>
-              <InputLabel
-                sx={{
-                  fontWeight: "bold",
-                  color: "inherit",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                Content
-              </InputLabel>
-              <TextField
-                id="content"
-                placeholder={mode === "CREATE" ? "Supports markdown.Yay!" : ""}
-                fullWidth
-                multiline
-                rows={30}
-                margin="normal"
-                required
-                autoFocus
-                value={formik.values.content}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.content && Boolean(formik.errors.content)}
-                helperText={formik.touched.content && formik.errors.content}
-              />
-            </Box>
+                  </InputLabel>
+                  <Button
+                    variant="text"
+                    color="error"
+                    onClick={() => handleDeleteImage(article!.imageId!)}
+                  >
+                    Delete
+                  </Button>
+                </Stack>
+              </>
+            ) : (
+              <FileInput />
+            )}
+          </FlexColumnBox>
+          <Box>
+            <CustomInputLabel>Content</CustomInputLabel>
+            <TextField
+              id="content"
+              placeholder={mode === "CREATE" ? "Supports markdown.Yay!" : ""}
+              fullWidth
+              multiline
+              rows={30}
+              margin="normal"
+              required
+              autoFocus
+              value={formik.values.content}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.content && Boolean(formik.errors.content)}
+              helperText={formik.touched.content && formik.errors.content}
+            />
           </Box>
         </Box>
-      </Form>
-    </>
+      </CustomBox>
+    </Form>
   );
 }
 
