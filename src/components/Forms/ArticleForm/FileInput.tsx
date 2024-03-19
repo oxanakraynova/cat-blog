@@ -56,11 +56,11 @@ const FileInput = () => {
         onChange={handleImageChange}
       />
       <InputLabel htmlFor="select-image">
-        <ColorButton variant="contained" color="info" component="span">
+        <ColorButton variant="contained" component="span">
           Upload Image
         </ColorButton>
       </InputLabel>
-      {imageData && (
+      {imageData && selectedImage && (
         <Box mt={2} textAlign="left">
           <CardMedia
             component="img"

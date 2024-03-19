@@ -5,6 +5,7 @@ import {
   TextField,
   InputLabel,
   CardMedia,
+  Input,
 } from "@mui/material";
 import { useFormik } from "formik";
 import { Form, useNavigate, useParams } from "react-router-dom";
@@ -65,6 +66,12 @@ function ArticleForm({ mode }: ArticleFormProps) {
       fetchArticle();
     }
   }, [articleId, mode]);
+
+  useEffect(() => {
+    if (selectedImage) {
+      setImageData(URL.createObjectURL(selectedImage));
+    }
+  }, [selectedImage]);
 
   const fetchImageData = async (imageId: string) => {
     try {
@@ -153,8 +160,11 @@ function ArticleForm({ mode }: ArticleFormProps) {
     },
   });
 
-  const handleUploadImage = async () => {
-    //TODO
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setSelectedImage(files[0]);
+    }
   };
 
   const handleDeleteImage = async (id: string) => {
@@ -244,9 +254,20 @@ function ArticleForm({ mode }: ArticleFormProps) {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    <Button variant="text" onClick={handleUploadImage}>
-                      Upload New
-                    </Button>
+                    <Input
+                      id="select-image"
+                      type="file"
+                      inputProps={{
+                        accept: "image/*",
+                      }}
+                      style={{ display: "none" }}
+                      onChange={handleImageChange}
+                    />
+                    <InputLabel htmlFor="select-image">
+                      <Button variant="text" component="span">
+                        Upload New
+                      </Button>
+                    </InputLabel>
                     <Button
                       variant="text"
                       color="error"
