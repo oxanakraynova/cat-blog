@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import AboutArticle from "../Articles/AboutArticle";
+import AboutSection from "../Articles/AboutSection";
 import Header from "../UI/Header";
 
 function AboutPage() {
@@ -7,7 +7,7 @@ function AboutPage() {
     <>
       <Container maxWidth="lg">
         <Header title="About" />
-        <AboutArticle />
+        <AboutSection />
       </Container>
     </>
   );

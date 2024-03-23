@@ -2,7 +2,7 @@ import { Box, CardMedia, Typography } from "@mui/material";
 
 import image from "../../assets/animal-2569336_1280.jpg";
 
-function AboutArticle() {
+function AboutSection() {
   return (
     <Box
       sx={{
@@ -64,4 +64,4 @@ function AboutArticle() {
   );
 }
 
-export default AboutArticle;
+export default AboutSection;

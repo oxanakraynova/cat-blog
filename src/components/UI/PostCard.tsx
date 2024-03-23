@@ -9,12 +9,11 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
-import { apiKey, bearerToken } from "../../services/apiService";
 import { ArticleData } from "../../services/articleService";
+import { getImageById } from "../../services/imageService";
 
 type PostCardProps = {
   article: ArticleData;
@@ -43,34 +42,22 @@ function PostCard({ article }: PostCardProps) {
   useEffect(() => {
     const fetchImageData = async () => {
       try {
-        if (article.imageId) {
-          const response = await axios.get(
-            `https://fullstack.exercise.applifting.cz/images/${article.imageId}`,
-            {
-              responseType: "arraybuffer",
-              headers: {
-                "Content-Type": "application/json",
-                "X-API-KEY": apiKey,
-                Authorization: bearerToken,
-              },
-            }
-          );
-          const blob = new Blob([response.data], { type: "image/jpeg" });
-
-          const imageUrl = URL.createObjectURL(blob);
-
-          setImageData(imageUrl);
+        if (!article.imageId) {
+          console.error("Image ID is undefined");
+          return;
         }
+        const response = await getImageById(article.imageId);
+        const blob = new Blob([response], { type: "image/jpeg" });
+        const imageUrl = URL.createObjectURL(blob);
+        setImageData(imageUrl);
       } catch (error) {
         console.error("Error fetching image data:", error);
       }
     };
-    fetchImageData();
-    return () => {
-      if (imageData) {
-        URL.revokeObjectURL(imageData);
-      }
-    };
+
+    if (article.imageId) {
+      fetchImageData();
+    }
   }, [article.imageId]);
 
   return (
