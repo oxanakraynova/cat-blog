@@ -20,11 +20,21 @@ import {
   getArticles,
   deleteArticle,
 } from "../../services/articleService";
+import Modal from "../UI/Modal";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [selected, setSelected] = useState<string[]>([]);
   const [articles, setArticles] = useState<ArticleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const { tenant } = useAuth();
 
@@ -82,17 +92,13 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   const handleDeleteClick = async (id: string) => {
     try {
-      const proceed = window.confirm("Are you sure?");
-      if (proceed) {
-        await deleteArticle(id);
-        console.log("Article deleted successfully.");
+      await deleteArticle(id);
+      console.log("Article deleted successfully.");
 
-        const response: ApiResponse = await getArticles();
+      const response: ApiResponse = await getArticles();
 
-        setArticles(response.items || []);
-      } else {
-        console.error("Error fetching article:");
-      }
+      setArticles(response.items || []);
+      handleClose();
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;
@@ -161,12 +167,20 @@ function MyArticleTable({}: { article: ArticleData }) {
                         <EditIcon />
                       </IconButton>
                     </Link>
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => handleDeleteClick(article.articleId!)}
-                    >
+                    <IconButton aria-label="open-modal" onClick={handleOpen}>
                       <DeleteIcon />
                     </IconButton>
+                    {open && (
+                      <Modal
+                        open={open}
+                        handleClose={handleClose}
+                        handleDelete={() =>
+                          handleDeleteClick(article.articleId!)
+                        }
+                        title="Delete Confirmation"
+                        content="This action cannot be undone. Are you sure you want to delete this article?"
+                      />
+                    )}
                   </Stack>
                 </TableCell>
               </TableRow>
