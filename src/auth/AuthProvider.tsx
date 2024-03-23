@@ -7,7 +7,11 @@ interface AuthContextType {
   isAuthenticated: boolean;
   token: string | null;
   tenant: Tenant | null;
-  login: (username: string, password: string, apiKey: string) => Promise<void>;
+  login: (
+    username: string,
+    password: string,
+    apiKey: string
+  ) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -15,7 +19,7 @@ const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   token: null,
   tenant: null,
-  login: () => Promise.resolve(),
+  login: () => Promise.resolve(false),
   logout: () => {},
 });
 
@@ -47,7 +51,11 @@ export const AuthProvider = ({ children }: Children) => {
     fetchTenant();
   }, []);
 
-  const login = async (username: string, password: string, apiKey: string) => {
+  const login = async (
+    username: string,
+    password: string,
+    apiKey: string
+  ): Promise<boolean> => {
     try {
       const headers = {
         "X-API-KEY": apiKey,
@@ -67,8 +75,10 @@ export const AuthProvider = ({ children }: Children) => {
       console.log("Login successful. Access Token:", accessToken);
 
       setIsAuthenticated(true);
+      return true;
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Could not authenticate user:", error);
+      return false;
     }
   };
 

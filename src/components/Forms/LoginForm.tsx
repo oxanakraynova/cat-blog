@@ -1,16 +1,32 @@
 import { CssBaseline } from "@mui/material";
-import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useAuth } from "../../auth/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
+import { useState } from "react";
+import {
+  FlexEndContainer,
+  FlexStartContainer,
+  StyledBox,
+} from "../UI/styled/styledForm";
+import HeaderForm from "../UI/HeaderForm";
+import CustomAlert from "../UI/CustomAlert";
 
 export default function LoginForm() {
+  const [loginError, setLoginError] = useState<string>("");
+  const [open, setOpen] = useState(true);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const { login } = useAuth();
+
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   const navigate = useNavigate();
 
@@ -30,11 +46,21 @@ export default function LoginForm() {
     }),
     onSubmit: async (values) => {
       try {
-        await login(values.username, values.password, values.apiKey);
-        navigate("/admin");
+        const isAuthenticated = await login(
+          values.username,
+          values.password,
+          values.apiKey
+        );
+        if (isAuthenticated) {
+          navigate("/admin");
+        } else {
+          setLoginError("Incorrect username or password. Please try again.");
+        }
       } catch (error) {
         console.error("Error logging in:", error);
-        // setStatus("Incorrect password/username. Please try again.");
+        setLoginError(
+          "An error occurred while logging in. Please try again later."
+        );
       }
     },
   });
@@ -42,42 +68,9 @@ export default function LoginForm() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <form onSubmit={formik.handleSubmit}>
-        <Box
-          sx={{
-            position: "absolute",
-            marginTop: "8%",
-            top: "20%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-            width: "23rem",
-            height: "auto",
-            boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{
-              marginTop: "2rem",
-              marginLeft: "2rem",
-              display: "flex",
-              justifyContent: "flex-start",
-            }}
-          >
-            Log In
-          </Typography>
-          <Box
-            sx={{
-              marginTop: 1,
-              marginLeft: "2rem",
-              width: "19rem",
-              height: "5rem",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-            }}
-          >
+        <StyledBox>
+          <HeaderForm title="Log In" />
+          <FlexStartContainer>
             <TextField
               margin="normal"
               required
@@ -106,31 +99,26 @@ export default function LoginForm() {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginRight: "2rem",
-              marginTop: "25%",
-            }}
-          >
-            {/* {status && <div style={{ color: "red" }}>{status}</div>} */}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginRight: "2rem",
-              marginBottom: "2rem",
-            }}
-          >
-            <Button color="primary" type="submit" variant="contained">
-              Log In
+          </FlexStartContainer>
+          <FlexEndContainer>
+            <Button
+              color="primary"
+              type="submit"
+              variant="contained"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Log In"}
             </Button>
-          </Box>
-        </Box>
+          </FlexEndContainer>
+        </StyledBox>
       </form>
+      {loginError && open && (
+        <CustomAlert
+          severity="error"
+          title={loginError}
+          handleClose={handleClose}
+        />
+      )}
     </Container>
   );
 }

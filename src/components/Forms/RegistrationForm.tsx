@@ -1,21 +1,31 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import {
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Container, CssBaseline, TextField } from "@mui/material";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
+import {
+  CustomContainer,
+  FlexStartContainer,
+  StyledBox,
+} from "../UI/styled/styledForm";
+import HeaderForm from "../UI/HeaderForm";
+import CustomAlert from "../UI/CustomAlert";
 
 const RegistrationForm: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>("");
+  const [loginError, setLoginError] = useState<string>("");
+
+  const [open, setOpen] = useState(true);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const navigate = useNavigate();
+
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   const formik = useFormik({
     initialValues: {
@@ -48,6 +58,9 @@ const RegistrationForm: React.FC = () => {
         navigate("/articles");
       } catch (error) {
         console.error("Error creating tenant:", error);
+        setLoginError(
+          "An error occurred while registration. Please try again later."
+        );
       }
     },
   });
@@ -56,42 +69,9 @@ const RegistrationForm: React.FC = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <form onSubmit={formik.handleSubmit}>
-        <Box
-          sx={{
-            position: "absolute",
-            marginTop: "8%",
-            top: "20%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            textAlign: "center",
-            width: "23rem",
-            height: "25rem",
-            boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-          }}
-        >
-          <Typography
-            component="h1"
-            variant="h5"
-            sx={{
-              marginTop: "2rem",
-              marginLeft: "2rem",
-              display: "flex",
-              justifyContent: "flex-start",
-            }}
-          >
-            Registration Form
-          </Typography>
-          <Box
-            sx={{
-              marginTop: 1,
-              marginLeft: "2rem",
-              width: "19rem",
-              height: "5rem",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-            }}
-          >
+        <StyledBox>
+          <HeaderForm title="Registration Form" />
+          <FlexStartContainer>
             <TextField
               margin="normal"
               required
@@ -134,22 +114,22 @@ const RegistrationForm: React.FC = () => {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginRight: "2rem",
-              marginTop: "50%",
-            }}
-          >
-            <Button type="submit" variant="contained">
-              Submit
+          </FlexStartContainer>
+          <CustomContainer>
+            <Button type="submit" variant="contained" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
-          </Box>
+          </CustomContainer>
           {apiKey && <div>Your API Key: {apiKey}</div>}
-        </Box>
+        </StyledBox>
       </form>
+      {loginError && open && (
+        <CustomAlert
+          severity="error"
+          title={loginError}
+          handleClose={handleClose}
+        />
+      )}
     </Container>
   );
 };
