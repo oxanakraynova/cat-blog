@@ -104,5 +104,5 @@ export function checkAuthLoader() {
   if (!token) {
     return redirect("/login");
   }
-  return true;
+  return null;
 }
