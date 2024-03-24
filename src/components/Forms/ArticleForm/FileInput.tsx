@@ -8,7 +8,6 @@ import {
   ButtonProps,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { useState, useEffect } from "react";
 
 const ColorButton = styled(Button)<ButtonProps>({
   color: "white",
@@ -18,23 +17,17 @@ const ColorButton = styled(Button)<ButtonProps>({
   },
 });
 
-const FileInput = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [imageData, setImageData] = useState<string | null>(null);
+interface InputProps {
+  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  imageData: string | null;
+  selectedImage: File | null;
+}
 
-  useEffect(() => {
-    if (selectedImage) {
-      setImageData(URL.createObjectURL(selectedImage));
-    }
-  }, [selectedImage]);
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      setSelectedImage(files[0]);
-    }
-  };
-
+const FileInput = ({
+  handleImageChange,
+  imageData,
+  selectedImage,
+}: InputProps) => {
   return (
     <>
       <InputLabel

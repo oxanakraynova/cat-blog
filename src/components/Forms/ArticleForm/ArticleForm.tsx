@@ -239,7 +239,11 @@ function ArticleForm({ mode }: ArticleFormProps) {
                 </Stack>
               </>
             ) : (
-              <FileInput />
+              <FileInput
+                handleImageChange={handleImageChange}
+                imageData={imageData}
+                selectedImage={selectedImage}
+              />
             )}
           </FlexColumnBox>
           <Box>
