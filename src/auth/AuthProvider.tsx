@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { redirect } from "react-router-dom";
 import { getTenantById, Tenant, tenantId } from "../services/tenantService";
 import { Children } from "../types/common";
 
@@ -91,3 +92,17 @@ export const AuthProvider = ({ children }: Children) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export function getAuthToken() {
+  const token = localStorage.getItem("access_token");
+  return token;
+}
+
+export function checkAuthLoader() {
+  const token = getAuthToken();
+
+  if (!token) {
+    return redirect("/login");
+  }
+  return true;
+}
