@@ -1,5 +1,4 @@
-import axios from "axios";
-import { apiKey, bearerToken } from "./apiService";
+import { apiClient } from "./apiService";
 
 export interface ImageInfo {
   imageId: string | null;
@@ -9,14 +8,7 @@ export const imageUrl = "https://fullstack.exercise.applifting.cz/images";
 
 export const getImageById = async (imageId: string): Promise<ArrayBuffer> => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.get(`${imageUrl}/${imageId}`, {
-      headers,
+    const response = await apiClient.get(`/images/${imageId}`, {
       responseType: "arraybuffer",
     });
     return response.data;
@@ -28,13 +20,11 @@ export const getImageById = async (imageId: string): Promise<ArrayBuffer> => {
 
 export const postImage = async (data: FormData): Promise<ImageInfo> => {
   try {
-    const headers = {
-      "Content-Type": "multipart/form-data",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.post(imageUrl, data, { headers });
+    const response = await apiClient.post("/images", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error uploading an image:", error);
@@ -44,16 +34,7 @@ export const postImage = async (data: FormData): Promise<ImageInfo> => {
 
 export const deleteImage = async (imageId: string) => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.delete(`${imageUrl}/${imageId}`, {
-      headers,
-    });
-
+    const response = await apiClient.delete(`/images/${imageId}`);
     console.log("Image deleted successfully.", response.data);
   } catch (error) {
     console.error("Error deleting image", error);

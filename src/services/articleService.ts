@@ -1,5 +1,4 @@
-import axios from "axios";
-import { apiKey, bearerToken } from "./apiService";
+import { apiClient } from "./apiService";
 
 export interface ArticleData {
   articleId?: string;
@@ -26,19 +25,11 @@ export interface ArticleValuesForm {
 
 const sortBy = "createdAt";
 const sortOrder = "desc";
-const articleUrl = "https://fullstack.exercise.applifting.cz/articles";
 
 export const getArticles = async (): Promise<ApiResponse> => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.get(
-      `${articleUrl}?sortBy=${sortBy}&sortOrder=${sortOrder}`,
-      { headers }
+    const response = await apiClient.get(
+      `/articles?sortBy=${sortBy}&sortOrder=${sortOrder}`
     );
     return response.data;
   } catch (error) {
@@ -51,13 +42,7 @@ export const getArticleById = async (
   articleId: string
 ): Promise<ArticleData> => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.get(`${articleUrl}/${articleId}`, { headers });
+    const response = await apiClient.get(`/articles/${articleId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching articles:", error);
@@ -69,13 +54,7 @@ export const createArticle = async (
   data: ArticleValuesForm
 ): Promise<ArticleData> => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.post(articleUrl, data, { headers });
+    const response = await apiClient.post("/articles", data);
     return response.data;
   } catch (error) {
     console.error("Error creating article:", error);
@@ -88,15 +67,7 @@ export const updateArticle = async (
   data: ArticleValuesForm
 ): Promise<ArticleData> => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.patch(`${articleUrl}/${articleId}`, data, {
-      headers,
-    });
+    const response = await apiClient.patch(`/articles/${articleId}`, data);
     return response.data;
   } catch (error) {
     console.error("Error updating article:", error);
@@ -106,15 +77,7 @@ export const updateArticle = async (
 
 export const deleteArticle = async (articleId: string) => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      "X-API-KEY": apiKey,
-      Authorization: bearerToken,
-    };
-
-    const response = await axios.delete(`${articleUrl}/${articleId}`, {
-      headers,
-    });
+    const response = await apiClient.delete(`/articles/${articleId}`);
 
     console.log("Article deleted successfully.", response.data);
   } catch (error) {
