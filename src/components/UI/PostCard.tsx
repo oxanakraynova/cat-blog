@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 import { ArticleData } from "../../services/articleService";
 import { getImageById } from "../../services/imageService";
+import { formatDate } from "../../utils/formatDate";
 
 type PostCardProps = {
   article: ArticleData;
@@ -30,14 +31,6 @@ function PostCard({ article }: PostCardProps) {
   const handleReadMore = (articleId: string) => {
     setExpandedArticleId(articleId);
   };
-
-  function formatDate(dateStr: string) {
-    const date = new Date(dateStr);
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const year = String(date.getFullYear()).slice(-2);
-    return `${month}/${day}/${year}`;
-  }
 
   useEffect(() => {
     const fetchImageData = async () => {
