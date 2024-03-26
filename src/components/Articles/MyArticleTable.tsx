@@ -1,16 +1,8 @@
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditOutlined";
-import { Link } from "react-router-dom";
-import { Checkbox, Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
 import Loading from "../UI/Loading";
@@ -20,21 +12,12 @@ import {
   getArticles,
   deleteArticle,
 } from "../../services/articleService";
-import Modal from "../UI/Modal";
+import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import { Link } from "react-router-dom";
 
 function MyArticleTable({}: { article: ArticleData }) {
-  const [selected, setSelected] = useState<string[]>([]);
   const [articles, setArticles] = useState<ArticleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const { tenant } = useAuth();
 
@@ -77,18 +60,52 @@ function MyArticleTable({}: { article: ArticleData }) {
     );
   }
 
-  const handleCheckboxClick = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {
-    if (event.target.checked) {
-      setSelected([...selected, id]);
-    } else {
-      setSelected(selected.filter((item) => item !== id));
-    }
-  };
+  const columns: GridColDef[] = [
+    { field: "title", headerName: "Article Title", width: 300 },
+    {
+      field: "perex",
+      headerName: "Perex",
+      width: 300,
+    },
+    {
+      field: "author",
+      headerName: "Author",
+      width: 150,
+    },
+    { field: "comments", headerName: "# of Comments", width: 150 },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      width: 100,
+      cellClassName: "actions",
+      getActions: ({ id }) => [
+        <>
+          <Link to={`/admin/${id}/edit`}>
+            <GridActionsCellItem
+              icon={<EditIcon />}
+              label="Edit"
+              className="textPrimary"
+            />
+          </Link>
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="open-modal"
+            onClick={() => handleDeleteClick(id.toString())}
+            color="inherit"
+          />
+        </>,
+      ],
+    },
+  ];
 
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
+  const rows = articles.map((article) => ({
+    id: article.articleId,
+    title: article.title,
+    perex: article.perex || "No description available.",
+    author: tenant ? tenant.name : "No author available.",
+    comments: article.comments || 0,
+  }));
 
   const handleDeleteClick = async (id: string) => {
     try {
@@ -98,7 +115,6 @@ function MyArticleTable({}: { article: ArticleData }) {
       const response: ApiResponse = await getArticles();
 
       setArticles(response.items || []);
-      handleClose();
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;
@@ -106,89 +122,20 @@ function MyArticleTable({}: { article: ArticleData }) {
   };
 
   return (
-    <Box sx={{ marginLeft: "5%" }}>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Checkbox
-                  color="primary"
-                  indeterminate={
-                    selected.length > 0 && selected.length < articles.length
-                  }
-                  checked={
-                    articles.length > 0 && selected.length === articles.length
-                  }
-                  onChange={(event) => {
-                    if (event.target.checked) {
-                      setSelected(
-                        articles.map((article) => article.articleId!)
-                      );
-                    } else {
-                      setSelected([]);
-                    }
-                  }}
-                />
-              </TableCell>
-              <TableCell>Article title</TableCell>
-              <TableCell>Perex</TableCell>
-              <TableCell>Author</TableCell>
-              <TableCell># of comments</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {articles.map((article) => (
-              <TableRow key={article.articleId}>
-                <TableCell>
-                  <Checkbox
-                    color="primary"
-                    checked={isSelected(article.articleId!)}
-                    onChange={(event) =>
-                      handleCheckboxClick(event, article.articleId!)
-                    }
-                  />
-                </TableCell>
-                <TableCell> {article.title}</TableCell>
-                <TableCell>
-                  {article.perex
-                    ? article.perex + " ..."
-                    : "No description available."}
-                </TableCell>
-                <TableCell>
-                  {tenant ? tenant.name : "No author available."}
-                </TableCell>
-                <TableCell>{article.comments ? article.comments : 0}</TableCell>
-                <TableCell>
-                  <Stack direction="row">
-                    <Link to={`/admin/${article.articleId}/edit`}>
-                      <IconButton aria-label="edit">
-                        <EditIcon />
-                      </IconButton>
-                    </Link>
-                    <IconButton aria-label="open-modal" onClick={handleOpen}>
-                      <DeleteIcon />
-                    </IconButton>
-                    {open && (
-                      <Modal
-                        open={open}
-                        handleClose={handleClose}
-                        handleDelete={() =>
-                          handleDeleteClick(article.articleId!)
-                        }
-                        title="Delete Confirmation"
-                        content="This action cannot be undone. Are you sure you want to delete this article?"
-                      />
-                    )}
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+    <Paper style={{ height: "auto", width: "100%", marginLeft: "5%" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        autoHeight
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+        }}
+        pageSizeOptions={[5, 10, 15, 20]}
+        checkboxSelection
+      />
+    </Paper>
   );
 }
 
