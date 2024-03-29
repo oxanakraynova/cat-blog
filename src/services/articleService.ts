@@ -13,7 +13,18 @@ export interface ArticleData {
 
 export interface ApiResponse {
   items: ArticleData[];
-  pagination: {};
+  pagination: PaginationData;
+}
+
+export interface PaginationData {
+  limit: number;
+  offset: number;
+  total: number;
+}
+
+export interface Pageable {
+  offset: number;
+  size: number;
 }
 
 export interface ArticleValuesForm {
