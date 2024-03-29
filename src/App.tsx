@@ -15,7 +15,7 @@ import NewArticlePage from "./components/pages/NewArticle";
 import EditArticlePage from "./components/pages/EditArticle";
 import RegistrationForm from "./components/Forms/RegistrationForm";
 import { lazy } from "react";
-import NotFound from "./components/pages/NotFound";
+import ErrorPage from "./components/pages/ErrorPage";
 import { AuthProvider, checkAuthLoader } from "./auth/AuthProvider";
 import { loader as articlesLoader } from "./components/Articles/ArticleList";
 import ArticlesError from "./components/Articles/ArticlesError";
@@ -26,7 +26,7 @@ const RootLayout = lazy(() => import("./components/Layout/Root"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
       <Route index element={<ArticlesPage />} loader={articlesLoader} />
       <Route path="about" element={<AboutPage />} />
       <Route path="login" element={<LoginPage />} />
@@ -53,7 +53,6 @@ const router = createBrowserRouter(
           loader={articleDetailsLoader}
         />
       </Route>
-      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
