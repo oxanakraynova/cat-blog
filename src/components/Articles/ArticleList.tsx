@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import PostCard from "../UI/PostCard";
+import ArticleCard from "../UI/ArticleCard";
 import { ArticleData, getArticles } from "../../services/articleService";
 import { useLoaderData } from "react-router-dom";
 
@@ -11,7 +11,7 @@ function ArticleList() {
       {articles.map((article) => (
         <Grid container spacing={3} key={article.articleId}>
           <Grid item xs={12}>
-            <PostCard article={article} />
+            <ArticleCard article={article} />
           </Grid>
         </Grid>
       ))}

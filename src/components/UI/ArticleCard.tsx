@@ -1,7 +1,5 @@
 import {
-  Card,
   CardMedia,
-  Box,
   CardContent,
   Typography,
   Grid,
@@ -15,12 +13,13 @@ import { useAuth } from "../../auth/AuthProvider";
 import { ArticleData } from "../../services/articleService";
 import { getImageById } from "../../services/imageService";
 import { formatDate } from "../../utils/formatDate";
+import { FlexColumnBox, FlexRowCard } from "./styled/styledLayout";
 
-type PostCardProps = {
+type ArticleCardProps = {
   article: ArticleData;
 };
 
-function PostCard({ article }: PostCardProps) {
+function ArticleCard({ article }: ArticleCardProps) {
   const [expandedArticleId, setExpandedArticleId] = useState<string | null>(
     null
   );
@@ -54,14 +53,7 @@ function PostCard({ article }: PostCardProps) {
   }, [article.imageId]);
 
   return (
-    <Card
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        ml: "5%",
-        mb: "3%",
-      }}
-    >
+    <FlexRowCard>
       {imageData ? (
         <CardMedia
           component="img"
@@ -76,16 +68,9 @@ function PostCard({ article }: PostCardProps) {
       ) : (
         "No image available."
       )}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          flexGrow: 1,
-        }}
-      >
+      <FlexColumnBox>
         <CardContent>
-          <Typography component="div" variant="h5" sx={{ marginBottom: 1 }}>
+          <Typography component="div" variant="h5" gutterBottom>
             {article.title}
           </Typography>
           <Grid container spacing={2}>
@@ -94,6 +79,7 @@ function PostCard({ article }: PostCardProps) {
                 variant="subtitle2"
                 color="text.secondary"
                 component="div"
+                gutterBottom
               >
                 {tenant ? tenant.name : "No author available."}
               </Typography>
@@ -103,12 +89,13 @@ function PostCard({ article }: PostCardProps) {
                 variant="subtitle2"
                 color="text.secondary"
                 component="div"
+                gutterBottom
               >
                 • {formatDate(article.createdAt!)}
               </Typography>
             </Grid>
           </Grid>
-          <Typography component="div" variant="body2" sx={{ marginTop: 1 }}>
+          <Typography component="div" variant="body2" gutterBottom>
             {article.perex
               ? article.perex + " ..."
               : "No description available."}
@@ -129,6 +116,7 @@ function PostCard({ article }: PostCardProps) {
                 variant="subtitle2"
                 color="text.secondary"
                 component="div"
+                gutterBottom
               >
                 {article.comments
                   ? article.comments + " comments"
@@ -137,9 +125,9 @@ function PostCard({ article }: PostCardProps) {
             </Stack>
           </CardActions>
         </CardContent>
-      </Box>
-    </Card>
+      </FlexColumnBox>
+    </FlexRowCard>
   );
 }
 
-export default PostCard;
+export default ArticleCard;

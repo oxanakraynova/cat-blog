@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
 import { ArticleData } from "../../services/articleService";
 import { getImageById } from "../../services/imageService";
+import { customFormatDate } from "../../utils/formatDate";
 
-function PostView({
+function ArticleView({
   article,
   articles,
 }: {
@@ -39,13 +40,6 @@ function PostView({
     }
   }, [article.imageId]);
 
-  const createdAtDate = new Date(article.createdAt!);
-  const formattedDate = createdAtDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <>
       <Grid container spacing={30}>
@@ -63,10 +57,10 @@ function PostView({
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography
-                variant="h3"
+                variant="h4"
+                gutterBottom
+                fontWeight="bold"
                 sx={{
-                  marginBottom: 2,
-                  fontWeight: "bold",
                   textAlign: "left",
                 }}
               >
@@ -74,13 +68,21 @@ function PostView({
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={3}>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography
+                    variant="subtitle2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
                     {tenant ? tenant.name : "No author available."}
                   </Typography>
                 </Grid>
                 <Grid item xs={7}>
-                  <Typography variant="subtitle2" color="text.secondary">
-                    • {formattedDate}
+                  <Typography
+                    variant="subtitle2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    • {customFormatDate(article.createdAt!)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -90,7 +92,7 @@ function PostView({
                   sx={{
                     width: "100%",
                     height: "31.5rem",
-                    marginTop: "1.5rem",
+                    marginTop: "1rem",
                     objectFit: "cover",
                   }}
                   src={imageData}
@@ -111,4 +113,4 @@ function PostView({
   );
 }
 
-export default PostView;
+export default ArticleView;

@@ -35,13 +35,11 @@ function RelatedArticlesSection({
           height: "auto",
           marginLeft: "30%",
           marginTop: "45%",
+          marginBottom: "1rem",
         }}
       >
         <CardContent sx={{ flex: 1 }}>
-          <Typography
-            variant="h4"
-            sx={{ fontWeight: "bold", marginBottom: "1.5rem" }}
-          >
+          <Typography variant="h5" fontWeight="bold" gutterBottom>
             Related Articles
           </Typography>
           {filteredRelatedArticles.map((article) => (
@@ -52,12 +50,14 @@ function RelatedArticlesSection({
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: "bold", marginBottom: "0.5rem" }}
+                  fontWeight="bold"
+                  gutterBottom
+                  sx={{ marginTop: "1rem" }}
                 >
                   {article.title}
                 </Typography>
               </Link>
-              <Typography variant="body1" sx={{ marginBottom: "1.5rem" }}>
+              <Typography variant="body1" sx={{ marginBottom: "1rem" }}>
                 {article.perex
                   ? article.perex + " ..."
                   : "No description available."}

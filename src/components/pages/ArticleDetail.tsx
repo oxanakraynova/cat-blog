@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useLoaderData, useParams } from "react-router-dom";
 import { useArticle } from "../../auth/ArticleProvider";
 import { ArticleData, getArticleById } from "../../services/articleService";
-import PostView from "../UI/PostView";
+import ArticleView from "../UI/ArticleView";
 
 function ArticleDetailPage() {
   const article: ArticleData = useLoaderData() as ArticleData;
@@ -18,7 +18,7 @@ function ArticleDetailPage() {
   return (
     <>
       <Grid>
-        <PostView article={article} articles={filteredRelatedArticles} />
+        <ArticleView article={article} articles={filteredRelatedArticles} />
       </Grid>
     </>
   );
