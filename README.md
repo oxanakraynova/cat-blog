@@ -11,6 +11,8 @@ Implementing a single-user blogging engine using ReactJS for the frontend, based
 - React Router
 - Hooks for state management
 - Axios for HTTP requests
+- Formik for building forms and validation through Yup
+- React Markdown
 
 ## Setup
 
