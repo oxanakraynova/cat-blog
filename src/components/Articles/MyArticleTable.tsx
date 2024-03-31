@@ -11,19 +11,12 @@ import {
   ApiResponse,
   getArticles,
   deleteArticle,
-  PaginationData,
 } from "../../services/articleService";
 import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [articles, setArticles] = useState<ArticleData[]>([]);
-  const [pagination, setPagination] = useState<PaginationData>({
-    offset: 0,
-    limit: 5,
-    total: 0,
-  });
-
   const [loading, setLoading] = useState<boolean>(true);
 
   const { tenant } = useAuth();
@@ -35,7 +28,6 @@ function MyArticleTable({}: { article: ArticleData }) {
 
         const response: ApiResponse = await getArticles();
         setArticles(response.items || []);
-        setPagination(response.pagination || {});
       } catch (error) {
         console.error("Error fetching articles:", error);
         throw error;
@@ -44,7 +36,7 @@ function MyArticleTable({}: { article: ArticleData }) {
       }
     };
     fetchArticles();
-  }, [pagination.offset]);
+  }, []);
 
   if (loading) {
     return <Loading />;
@@ -123,19 +115,10 @@ function MyArticleTable({}: { article: ArticleData }) {
       const response: ApiResponse = await getArticles();
 
       setArticles(response.items || []);
-      setPagination(response.pagination || {});
     } catch (error) {
       console.error("Error fetching article:", error);
       throw error;
     }
-  };
-
-  const handlePaginationChange = (model: any) => {
-    setPagination({
-      offset: model.page * (pagination.limit - 1),
-      limit: model.pageSize,
-      total: pagination.total,
-    });
   };
 
   return (
@@ -144,14 +127,14 @@ function MyArticleTable({}: { article: ArticleData }) {
         rows={rows}
         columns={columns}
         autoHeight
-        pagination
-        rowCount={pagination?.total}
-        paginationModel={{
-          page: pagination.offset,
-          pageSize: pagination.limit - 1,
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
         }}
-        onPaginationModelChange={handlePaginationChange}
-        paginationMode="server"
+        pageSizeOptions={[5]}
         checkboxSelection
       />
     </Paper>
