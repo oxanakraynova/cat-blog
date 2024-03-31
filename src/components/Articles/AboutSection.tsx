@@ -1,11 +1,16 @@
 import { Grid, Typography } from "@mui/material";
 
 import image from "../../assets/animal-2569336_1280.jpg";
+import Header from "../UI/Header";
 import { StyledCardMedia } from "../UI/styled/styledImages";
+import Subheader from "../UI/Subheader";
 
 function AboutSection() {
   return (
-    <Grid container marginLeft="5%">
+    <Grid container>
+      <Grid item xs={12} sm={8}>
+        <Header title="About" />
+      </Grid>
       <Grid item xs={12} sm={8}>
         <StyledCardMedia src={image} alt="cat is lying on a chair" />
         <Typography variant="body1" gutterBottom>
@@ -15,9 +20,7 @@ function AboutSection() {
           for all things cat-related, where we aim to entertain, educate, and
           celebrate the world of cats.
         </Typography>
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-          Our mission
-        </Typography>
+        <Subheader title="Our mission" />
         <Typography variant="body1" gutterBottom>
           Our mission is simple: to create a space where cat lovers can come
           together to exchange stories, learn about cat care, discover the
@@ -26,9 +29,7 @@ function AboutSection() {
           experiences, we can foster a stronger bond between humans and their
           feline companions.
         </Typography>
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-          What You'll Find Here
-        </Typography>
+        <Subheader title="What You'll Find Here" />
         <Typography variant="body1" gutterBottom>
           Our cat blog covers a wide range of topics, from practical tips on
           grooming and nutrition to heartwarming tales of rescued kitties
@@ -37,9 +38,7 @@ function AboutSection() {
           Plus, you'll find a gallery of adorable cat photos that are sure to
           brighten your day.
         </Typography>
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
-          Join Our Community
-        </Typography>
+        <Subheader title="Join Our Community" />
         <Typography variant="body1" gutterBottom>
           We invite you to be part of our growing cat-loving community. Whether
           you're a seasoned cat owner or a curious cat admirer, we welcome your

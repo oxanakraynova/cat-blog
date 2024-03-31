@@ -53,7 +53,6 @@ function CommentsSection({ article }: { article: ArticleData }) {
           width: "50rem",
           height: "auto",
           marginTop: "1rem",
-          marginLeft: "15%",
         }}
       >
         <Typography

@@ -33,9 +33,6 @@ function RelatedArticlesSection({
           flexDirection: "column",
           width: "25rem",
           height: "auto",
-          marginLeft: "30%",
-          marginTop: "45%",
-          marginBottom: "1rem",
         }}
       >
         <CardContent sx={{ flex: 1 }}>

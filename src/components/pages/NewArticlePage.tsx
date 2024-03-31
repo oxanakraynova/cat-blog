@@ -1,12 +1,7 @@
-import { Container } from "@mui/material";
 import ArticleForm from "../Forms/ArticleForm/ArticleForm";
 
 function NewArticlePage() {
-  return (
-    <Container maxWidth="lg">
-      <ArticleForm mode="CREATE" />
-    </Container>
-  );
+  return <ArticleForm mode="CREATE" />;
 }
 
 export default NewArticlePage;

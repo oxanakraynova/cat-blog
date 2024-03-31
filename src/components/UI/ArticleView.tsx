@@ -8,6 +8,7 @@ import { ArticleData } from "../../services/articleService";
 import { getImageById } from "../../services/imageService";
 import { customFormatDate } from "../../utils/formatDate";
 import { StyledCardMedia } from "./styled/styledImages";
+import Header from "./Header";
 
 function ArticleView({
   article,
@@ -51,22 +52,12 @@ function ArticleView({
               flexDirection: "column",
               width: "50rem",
               height: "auto",
-              ml: "15%",
-              mt: "15%",
-              gap: "1.5rem",
             }}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
-              <Typography
-                variant="h4"
-                gutterBottom
-                fontWeight="bold"
-                sx={{
-                  textAlign: "left",
-                }}
-              >
-                {article.title}
-              </Typography>
+              <Header
+                title={article.title ? article.title : "No title available."}
+              />
               <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <Typography

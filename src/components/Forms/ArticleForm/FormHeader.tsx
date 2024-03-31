@@ -12,7 +12,7 @@ const FormHeader = ({ mode }: ArticleFormProps) => {
       direction="row"
       spacing={5}
       alignItems="flex-start"
-      sx={{ marginLeft: "14rem", width: "37.5rem", marginTop: "6.5rem" }}
+      sx={{ width: "37.5rem" }}
     >
       <Header title={pageTitle} />
       <Button variant="contained" type="submit" disabled={isSubmitting}>

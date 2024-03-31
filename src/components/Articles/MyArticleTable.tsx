@@ -122,7 +122,7 @@ function MyArticleTable({}: { article: ArticleData }) {
   };
 
   return (
-    <Paper style={{ height: "auto", width: "100%", marginLeft: "5%" }}>
+    <Paper style={{ height: "auto", width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}

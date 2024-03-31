@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Loading from "../UI/Loading";
@@ -8,7 +9,9 @@ function Root() {
     <Suspense fallback={<Loading />}>
       <MainNavigation />
       <Suspense fallback={<Loading />}>
-        <Outlet />
+        <Container maxWidth="lg">
+          <Outlet />
+        </Container>
       </Suspense>
     </Suspense>
   );

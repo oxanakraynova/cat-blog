@@ -32,7 +32,7 @@ const MainNavigation = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "1rem",
-                ml: "5%",
+                marginLeft: "3%",
               }}
             >
               <Box

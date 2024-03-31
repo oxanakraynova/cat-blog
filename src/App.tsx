@@ -5,9 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import AboutPage from "./components/pages/AboutPage";
-import ArticleDetailPage, {
-  loader as articleDetailsLoader,
-} from "./components/pages/ArticleDetailPage";
 import ArticlesPage from "./components/pages/ArticlesPage";
 import LoginPage from "./components/pages/LoginPage";
 import AdminArticlesPage from "./components/pages/AdminArticlesPage";
@@ -20,6 +17,8 @@ import { AuthProvider, checkAuthLoader } from "./auth/AuthProvider";
 import { loader as articlesLoader } from "./components/Articles/ArticleList";
 import ArticlesError from "./components/Articles/ArticlesError";
 import { ArticleProvider } from "./auth/ArticleProvider";
+import ArticleDetailPage from "./components/pages/ArticleDetailPage";
+import { loader as articleDetailsLoader } from "./components/Articles/ArticleDetail";
 
 const RootLayout = lazy(() => import("./components/Layout/Root"));
 

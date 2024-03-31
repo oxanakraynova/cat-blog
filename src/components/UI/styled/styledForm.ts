@@ -4,12 +4,10 @@ import { Box, InputLabel } from "@mui/material";
 export const CustomInputLabel = styled(InputLabel)({
   fontWeight: "bold",
   color: "inherit",
-  marginBottom: "0.5rem",
-  marginTop: "0.5rem",
+  marginTop: "3%",
 });
 
 export const CustomBox = styled(Box)({
-  marginLeft: "14rem",
   width: "100%",
   height: "77rem",
   display: "flex",
