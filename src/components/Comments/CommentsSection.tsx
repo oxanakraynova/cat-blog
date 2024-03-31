@@ -26,11 +26,6 @@ export interface InitialValuesForm {
   score?: number;
 }
 
-export async function action(commentData: any) {
-  const data = await createComment(commentData);
-  return { data };
-}
-
 function CommentsSection({ article }: { article: ArticleData }) {
   const [comment, setComment] = useState<InitialValuesForm[]>([]);
 
@@ -50,11 +45,14 @@ function CommentsSection({ article }: { article: ArticleData }) {
           content: values.content,
         };
 
-        const response = await action(commentData);
-        console.log("Comment Upload Response:", response);
-
-        setComment((prevComments) => [...prevComments, response.data]);
-        resetForm();
+        const response = await createComment(commentData);
+        if (response && response.commentId) {
+          console.log("Comment created successfully.", response);
+          setComment((prevComments) => [...prevComments, response]);
+          resetForm();
+        } else {
+          console.error("Failed to create comment: invalid response data");
+        }
       } catch (error) {
         console.error("Error:", error);
       }
