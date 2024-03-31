@@ -1,5 +1,13 @@
-import { InitialValuesForm } from "../components/Comments/CommentsSection";
 import { apiClient } from "./apiService";
+
+export interface InitialValuesForm {
+  articleId: string | undefined;
+  author: string | undefined;
+  content: string;
+  commentId?: string;
+  postedAt?: string;
+  score?: number;
+}
 
 export const createComment = async (
   data: InitialValuesForm

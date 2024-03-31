@@ -6,29 +6,13 @@ import {
   CardContent,
   Box,
   Divider,
+  IconButton,
 } from "@mui/material";
-import { CommentsProps, InitialValuesForm } from "./CommentsSection";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { InitialValuesForm } from "../../services/commentService";
 
 function CommentCard({ comment }: { comment: InitialValuesForm }) {
-  // const handleUpvote = (commentId: number) => {
-  //   const updatedComments = comments.map((comment) => {
-  //     if (comment.id === commentId) {
-  //       return { ...comment, rating: comment.rating + 1 };
-  //     }
-  //     return comment;
-  //   });
-  //   setComments(updatedComments);
-  // };
-
-  // const handleDownvote = (commentId: number) => {
-  //   const updatedComments = comments.map((comment) => {
-  //     if (comment.id === commentId) {
-  //       return { ...comment, rating: comment.rating - 1 };
-  //     }
-  //     return comment;
-  //   });
-  //   setComments(updatedComments);
-  // };
   return (
     <>
       <Card key={comment.commentId} sx={{ marginTop: "1rem" }}>
@@ -64,13 +48,13 @@ function CommentCard({ comment }: { comment: InitialValuesForm }) {
               +{comment.score}
             </Typography>
             <Divider orientation="vertical" flexItem />
-            {/* <IconButton onClick={() => handleUpvote(comment.id)}>
+            <IconButton>
               <KeyboardArrowUpIcon />
             </IconButton>
             <Divider orientation="vertical" flexItem />
-            <IconButton onClick={() => handleDownvote(comment.id)}>
+            <IconButton>
               <KeyboardArrowDownIcon />
-            </IconButton> */}
+            </IconButton>
             <Divider orientation="vertical" flexItem />
           </Box>
         </CardContent>

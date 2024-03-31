@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Loading from "../UI/Loading";
 import MainNavigation from "./MainNavigation";
 
-function RootLayout() {
+function Root() {
   return (
     <Suspense fallback={<Loading />}>
       <MainNavigation />
@@ -14,4 +14,4 @@ function RootLayout() {
   );
 }
 
-export default RootLayout;
+export default Root;

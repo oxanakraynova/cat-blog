@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { Button, Container, CssBaseline, TextField } from "@mui/material";
@@ -12,7 +12,7 @@ import {
 import HeaderForm from "../UI/HeaderForm";
 import CustomAlert from "../UI/CustomAlert";
 
-const RegistrationForm: React.FC = () => {
+export default function RegistrationForm() {
   const [apiKey, setApiKey] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
 
@@ -132,5 +132,4 @@ const RegistrationForm: React.FC = () => {
       )}
     </Container>
   );
-};
-export default RegistrationForm;
+}

@@ -5,7 +5,7 @@ import photo from "../../assets/1.jpg";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 
-function UserLogin() {
+function User() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const { logout } = useAuth();
@@ -64,4 +64,4 @@ function UserLogin() {
   );
 }
 
-export default UserLogin;
+export default User;

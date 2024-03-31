@@ -1,4 +1,4 @@
-import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
 import RelatedArticlesSection from "../Articles/RelatedArticlesSection";
 import CommentsSection from "../Comments/CommentsSection";
 import ReactMarkdown from "react-markdown";
@@ -7,6 +7,7 @@ import { useAuth } from "../../auth/AuthProvider";
 import { ArticleData } from "../../services/articleService";
 import { getImageById } from "../../services/imageService";
 import { customFormatDate } from "../../utils/formatDate";
+import { StyledCardMedia } from "./styled/styledImages";
 
 function ArticleView({
   article,
@@ -87,17 +88,7 @@ function ArticleView({
                 </Grid>
               </Grid>
               {imageData && (
-                <CardMedia
-                  component="img"
-                  sx={{
-                    width: "100%",
-                    height: "31.5rem",
-                    marginTop: "1rem",
-                    objectFit: "cover",
-                  }}
-                  src={imageData}
-                  alt={article.title}
-                />
+                <StyledCardMedia src={imageData} alt={article.title} />
               )}
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </CardContent>

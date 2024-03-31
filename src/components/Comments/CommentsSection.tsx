@@ -6,25 +6,10 @@ import { useFormik } from "formik";
 import CommentCard from "./CommentCard";
 import { Form } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
-import { createComment } from "../../services/commentService";
-
-export type CommentsProps = {
-  articleId: string;
-  commentId: string;
-  author: string;
-  content: string;
-  postedAt: string;
-  score: number;
-};
-
-export interface InitialValuesForm {
-  articleId: string | undefined;
-  author: string | undefined;
-  content: string;
-  commentId?: string;
-  postedAt?: string;
-  score?: number;
-}
+import {
+  createComment,
+  InitialValuesForm,
+} from "../../services/commentService";
 
 function CommentsSection({ article }: { article: ArticleData }) {
   const [comment, setComment] = useState<InitialValuesForm[]>([]);

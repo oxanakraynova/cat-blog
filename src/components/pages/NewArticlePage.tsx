@@ -3,11 +3,9 @@ import ArticleForm from "../Forms/ArticleForm/ArticleForm";
 
 function NewArticlePage() {
   return (
-    <>
-      <Container maxWidth="lg">
-        <ArticleForm mode="CREATE" />
-      </Container>
-    </>
+    <Container maxWidth="lg">
+      <ArticleForm mode="CREATE" />
+    </Container>
   );
 }
 

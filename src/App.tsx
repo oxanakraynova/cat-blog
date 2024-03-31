@@ -4,15 +4,15 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import AboutPage from "./components/pages/About";
+import AboutPage from "./components/pages/AboutPage";
 import ArticleDetailPage, {
   loader as articleDetailsLoader,
-} from "./components/pages/ArticleDetail";
-import ArticlesPage from "./components/pages/Articles";
-import LoginPage from "./components/pages/Login";
-import AdminArticlesPage from "./components/pages/AdminArticles";
-import NewArticlePage from "./components/pages/NewArticle";
-import EditArticlePage from "./components/pages/EditArticle";
+} from "./components/pages/ArticleDetailPage";
+import ArticlesPage from "./components/pages/ArticlesPage";
+import LoginPage from "./components/pages/LoginPage";
+import AdminArticlesPage from "./components/pages/AdminArticlesPage";
+import NewArticlePage from "./components/pages/NewArticlePage";
+import EditArticlePage from "./components/pages/EditArticlePage";
 import RegistrationForm from "./components/Forms/RegistrationForm";
 import { lazy } from "react";
 import ErrorPage from "./components/pages/ErrorPage";

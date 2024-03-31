@@ -9,6 +9,12 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
+interface InputProps {
+  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  imageData: string | null;
+  selectedImage: File | null;
+}
+
 const ColorButton = styled(Button)<ButtonProps>({
   color: "white",
   backgroundColor: grey[600],
@@ -16,12 +22,6 @@ const ColorButton = styled(Button)<ButtonProps>({
     backgroundColor: grey[800],
   },
 });
-
-interface InputProps {
-  handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  imageData: string | null;
-  selectedImage: File | null;
-}
 
 const FileInput = ({
   handleImageChange,
