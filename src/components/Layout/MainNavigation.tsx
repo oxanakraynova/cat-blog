@@ -32,7 +32,7 @@ const MainNavigation = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "1rem",
-                marginLeft: "3%",
+                marginLeft: "4%",
               }}
             >
               <Box
@@ -61,6 +61,7 @@ const MainNavigation = () => {
             )}
           </Toolbar>
         </AppBar>
+        <Toolbar />
       </Box>
     </ThemeProvider>
   );

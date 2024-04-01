@@ -11,7 +11,8 @@ export const FlexColumnBox = styled(Box)({
 export const FlexRowCard = styled(Card)({
   display: "flex",
   flexDirection: "row",
-  maxWidth: "52rem",
+  maxWidth: "60%",
+  height: "13rem",
   marginBottom: "3%",
   marginTop: "1%",
 });

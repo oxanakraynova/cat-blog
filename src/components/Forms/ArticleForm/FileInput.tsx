@@ -35,6 +35,7 @@ const FileInput = ({
           fontWeight: "bold",
           color: "inherit",
           marginBottom: "0.5rem",
+          marginTop: "0.5rem",
         }}
       >
         Featured image

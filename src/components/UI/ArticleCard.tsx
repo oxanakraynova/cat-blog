@@ -53,7 +53,7 @@ function ArticleCard({ article }: ArticleCardProps) {
   }, [article.imageId]);
 
   return (
-    <FlexRowCard>
+    <FlexRowCard elevation={0}>
       {imageData ? (
         <CardMedia
           component="img"
@@ -70,7 +70,7 @@ function ArticleCard({ article }: ArticleCardProps) {
       )}
       <FlexColumnBox>
         <CardContent>
-          <Typography component="div" variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             {article.title}
           </Typography>
           <Grid container spacing={2}>
@@ -78,7 +78,6 @@ function ArticleCard({ article }: ArticleCardProps) {
               <Typography
                 variant="subtitle2"
                 color="text.secondary"
-                component="div"
                 gutterBottom
               >
                 {tenant ? tenant.name : "No author available."}
@@ -88,14 +87,13 @@ function ArticleCard({ article }: ArticleCardProps) {
               <Typography
                 variant="subtitle2"
                 color="text.secondary"
-                component="div"
                 gutterBottom
               >
                 • {formatDate(article.createdAt!)}
               </Typography>
             </Grid>
           </Grid>
-          <Typography component="div" variant="body2" gutterBottom>
+          <Typography variant="body2" gutterBottom>
             {article.perex
               ? article.perex + " ..."
               : "No description available."}
@@ -115,7 +113,6 @@ function ArticleCard({ article }: ArticleCardProps) {
               <Typography
                 variant="subtitle2"
                 color="text.secondary"
-                component="div"
                 gutterBottom
               >
                 {article.comments

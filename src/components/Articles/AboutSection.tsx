@@ -7,7 +7,7 @@ import Subheader from "../UI/Subheader";
 
 function AboutSection() {
   return (
-    <Grid container>
+    <Grid container style={{ marginTop: "4%" }}>
       <Grid item xs={12} sm={8}>
         <Header title="About" />
       </Grid>
