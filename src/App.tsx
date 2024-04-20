@@ -13,7 +13,7 @@ import EditArticlePage from "./components/pages/EditArticlePage";
 import RegistrationForm from "./components/Forms/RegistrationForm";
 import { lazy } from "react";
 import ErrorPage from "./components/pages/ErrorPage";
-import { AuthProvider, checkAuthLoader } from "./auth/AuthProvider";
+import { AuthProvider } from "./auth/AuthProvider";
 import { loader as articlesLoader } from "./components/Articles/ArticleList";
 import ArticlesError from "./components/Articles/ArticlesError";
 import { ArticleProvider } from "./auth/ArticleProvider";
@@ -41,7 +41,7 @@ const router = createBrowserRouter(
           loader={articleDetailsLoader}
         />
       </Route>
-      <Route path="admin" element={<RootLayout />} loader={checkAuthLoader}>
+      <Route path="admin" element={<RootLayout />}>
         <Route index element={<AdminArticlesPage />} />
         <Route path="new" element={<NewArticlePage />} />
         <Route
