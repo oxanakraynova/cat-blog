@@ -15,7 +15,6 @@ import { lazy } from "react";
 import ErrorPage from "./components/pages/ErrorPage";
 import { AuthProvider } from "./auth/AuthProvider";
 import { loader as articlesLoader } from "./components/Articles/ArticleList";
-import ArticlesError from "./components/Articles/ArticlesError";
 import { ArticleProvider } from "./auth/ArticleProvider";
 import ArticleDetailPage from "./components/pages/ArticleDetailPage";
 import { loader as articleDetailsLoader } from "./components/Articles/ArticleDetail";
@@ -29,11 +28,7 @@ const router = createBrowserRouter(
       <Route path="about" element={<AboutPage />} />
       <Route path="login" element={<LoginPage />} />
       <Route path="register" element={<RegistrationForm />} />
-      <Route
-        path="articles"
-        element={<RootLayout />}
-        errorElement={<ArticlesError />}
-      >
+      <Route path="articles" element={<RootLayout />}>
         <Route index element={<ArticlesPage />} loader={articlesLoader} />
         <Route
           path=":articleId"

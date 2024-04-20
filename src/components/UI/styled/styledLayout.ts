@@ -16,3 +16,11 @@ export const FlexRowCard = styled(Card)({
   marginBottom: "3%",
   marginTop: "1%",
 });
+
+export const AbsoluteBoxPosition = styled(Box)({
+  position: "absolute",
+  top: "25%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+});

@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { NavLink, useRouteError } from "react-router-dom";
 import MainNavigation from "../Layout/MainNavigation";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { AbsoluteBoxPosition } from "../UI/styled/styledLayout";
 
 function ErrorPage() {
   const error: unknown = useRouteError();
@@ -18,17 +19,9 @@ function ErrorPage() {
   return (
     <>
       <MainNavigation />
-      <Box
-        sx={{
-          position: "absolute",
-          top: "25%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
-        }}
-      >
+      <AbsoluteBoxPosition>
         <Typography variant="h3" gutterBottom>
-          An error occured!
+          Error
         </Typography>
         <Typography variant="h4" gutterBottom>
           {title}
@@ -42,13 +35,12 @@ function ErrorPage() {
             component={NavLink}
             variant="contained"
             color="primary"
-            sx={{ height: "2.5rem", width: "9rem" }}
             startIcon={<ArrowBackIcon />}
           >
             GO HOME
           </Button>
         </Box>
-      </Box>
+      </AbsoluteBoxPosition>
     </>
   );
 }
