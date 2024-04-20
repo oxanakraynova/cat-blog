@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getTenantById, Tenant, tenantId } from "../services/tenantService";
 import { Children } from "../types/common";
-import { useCookies } from "react-cookie";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -30,15 +29,14 @@ export const AuthProvider = ({ children }: Children) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [tenant, setTenant] = useState<Tenant | null>(null);
-  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
 
   useEffect(() => {
-    const storedToken = cookies.access_token;
+    const storedToken = localStorage.getItem("access_token");
     if (storedToken) {
       setIsAuthenticated(true);
       setToken(storedToken);
     }
-  }, [cookies.access_token]);
+  }, []);
 
   useEffect(() => {
     const fetchTenant = async () => {
@@ -73,7 +71,7 @@ export const AuthProvider = ({ children }: Children) => {
       );
 
       const accessToken = response.data.access_token;
-      setCookie("access_token", accessToken, { path: "/" });
+      localStorage.setItem("access_token", accessToken);
       console.log("Login successful. Access Token:", accessToken);
 
       setIsAuthenticated(true);
@@ -85,7 +83,7 @@ export const AuthProvider = ({ children }: Children) => {
   };
 
   const logout = () => {
-    removeCookie("access_token");
+    localStorage.removeItem("access_token");
     setIsAuthenticated(false);
   };
 
