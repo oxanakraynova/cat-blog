@@ -1,6 +1,6 @@
 import { Avatar, Card, CardHeader, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import photo from "../../assets/1.jpg";
+import photo from "../../assets/avatar.jpg";
 import { ArticleData } from "../../services/articleService";
 import { useFormik } from "formik";
 import CommentCard from "./CommentCard";

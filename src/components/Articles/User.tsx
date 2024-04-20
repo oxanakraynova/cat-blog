@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import photo from "../../assets/1.jpg";
+import photo from "../../assets/avatar.jpg";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 

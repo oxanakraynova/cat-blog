@@ -10,6 +10,11 @@ function ErrorPage() {
   const status = (error as { status?: number })?.status;
   const data = (error as { data?: string })?.data;
 
+  const title = data || "Sorry, an unexpected error has occurred.";
+  const message = status
+    ? status + " " + statusText
+    : statusText || errorMessage;
+
   return (
     <>
       <MainNavigation />
@@ -26,12 +31,10 @@ function ErrorPage() {
           An error occured!
         </Typography>
         <Typography variant="h4" gutterBottom>
-          {data || "Sorry, an unexpected error has occurred."}
+          {title}
         </Typography>
         <Typography variant="h5" gutterBottom>
-          {status && statusText
-            ? status + " " + statusText
-            : statusText || errorMessage}
+          {message}
         </Typography>
         <Box m={2} display="flex" justifyContent="center" alignItems="center">
           <Button
