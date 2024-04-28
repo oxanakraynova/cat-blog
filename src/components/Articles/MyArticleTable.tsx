@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/EditOutlined";
@@ -14,6 +13,7 @@ import {
 } from "../../services/articleService";
 import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
+import { AbsoluteBoxPosition } from "../UI/styled/styledLayout";
 
 function MyArticleTable({}: { article: ArticleData }) {
   const [articles, setArticles] = useState<ArticleData[]>([]);
@@ -44,19 +44,11 @@ function MyArticleTable({}: { article: ArticleData }) {
 
   if (!loading && !articles.length) {
     return (
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
-        }}
-      >
+      <AbsoluteBoxPosition>
         <Typography variant="h6" gutterBottom>
           Articles not found
         </Typography>
-      </Box>
+      </AbsoluteBoxPosition>
     );
   }
 

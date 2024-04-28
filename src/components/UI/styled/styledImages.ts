@@ -7,3 +7,8 @@ export const StyledCardMedia = styled("img")({
   marginTop: "1rem",
   objectFit: "cover",
 });
+
+export const StyledLogo = styled("img")({
+  height: "3rem",
+  objectFit: "contain",
+});

@@ -1,24 +1,18 @@
-import { List, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import User from "../Articles/User";
+import { StyledListWithMarginLeftAuto } from "../UI/styled/styledAppbar";
 import { CustomLink } from "./CustomLink";
 
 const AdminNavigation = () => {
   return (
-    <List
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: "1rem",
-        marginLeft: "auto",
-      }}
-    >
+    <StyledListWithMarginLeftAuto>
       <CustomLink to="/admin">My Articles</CustomLink>
       <Button variant="text" component={NavLink} to="/admin/new">
         Create Article
       </Button>
       <User />
-    </List>
+    </StyledListWithMarginLeftAuto>
   );
 };
 

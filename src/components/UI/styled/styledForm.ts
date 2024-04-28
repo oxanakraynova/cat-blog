@@ -4,7 +4,7 @@ import { Box, InputLabel } from "@mui/material";
 export const CustomInputLabel = styled(InputLabel)({
   fontWeight: "bold",
   color: "inherit",
-  marginTop: "3%",
+  marginTop: "4%",
 });
 
 export const CustomBox = styled(Box)({

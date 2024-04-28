@@ -1,16 +1,26 @@
+import { createTheme, ThemeProvider } from "@mui/material";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Loading from "../UI/Loading";
 import MainNavigation from "./MainNavigation";
 
 function Root() {
+  const theme = createTheme({
+    palette: {
+      secondary: {
+        main: "#f9fafb",
+      },
+    },
+  });
   return (
-    <Suspense fallback={<Loading />}>
-      <MainNavigation />
+    <ThemeProvider theme={theme}>
       <Suspense fallback={<Loading />}>
-        <Outlet />
+        <MainNavigation />
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
       </Suspense>
-    </Suspense>
+    </ThemeProvider>
   );
 }
 

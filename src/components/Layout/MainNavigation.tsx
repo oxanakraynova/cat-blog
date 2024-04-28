@@ -1,69 +1,42 @@
-import AppBar from "@mui/material/AppBar";
-import { Box } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.jpeg";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@mui/material/styles";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { List } from "@mui/material";
 import AdminNavigation from "./AdminNavigation";
 import { CustomLink } from "./CustomLink";
 import { useAuth } from "../../auth/AuthProvider";
-
-const theme = createTheme({
-  palette: {
-    secondary: {
-      main: "#f9fafb",
-    },
-  },
-});
+import { StyledLogo } from "../UI/styled/styledImages";
+import { StyledAppBar, StyledBox, StyledList } from "../UI/styled/styledAppbar";
 
 const MainNavigation = () => {
   const { isAuthenticated } = useAuth();
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" color="secondary" sx={{ overflowX: "auto" }}>
-          <Toolbar>
-            <List
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                marginLeft: "4%",
-              }}
+    <StyledBox>
+      <StyledAppBar color="secondary">
+        <Toolbar>
+          <StyledList>
+            <StyledLogo alt="cat logo." src={logo} />
+            <CustomLink to="/articles">Recent Articles</CustomLink>
+            <CustomLink to="/about">About</CustomLink>
+          </StyledList>
+          {isAuthenticated ? (
+            <AdminNavigation />
+          ) : (
+            <Button
+              variant="text"
+              sx={{ marginLeft: "auto" }}
+              endIcon={<ArrowForwardIcon />}
+              component={NavLink}
+              to="/login"
             >
-              <Box
-                component="img"
-                sx={{
-                  height: "3rem",
-                }}
-                alt="cat logo."
-                src={logo}
-              />
-              <CustomLink to="/articles">Recent Articles</CustomLink>
-              <CustomLink to="/about">About</CustomLink>
-            </List>
-            {isAuthenticated ? (
-              <AdminNavigation />
-            ) : (
-              <Button
-                variant="text"
-                sx={{ marginLeft: "auto" }}
-                endIcon={<ArrowForwardIcon />}
-                component={NavLink}
-                to="/login"
-              >
-                Log in
-              </Button>
-            )}
-          </Toolbar>
-        </AppBar>
-        <Toolbar />
-      </Box>
-    </ThemeProvider>
+              Log in
+            </Button>
+          )}
+        </Toolbar>
+      </StyledAppBar>
+      <Toolbar />
+    </StyledBox>
   );
 };
 
