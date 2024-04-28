@@ -1,15 +1,33 @@
 import { Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
-import { useArticle } from "../../auth/ArticleProvider";
-import { ArticleData, getArticleById } from "../../services/articleService";
+import {
+  ApiResponse,
+  ArticleData,
+  getArticleById,
+  getArticles,
+} from "../../services/articleService";
 import ArticleView from "../UI/ArticleView";
 
 function ArticleDetail() {
+  const [articles, setArticles] = useState<ArticleData[]>([]);
+
   const article: ArticleData = useLoaderData() as ArticleData;
 
   const params = useParams<{ articleId?: string }>();
 
-  const { articles } = useArticle();
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response: ApiResponse = await getArticles();
+        setArticles(response.items || []);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+        throw error;
+      }
+    };
+    fetchArticles();
+  }, []);
 
   const filteredRelatedArticles = articles.filter(
     (article) => article.articleId !== params.articleId

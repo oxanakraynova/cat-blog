@@ -15,7 +15,6 @@ import { lazy } from "react";
 import ErrorPage from "./components/pages/ErrorPage";
 import { AuthProvider } from "./auth/AuthProvider";
 import { loader as articlesLoader } from "./components/Articles/ArticleList";
-import { ArticleProvider } from "./auth/ArticleProvider";
 import ArticleDetailPage from "./components/pages/ArticleDetailPage";
 import { loader as articleDetailsLoader } from "./components/Articles/ArticleDetail";
 
@@ -52,9 +51,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <AuthProvider>
-      <ArticleProvider>
-        <RouterProvider router={router} />
-      </ArticleProvider>
+      <RouterProvider router={router} />
     </AuthProvider>
   );
 }
