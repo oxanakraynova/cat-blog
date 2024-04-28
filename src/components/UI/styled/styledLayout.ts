@@ -12,8 +12,8 @@ export const FlexRowCard = styled(Card)({
   display: "flex",
   flexDirection: "row",
   maxWidth: "60%",
-  height: "13rem",
-  marginBottom: "3%",
+  height: "14rem",
+  marginBottom: "1%",
   marginTop: "1%",
 });
 
