@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { ArticleData } from "../../services/articleService";
 import Header from "../UI/Header";
@@ -6,7 +6,14 @@ import MyArticleTable from "./MyArticleTable";
 
 function AdminArticleList(article: ArticleData) {
   return (
-    <>
+    <Box
+      display="flex"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      flexDirection="column"
+      minHeight="100vh"
+      position="relative"
+    >
       <Stack
         direction="row"
         spacing={5}
@@ -19,7 +26,7 @@ function AdminArticleList(article: ArticleData) {
         </Button>
       </Stack>
       <MyArticleTable article={article} />
-    </>
+    </Box>
   );
 }
 
