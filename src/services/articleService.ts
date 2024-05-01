@@ -22,11 +22,6 @@ export interface PaginationData {
   total: number;
 }
 
-export interface Pageable {
-  offset: number;
-  size: number;
-}
-
 export interface ArticleValuesForm {
   title: string;
   content: string;
