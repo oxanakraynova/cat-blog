@@ -1,12 +1,4 @@
-import {
-  Stack,
-  Button,
-  Box,
-  TextField,
-  InputLabel,
-  CardMedia,
-  Input,
-} from "@mui/material";
+import { Button, Box, TextField, InputLabel, Input } from "@mui/material";
 import { useFormik } from "formik";
 import { Form, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -27,7 +19,9 @@ import {
   CustomBox,
   CustomInputLabel,
   FlexColumnBox,
+  StyledStack,
 } from "../../UI/styled/styledForm";
+import { FormCardMedia } from "../../UI/styled/styledForm";
 
 export interface ArticleFormProps {
   mode: "CREATE" | "EDIT";
@@ -191,30 +185,11 @@ function ArticleForm({ mode }: ArticleFormProps) {
             />
           </Box>
           <FlexColumnBox>
-            {imageData ? (
+            {imageData && mode === "EDIT" ? (
               <>
-                <CustomInputLabel>Featured image</CustomInputLabel>
-                <CardMedia
-                  component="img"
-                  src={imageData}
-                  alt="Article Image"
-                  sx={{
-                    maxWidth: "12rem",
-                    height: "100%",
-                    objectFit: "cover",
-                    maxHeight: "6rem",
-                    marginTop: "0.5rem",
-                    marginBottom: "0.5rem",
-                  }}
-                />
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  justifyContent="flex-start"
-                  sx={{
-                    marginTop: "0.5rem",
-                  }}
-                >
+                <CustomInputLabel>Featured Image</CustomInputLabel>
+                <FormCardMedia src={imageData} alt="Article Image" />
+                <StyledStack>
                   <Input
                     id="select-image"
                     type="file"
@@ -236,7 +211,7 @@ function ArticleForm({ mode }: ArticleFormProps) {
                   >
                     Delete
                   </Button>
-                </Stack>
+                </StyledStack>
               </>
             ) : (
               <FileInput

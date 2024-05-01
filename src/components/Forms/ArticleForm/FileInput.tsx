@@ -3,11 +3,11 @@ import {
   Box,
   InputLabel,
   Input,
-  CardMedia,
   styled,
   ButtonProps,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { FormCardMedia } from "../../UI/styled/styledForm";
 
 interface InputProps {
   handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -38,7 +38,7 @@ const FileInput = ({
           marginTop: "0.5rem",
         }}
       >
-        Featured image
+        Featured Image
       </InputLabel>
       <Input
         id="select-image"
@@ -56,17 +56,7 @@ const FileInput = ({
       </InputLabel>
       {imageData && selectedImage && (
         <Box mt={2} textAlign="left">
-          <CardMedia
-            component="img"
-            src={imageData}
-            alt={selectedImage?.name}
-            sx={{
-              maxWidth: "12rem",
-              height: "100%",
-              objectFit: "cover",
-              maxHeight: "6rem",
-            }}
-          />
+          <FormCardMedia src={imageData} alt={selectedImage?.name} />
         </Box>
       )}
     </>

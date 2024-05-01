@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
-import { Box, InputLabel } from "@mui/material";
+import { styled } from "@mui/material";
+import { Box, InputLabel, Stack } from "@mui/material";
 
 export const CustomInputLabel = styled(InputLabel)({
   fontWeight: "bold",
@@ -57,4 +57,20 @@ export const CustomContainer = styled(Box)({
   marginRight: "2rem",
   marginBottom: "2rem",
   marginTop: "50%",
+});
+
+export const FormCardMedia = styled("img")({
+  maxWidth: "12rem",
+  height: "100%",
+  objectFit: "cover",
+  maxHeight: "6rem",
+  marginTop: "0.5rem",
+  marginBottom: "0.5rem",
+});
+
+export const StyledStack = styled(Stack)({
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  marginTop: "0.5rem",
+  gap: 2,
 });

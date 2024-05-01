@@ -8,12 +8,7 @@ const FormHeader = ({ mode }: ArticleFormProps) => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   return (
-    <Stack
-      direction="row"
-      spacing={5}
-      alignItems="flex-start"
-      sx={{ width: "37.5rem" }}
-    >
+    <Stack direction="row" spacing={5} alignItems="flex-start" width="37.5rem">
       <Header title={pageTitle} />
       <Button variant="contained" type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Submitting..." : "Publish Article"}
